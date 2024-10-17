@@ -13,12 +13,14 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Stack } from '@mui/material';
+import { Outlet} from "react-router-dom";
 
 const pages = ['Products', 'Pricing', 'Blog','Products', 'Pricing', 'Blog','Products', 'Pricing', 'Blog'];
 
 function ResponsiveAppBar() {
   return (
-    <AppBar  position="static">
+    <>
+      <AppBar  position="static">
       <Container maxWidth="xl" >
         <Toolbar disableGutters sx={{display: {xs: 'none', md: 'flex'},justifyContent:'space-between'}}>
           <Stack direction="row" alignItems='center'>
@@ -113,6 +115,8 @@ function ResponsiveAppBar() {
         ))}
       </Stack>
     </AppBar>
+    <Outlet />
+    </>
   );
 }
 export default ResponsiveAppBar;

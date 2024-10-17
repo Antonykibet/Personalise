@@ -7,11 +7,16 @@ import Typography from '@mui/material/Typography';
 import { useMediaQuery } from '@mui/material';
 import logo from "../logo512.png"
 import { Button, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-export default function ProductCard() {
+export default function ProductCard({link}) {
+  const navigate = useNavigate()
+  const handleClick = ()=>{
+    navigate(link)
+  }
   const isSmallScreen = useMediaQuery('(max-width: 768px)');
   return (
-    <Card sx={{minWidth: isSmallScreen ? '90%' : '25%',flexGrow:'0'}}>
+    <Card onClick={handleClick} sx={{minWidth: isSmallScreen ? '90%' : '25%',flexGrow:'0'}}>
       <CardMedia
         component="img"
         height="194"

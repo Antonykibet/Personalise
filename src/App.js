@@ -1,17 +1,19 @@
 import './App.css';
-import Header  from './components/header';
-import Hero from './components/hero';
-import SearchBar from './components/search';
-import Sections from './components/Section';
+import Landing from './pages/landing';
+import ProductPage from './pages/productPage';
+import Layout from './components/layout';
+import { Route,Routes,BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <Header/>
-      <Hero/>
-      <SearchBar/>
-      <Sections/>
-    </div>
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path='/' element={<Landing/>}/>
+          <Route path='testPage' element={<ProductPage/>}/>
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   );
 }
 

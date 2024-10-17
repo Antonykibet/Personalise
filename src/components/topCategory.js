@@ -6,7 +6,7 @@ export default function TopCategory({title}){
         <Stack direction='column' spacing={2} alignItems='start'>
             <Typography>{title}</Typography>
             <Stack p={2} direction='row' spacing={2} width='100vw' overflow='auto' >
-                <ProductCard/>
+                <ProductCard link='/testPage'/>
                 <ProductCard/>
                 <ProductCard/>
                 <ProductCard/>
