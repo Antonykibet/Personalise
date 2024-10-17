@@ -106,6 +106,7 @@ function ResponsiveAppBar() {
       <Stack direction="row" justifyContent={'center'}>
         {pages.map((page) => (
                 <Button
+                    href={`/category/${page}`}
                     key={page}
                     onClick={''}
                     sx={{ my: 0, color: 'white', display: 'block' }}

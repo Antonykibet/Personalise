@@ -16,7 +16,7 @@ export default function ProductCard({link}) {
   }
   const isSmallScreen = useMediaQuery('(max-width: 768px)');
   return (
-    <Card onClick={handleClick} sx={{minWidth: isSmallScreen ? '90%' : '25%',flexGrow:'0'}}>
+    <Card onClick={handleClick} sx={{maxWidth: isSmallScreen ? '90%' : '25%',flexGrow:'0'}}>
       <CardMedia
         component="img"
         height="194"
