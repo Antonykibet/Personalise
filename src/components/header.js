@@ -8,44 +8,53 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import { Stack } from '@mui/material';
-import { Outlet} from "react-router-dom";
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import { InputAdornment, Stack } from '@mui/material';
+import { InputBase } from "@mui/material"
+import SearchIcon from '@mui/icons-material/Search';
 
-const pages = ['Products', 'Pricing', 'Blog','Products', 'Pricing', 'Blog','Products', 'Pricing', 'Blog'];
+const pages = ['Products', 'Pricing', 'Blog','Products', 'Pricing', 'Blog','Products', 'Pricing', 'Blog','Pricing', 'Blog','Products', 'Pricing', 'Blog'];
 
 function ResponsiveAppBar() {
   return (
     <>
-      <AppBar  position="static">
+      <AppBar sx={{backgroundColor:'#ffffff'}} position="static">
       <Container maxWidth="xl" >
         <Toolbar disableGutters sx={{display: {xs: 'none', md: 'flex'},justifyContent:'space-between'}}>
           <Stack direction="row" alignItems='center'>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <AutoFixHighIcon sx={{ display: { xs: 'none', md: 'flex' },color:'#000000', }} />
             <Typography
               variant="h6"
               noWrap
               component="a"
               href="#app-bar-with-responsive-menu"
               sx={{
-                mr: 2,
                 display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
+                fontFamily: 'Poppins',
                 fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
+                textDecoration:'none',
+                color: '#000000',
               }}
             >
-              LOGO
+              Personalyze
             </Typography>
           </Stack>
+          
           <Stack direction="row" alignItems='center' spacing={2}>
-           <ShoppingCartOutlinedIcon />
-           <PersonOutlinedIcon />
+          <InputBase
+              sx={{ border:{border:'solid',borderRadius:16,borderWidth:'2px'}, px:1}}
+              placeholder="Search products"
+              endAdornment={
+                <InputAdornment  position='end'>
+                  <SearchIcon sx={{color:'#e45a00'}} />
+                </InputAdornment>
+              }
+              />
+           <ShoppingCartOutlinedIcon sx={{color: '#000000',fontSize:'26px'}} />
+           <AccountCircleSharpIcon sx={{color: '#000000',fontSize:'26px'}}/>
           </Stack>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -82,7 +91,7 @@ function ResponsiveAppBar() {
                 ))}
                 </Menu>
             </Box>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            <AutoFixHighIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
             <Typography
                 variant="h5"
                 noWrap
@@ -103,20 +112,18 @@ function ResponsiveAppBar() {
             </Typography>
         </Toolbar>
       </Container>
-      <Stack direction="row" justifyContent={'center'}>
+      <Stack direction="row" justifyContent={'center'} >
         {pages.map((page) => (
-                <Button
+                <Button 
                     href={`/category/${page}`}
                     key={page}
-                    onClick={''}
-                    sx={{ my: 0, color: 'white', display: 'block' }}
+                    sx={{ my: 0, color: '#000000', display: 'block', fontFamily:'poppins' }}
                 >
-                    {page}
+                {page}
                 </Button>
         ))}
       </Stack>
     </AppBar>
-    <Outlet />
     </>
   );
 }

@@ -5,7 +5,6 @@ export default function Landing(){
     return(
         <>
             <Hero/>
-            <SearchBar/>
             <Sections/>
         </>
     )

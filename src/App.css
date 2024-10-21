@@ -27,6 +27,12 @@
 .App-link {
   color: #61dafb;
 }
+.carousel-container{
+  transform: rotate(90deg);
+}
+.CarouselObject{
+  border: solid;
+}
 
 @keyframes App-logo-spin {
   from {

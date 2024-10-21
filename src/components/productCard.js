@@ -1,13 +1,12 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
-import { useMediaQuery } from '@mui/material';
+import { useMediaQuery, CardHeader, IconButton } from '@mui/material';
 import logo from "../logo512.png"
-import { Button, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 export default function ProductCard({link}) {
   const navigate = useNavigate()
@@ -16,28 +15,23 @@ export default function ProductCard({link}) {
   }
   const isSmallScreen = useMediaQuery('(max-width: 768px)');
   return (
-    <Card onClick={handleClick} sx={{maxWidth: isSmallScreen ? '90%' : '25%',flexGrow:'0'}}>
+    <Card variant='plain' onClick={handleClick} sx={{minWidth: isSmallScreen ? '90vw' : '15vw',position: 'relative'}}>
+      <CardHeader 
+        sx={{position: 'absolute', top: 0,right:0}}
+        action={<IconButton>
+            <FavoriteBorderIcon/>
+          </IconButton>}/>
       <CardMedia
         component="img"
         height="194"
         image={logo}
         alt="Paella dish"
       />
-      <Stack mx={1} direction="row" justifyContent="space-between">
-        <Typography>Hoodie</Typography>
-        <Typography>1200</Typography>
+      <Stack mx={1} >
+        <Typography variant='p' sx={{fontWeight:700,fontSize:'14px',fontFamily:'Inter'}}>Hoodie</Typography>
+        <Typography variant='p' sx={{fontWeight:300,fontSize:'12px',fontFamily:'Inter'}}>Some random shii</Typography>
+        <Typography variant='p' sx={{color:'#004b24',fontSize:'16px',fontWeight:700,fontFamily:'Inter',}}>KSH 1200</Typography>
       </Stack>
-      <CardContent>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the mussels,
-          if you like.
-        </Typography>
-      </CardContent>
-        
-      <CardActions sx={{justifyContent:'center'}}>
-        <Button fullWidth variant='outlined'>Personalise</Button>
-      </CardActions>
     </Card>
   );
 }
