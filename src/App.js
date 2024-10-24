@@ -11,8 +11,8 @@ function App() {
       <Layout>
         <Routes>
           <Route path='/' element={<Landing/>}/>
-          <Route path='testPage/:' element={<ProductPage/>}/>
-          <Route path='category/:category' element={<CategoryPage />} />
+          <Route path='testPage/' element={<ProductPage/>}/>
+          <Route path='category/:category' element={<CategoryPage />}/>
         </Routes>
       </Layout>
     </BrowserRouter>
