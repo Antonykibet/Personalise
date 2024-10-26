@@ -25,7 +25,7 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl" >
         <Toolbar disableGutters sx={{display: {xs: 'none', md: 'flex'},justifyContent:'space-between'}}>
           <Stack direction="row" alignItems='center'>
-            <AutoFixHighIcon sx={{ display: { xs: 'none', md: 'flex' },color:'#000000', }} />
+            <AutoFixHighIcon sx={{ display: { xs: 'none', md: 'flex' },color:'#e45a00', }} />
             <Typography
               variant="h6"
               noWrap
@@ -36,7 +36,7 @@ function ResponsiveAppBar() {
                 fontFamily: 'Poppins',
                 fontWeight: 700,
                 textDecoration:'none',
-                color: '#000000',
+                color: '#e45a00',
               }}
             >
               Personalyze
@@ -112,7 +112,7 @@ function ResponsiveAppBar() {
             </Typography>
         </Toolbar>
       </Container>
-      <Stack direction="row" justifyContent={'center'} >
+      <Stack sx={{backgroundColor:'rgb(245, 246, 250)'}} direction="row" justifyContent={'center'} >
         {pages.map((page) => (
                 <Button 
                     href={`/category/${page}`}

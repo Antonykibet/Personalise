@@ -4,7 +4,7 @@ export default function Layout({children}){
     return(
         <div>
             <Header/>
-            <main>{children}</main>
+            <main style={{height:'auto'}}>{children}</main>
             <Footer/>
         </div>
     )

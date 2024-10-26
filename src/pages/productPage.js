@@ -41,10 +41,10 @@ export default function ProductPage(){
                     <Typography variant="h4" sx={{fontFamily:'Montserrat',fontWeight:700,color:'rgb(34, 34, 34)'}}>Product</Typography>
                     <Typography variant="h5" sx={{fontFamily:'Montserrat',fontWeight:700,color:'rgb(34, 34, 34)'}}>200/=</Typography>
                     <Typography variant='body2' sx={{fontWeight:300,fontFamily:'Inter'}}>This product is fine fine finefine fine fine fine fine fine
-                    product is fine fine finefine fine fine fine fine fine
-                    product is fine fine finefine fine fine fine fine fine
-                    product is fine fine finefine fine fine fine fine fine
-                    product is fine fine finefine fine fine fine fine fine
+                        product is fine fine finefine fine fine fine fine fine
+                        product is fine fine finefine fine fine fine fine fine
+                        product is fine fine finefine fine fine fine fine fine
+                        product is fine fine finefine fine fine fine fine fine
                     </Typography>
                     <TextField sx={{my:1}} onChange={handleAddText} label="Add Text" variant="outlined" />
                     <TextField sx={{my:1}} onChange={handleChangeFontSize}  label='Text size' type='number' value={fontSize} />
