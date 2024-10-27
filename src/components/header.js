@@ -12,9 +12,10 @@ import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
-import { InputAdornment, Stack } from '@mui/material';
+import { InputAdornment, Stack, Link, TextField } from '@mui/material';
 import { InputBase } from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
+import Autocomplete from '@mui/material/Autocomplete';
 
 const pages = ['Products', 'Pricing', 'Blog','Products', 'Pricing', 'Blog','Products', 'Pricing', 'Blog','Pricing', 'Blog','Products', 'Pricing', 'Blog'];
 
@@ -30,7 +31,7 @@ function ResponsiveAppBar() {
               variant="h6"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
+              href="/"
               sx={{
                 display: { xs: 'none', md: 'flex' },
                 fontFamily: 'Poppins',
@@ -52,9 +53,9 @@ function ResponsiveAppBar() {
                   <SearchIcon sx={{color:'#e45a00'}} />
                 </InputAdornment>
               }
-              />
-           <ShoppingCartOutlinedIcon sx={{color: '#000000',fontSize:'26px'}} />
-           <AccountCircleSharpIcon sx={{color: '#000000',fontSize:'26px'}}/>
+          />
+          <Link href='/checkout'><ShoppingCartOutlinedIcon  sx={{color: '#000000',fontSize:'26px'}} /></Link>
+          <Link href='/sign-in'><AccountCircleSharpIcon sx={{color: '#000000',fontSize:'26px'}}/></Link>
           </Stack>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
