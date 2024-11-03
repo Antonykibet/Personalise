@@ -14,16 +14,17 @@ export default function ProductCard({link}) {
     navigate(link)
   }
   const isSmallScreen = useMediaQuery('(max-width: 768px)');
+  const isTablet = useMediaQuery('(max-width: 820px)');
   return (
-    <Card variant='plain' onClick={handleClick} sx={{minWidth: isSmallScreen ? '90vw' : '15vw',position: 'relative'}}>
+    <Card variant='plain' onClick={handleClick} sx={{position: 'relative'}}>
       <CardHeader 
         sx={{position: 'absolute', top: 0,right:0}}
         action={<IconButton>
             <FavoriteBorderIcon/>
           </IconButton>}/>
       <CardMedia
+        sx={{width:isSmallScreen?'40vw':'20vw'}}
         component="img"
-        height="194"
         image={logo}
         alt="Paella dish"
       />

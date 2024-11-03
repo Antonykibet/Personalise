@@ -4,7 +4,7 @@ export default function CategorySelection(){
     return(
         <>
             <Stack sx={{}} direction='row' justifyContent='space-around'>
-                <Card variant="plain" >
+                <Card sx={{display:'flex',alignItems:'center',flexDirection:'column'}}  variant="plain" >
                     <CardMedia
                         component="img"
                         height="194"
@@ -12,9 +12,7 @@ export default function CategorySelection(){
                         image={logo}
                         alt="Paella dish"
                     />
-                    <CardContent>
-                        <Typography variant='p' sx={{fontWeight:700,fontSize:'14px',fontFamily:'Inter'}}>Item</Typography>
-                    </CardContent>
+                    <Typography  variant='h6' sx={{fontWeight:700,fontFamily:'Inter'}}>Item</Typography>
                 </Card>
                 <Card>
                     <CardMedia

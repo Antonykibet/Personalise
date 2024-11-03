@@ -4,7 +4,7 @@ import { Stack } from "@mui/material"
 import CategorySelection from "./categorySelection"
 export default function Sections(){
     return (
-        <Stack direction='column' spacing={4} px={4} my={2}>
+        <Stack  spacing={4} px={2} my={2}>
             <TopCategory title = 'Top Category'/>
             <CategorySelection/>
             <Category2 title = 'Hoodie'/>
