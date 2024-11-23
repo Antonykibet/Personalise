@@ -1,58 +1,57 @@
-import { useRef,useEffect, useState } from 'react';
-import { Stage, Layer, Text, Image, Label} from 'react-konva';
-import { Box, Button, Stack, TextField, Typography, Select, MenuItem, InputLabel} from "@mui/material";
-import truckHat from '../truckhat.png'
+import { useState } from 'react';
+import { Box, Button, Stack, Typography, Modal, Backdrop, useMediaQuery} from "@mui/material";
+
 import TopCategory from '../components/topCategory';
+import Playground from '../Playground/playground';
+
+
+  
 
 export default function ProductPage(){
-    const img = document.createElement('img')
-    img.src = truckHat
-    const stageWrapperRef = useRef(null);
-    const [stageDimension,setStageDimension] = useState({width:0,height:0})
-    const [text,setText] = useState('Add Text')
-    const [fontSize,setFontSize] = useState(46)
-    useEffect(() => {
-        if (stageWrapperRef.current) {
-          const { width, height } = stageWrapperRef.current.getBoundingClientRect();
-          setStageDimension({width,height})
-        }
-      }, [stageWrapperRef]);
+    const isPhone = useMediaQuery('(max-width: 768px)');
+    const isTablet = useMediaQuery('(max-width: 820px)');
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-    const handleAddText = (e)=>{
-        setText(e.target.value)
-    }
-    const handleChangeFontSize = (e)=>{
-        setFontSize(e.target.value)
-    }
+    
     return (
         <>
-        <Stack px={4} my={8}>
-            <Stack direction='row' spacing={2} mb={6}  >
-                <Box sx={{boxShadow:'rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px',borderRadius:'4px'}}   ref={stageWrapperRef} width='60vw' height='70vh'>
-                    <Stage width={stageDimension.width} height={stageDimension.height}>
-                    <Layer>
-                        <Image image={img} />
-                        <Text text={text} fontSize={fontSize} fontFamily='sans-serif' draggable />
-                        <Label />
-                    </Layer>
-                    </Stage>
+        <Stack px={{md:4,xs:2}} my={8} mt={4}>
+            <Stack px={{justifyContent:{xs:'center',md:'space-around'}}} direction={isPhone||isTablet ? 'column':'row'} spacing={4} mb={6}  >
+                <Box sx={{width: {md:'65%',xs:'100%'}, height:'70vh', boxShadow:'rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px',borderRadius:'4px'}}  >
+                    
                 </Box>
-                <Stack  width='40vw'>
-                    <Typography variant="h4" sx={{fontFamily:'Montserrat',fontWeight:700,color:'rgb(34, 34, 34)'}}>Product</Typography>
-                    <Typography variant="h5" sx={{fontFamily:'Montserrat',fontWeight:700,color:'rgb(34, 34, 34)'}}>200/=</Typography>
-                    <Typography variant='body2' sx={{fontWeight:300,fontFamily:'Inter'}}>This product is fine fine finefine fine fine fine fine fine
-                        product is fine fine finefine fine fine fine fine fine
-                        product is fine fine finefine fine fine fine fine fine
-                        product is fine fine finefine fine fine fine fine fine
-                        product is fine fine finefine fine fine fine fine fine
-                    </Typography>
-                    <TextField sx={{my:1}} onChange={handleAddText} label="Add Text" variant="outlined" />
-                    <TextField sx={{my:1}} onChange={handleChangeFontSize}  label='Text size' type='number' value={fontSize} />
-                    <TextField sx={{my:1}} label='Font style' select>
-                        <MenuItem>Woo</MenuItem>
-                        <MenuItem>Woo</MenuItem>
-                    </TextField>
-                    <Button sx={{my:2,borderRadius:4,backgroundColor:'#e45a00',color:'white'}}  variant='solid'>Add to Cart</Button>
+                <Stack spacing={4} sx={{justifyContent:'space-between',width:{md:'35%',xs:'100%'}}}>
+                    <Stack >
+                        <Typography variant="h4" sx={{fontFamily:'Montserrat',fontWeight:700,color:'rgb(34, 34, 34)'}}>Product</Typography>
+                        <Typography variant="h5" sx={{fontFamily:'Montserrat',fontWeight:700,color:'rgb(34, 34, 34)'}}>200/=</Typography>   
+                        <Typography variant='body2' sx={{fontWeight:300,fontFamily:'Inter'}}>
+                            This product is fine fine finefine fine fine fine fine fine
+                            product is fine fine finefine fine fine fine fine fine
+                            product is fine fine finefine fine fine fine fine fine
+                            product is fine fine finefine fine fine fine fine fine
+                            product is fine fine finefine fine fine fine fine fine
+                        </Typography>
+                    </Stack> 
+                    <Stack  spacing={1}>
+                        <Button fullWidth sx={{borderRadius:4,borderColor:'#e45a00',color:'#e45a00'}}  variant='outlined'>Add to Cart</Button>
+                        <Button onClick={handleOpen} sx={{borderRadius:4,backgroundColor:'#e45a00',color:'white'}}  variant='solid'>Personalise</Button>
+                    </Stack>
+                    
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        closeAfterTransition
+                        slots={{ backdrop: Backdrop }}
+                        slotProps={{
+                        backdrop: {
+                            timeout: 500,
+                        },
+                        }}>
+                            <Playground/>
+                    </Modal>
+
                 </Stack>
             </Stack>
             <Typography variant="h5" sx={{fontFamily:'Montserrat',fontWeight:700,color:'rgb(34, 34, 34)'}}>Others also bought</Typography>

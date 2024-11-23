@@ -308,33 +308,32 @@ export default function PaymentForm() {
           <OutlinedInput placeholder='Enter mpesa phone number'/>
           <Button onClick={handleOpen} variant='contained' width='200px'>Pay</Button>
           <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
-        }}
-      >
-        <Fade in={open}>
-          <Box sx={mpesaModalStyle} >
-            <Typography id="transition-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
-            <OutlinedInput placeholder='Enter RECEIPT code'/>
-            <Button onClick={()=>[
-              
-              handleClose()
-            ]} >Proceed</Button>
-          </Box>
-        </Fade>
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+            slots={{ backdrop: Backdrop }}
+            slotProps={{
+              backdrop: {
+                timeout: 500,
+              },
+            }}
+          >
+          <Fade in={open}>
+            <Box sx={mpesaModalStyle} >
+              <Typography id="transition-modal-title" variant="h6" component="h2">
+                Text in a modal
+              </Typography>
+              <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+              </Typography>
+              <OutlinedInput placeholder='Enter RECEIPT code'/>
+              <Button onClick={()=>[
+                handleClose()
+              ]} >Proceed</Button>
+            </Box>
+          </Fade>
       </Modal>
         </Box>
       )}

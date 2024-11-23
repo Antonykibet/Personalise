@@ -109,15 +109,15 @@ function ResponsiveAppBar() {
           sx={{backgroundColor:'rgb(245, 246, 250)',display:{xs:menuDisplay,md:'flex',lg:'flex',xl:'flex'}}} 
           direction={isPhone||isTablet ? 'column':'row'}  
           justifyContent={'center'} >
-          {pages.map((page) => (
-                  <Button 
-                      href={`/category/${page}`}
-                      key={page}
-                      sx={{ my: 0, color: '#000000', display: 'block', fontFamily:'poppins' }}
-                  >
-                  {page}
-                  </Button>
-          ))}
+            {pages.map((page) => (
+                    <Button 
+                        href={`/category/${page}`}
+                        key={page}
+                        sx={{ my: 0, color: '#000000', display: 'block', fontFamily:'poppins' }}
+                    >
+                      {page}
+                    </Button>
+            ))}
         </Stack>
       </AppBar>
     </>
