@@ -7,6 +7,7 @@ import { Route,Routes,BrowserRouter } from 'react-router-dom';
 import Checkout from './checkout/Checkout';
 import SignIn from './sign-in/SignIn';
 import SignUp from './sign-up/SignUp';
+import AdminPage from './pages/admin';
 function App() {
   return (
     <BrowserRouter>
@@ -18,6 +19,7 @@ function App() {
           <Route path='checkout' element={<Checkout />}/>
           <Route path='sign-in' element={<SignIn />} />
           <Route path='sign-up' element={<SignUp />} />
+          <Route path='admin' element={<AdminPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>

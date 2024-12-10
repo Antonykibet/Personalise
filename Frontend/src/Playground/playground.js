@@ -14,7 +14,7 @@ import TemplateBox from './templateBox';
 import TextConfigBox from './TextConfigBox';
 
 const img = document.createElement('img')
-    img.src = stanleyCup
+img.src = stanleyCup
 
 let ModalStyle = {
     position:'absolute',
@@ -55,38 +55,27 @@ const canvasButtons = [
     },
 ]
 
-export default function Playground(){
+export default function Playground({isAdmin, handleFormDataEntry}){
     const isPhone = useMediaQuery('(max-width: 768px)');
     const isTablet = useMediaQuery('(max-width: 820px)');
     const [canvas, setCanvas] = useState('');
     const canvasWrapper = useRef(null)
     const [selectedButton, setSelectedButton] = useState('Template');
-    const [focusedText, setFocusedText] = useState({
-        id:1,
-        text:'AddText',
-        fontWeight:'normal',
-        fontStyle:'normal',
-        fill:'red',
-        fontSize:24,
-        fontFamily:'Poppins',
-        linethrough: false,
-        underline: false
-    })
-    const [textFields, setTextFields] = useState([
+    const [focusedText, setFocusedText] = useState(
         {
-            id:1,
-            text:'AddText',
-            fontWeight:'normal',
-            fontStyle:'normal',
-            fill:'red',
-            fontSize:'24px',
-            fontFamily:'Poppins',
+            id:0,
+            text:'',
+            fontWeight:'',
+            fontStyle:'',
+            fill:'',
+            fontSize:0,
+            fontFamily:'',
             linethrough: false,
             underline: false
-        }])
+        })
+    const [textFields, setTextFields] = useState([])
     
     const otherStateRef = useRef(textFields)
-    
     
     useEffect(() => {
         otherStateRef.current = textFields
@@ -104,24 +93,45 @@ export default function Playground(){
             linethrough: false,
             underline: false
         }
-        
-        setTextFields((previous)=>[...previous,field])
-    }
-
-    const handleTextConfig = (textId,change)=>{
-        const newTextFields = textFields.map((field)=>{
-            if (field.id === textId){
-                return {...field, ...change}
-            }
-            return field
+        const text = new Textbox(field.text,field)
+        text.on('selected',()=>{
+            setFocusedText(field)
         })
-        setTextFields(newTextFields)
+        canvas.add(text)
+        setTextFields((previous)=>{
+            previous.push(text)
+            return previous
+        })
     }
 
+    const handleTextConfig = (id,editfield) =>{
+        textFields.forEach((field)=>{
+            if (field.id === id){
+                const key = Object.keys(editfield)[0]
+                field.set(key, editfield[key])
+
+                //Once a fabric js object is selected/is on focus,
+                //changes made to it will not reflect until you deselect it.
+                canvas.discardActiveObject()
+                canvas.renderAll()
+            }
+        })
+    }
+    
     const handleButtonClick = (buttonId) => {
         setSelectedButton(buttonId);
     };
     
+    //proceed button
+    const handleAdminDesign = ()=>{
+        let canvasJSON = JSON.stringify(canvas)
+        let canvasSVG = canvas.toSVG()
+        handleFormDataEntry('canvasJSON',canvasJSON)
+        handleFormDataEntry('canvasSVG',canvasSVG)
+    }
+    const handleUserDesign = ()=>{
+        alert('Sawa chill!!')
+    }
 
     
 
@@ -135,29 +145,14 @@ export default function Playground(){
         newCanvas.requestRenderAll();
         newCanvas.add(productImg)
         newCanvas.centerObject(productImg)
-        
-        
-        textFields.forEach((field)=>{
-            const text = new Textbox(field.text,field)
-            text.on('selected',()=>{
-                otherStateRef.current.forEach((textField)=>{
-                    if(textField.id === field.id){
-                        
-                        setFocusedText(textField)
-                    }
-                })
-            })
+        setCanvas(newCanvas)
 
-             
-            
-            newCanvas.add(text)
-        })
-        
         // Cleanup function
         return () => {
-        newCanvas.dispose();
-        };
-      }, [textFields]);
+            newCanvas.dispose();
+            };
+
+        },[]);
       
       
    
@@ -187,7 +182,18 @@ export default function Playground(){
                             selectedButton === 'Draw'?<TextConfigBox/>:''
                             }
                         <Stack>
-                        <Button  sx={{m:1,mx:2 ,borderRadius:4,backgroundColor:'#e45a00',color:'white'}}  variant='solid'>PROCEED TO ADD TO CART</Button>
+                        <Button  
+                            sx={{
+                                m:1,
+                                mx:2,
+                                borderRadius:4,
+                                backgroundColor:'#e45a00',
+                                color:'white'}}
+                                variant='solid'
+                                onClick={isAdmin?()=>handleAdminDesign():()=>handleUserDesign()}
+                            >
+                                    {isAdmin?'SUBMIT DESIGN':'PROCEED TO ADD TO CART'}
+                        </Button>
                         </Stack>
                     </Box>
 
@@ -234,7 +240,7 @@ export default function Playground(){
                 
                 <Stack sx={{position:'relative', width:{md:'60vw',xs:'100%'}, height:'100%'}} ref={canvasWrapper}  id='canvasWrapper'>
                     <canvas  id="canvas" />
-                    {focusedText === null?'': <TextFieldEditModal  textField = {focusedText} handleTextConfig = {handleTextConfig}  />}
+                    <TextFieldEditModal textFields = {textFields}  focusedText = {focusedText} handleTextConfig={handleTextConfig}/>
                 </Stack>
 
             </Stack>

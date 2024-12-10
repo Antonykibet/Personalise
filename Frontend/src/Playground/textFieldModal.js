@@ -14,21 +14,24 @@ const formatIcons = [
     {format:'strikethrough',cssProperty:'linethrough', defaultOption:'false', secondOption:'true',  isSelected:false, icon:<StrikethroughSIcon/>}
 ]
 
-export default function TextFieldEditModal({textField,handleTextConfig}){
-    const colorRef = useRef(textField.fill)
-    useEffect(()=>{
-        colorRef.current = textField.fill
-    },[textField])
-    const [color, setColor] = useState(textField.fill)
-    
+export default function TextFieldEditModal({focusedText ,textFields, handleTextConfig}){
+    const [color, setColor] = useState('')
 
+    useEffect(()=>{
+        textFields.forEach((field)=>{
+            if (field.id === focusedText.id){
+                setColor(field.fill)
+            }
+        })
+    },[focusedText])
+   
     const handleColorChange = (newValue) => {
-        handleTextConfig(textField.id,{fill:newValue})
-        colorRef.current = newValue
+        handleTextConfig(focusedText.id,{fill:newValue})
+        setColor(newValue)
       }
 
     const handleFormatChange = (newValue) => {
-        
+        handleTextConfig(focusedText.id,{})
       }
     return(
         <Stack 
@@ -53,9 +56,9 @@ export default function TextFieldEditModal({textField,handleTextConfig}){
                 size="small"
                 sx={{mb:2,width:'40%',"& .MuiInputBase-input": { fontSize: 15,  padding: 0.2, top:0},}}
                 select
-                defaultValue={textField.fontFamily}
+                defaultValue={''}
                 onChange={(event)=>{
-                    handleTextConfig(textField.id,{fontFamily:event.target.value})
+                    handleTextConfig(focusedText.id,{fontFamily:event.target.value})
                 }}
             >
                 <MenuItem value='Poppins'>Poppins</MenuItem>
@@ -73,7 +76,7 @@ export default function TextFieldEditModal({textField,handleTextConfig}){
                 
             </TextField>
 
-            <MuiColorInput sx={{width:'24px'}} variant="standard" size="small" format="rgb" value={colorRef.current} onChange={handleColorChange} />
+            <MuiColorInput  sx={{width:'24px'}} variant="standard" size="small" format="rgb" value={color} onChange={handleColorChange} />
             
             {formatIcons.map((icon)=>{
                 return(
@@ -82,7 +85,7 @@ export default function TextFieldEditModal({textField,handleTextConfig}){
                             const newFormatIcons = formatIcons.map((formatIcon)=>{
                                 if (formatIcon.format === icon.format){
                                     const cssProperty = icon.cssProperty
-                                    handleTextConfig(textField.id,{cssProperty:formatIcon.isSelected === true? formatIcon.secondOption:formatIcon.defaultOption})
+                                    handleTextConfig(focusedText.id,{cssProperty:formatIcon.isSelected === true? formatIcon.secondOption:formatIcon.defaultOption})
                                     return {...formatIcon,...{isSelected:!formatIcon.isSelected}}
                                     
                                 }

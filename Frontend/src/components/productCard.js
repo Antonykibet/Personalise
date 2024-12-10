@@ -3,12 +3,16 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { useMediaQuery, CardHeader, IconButton } from '@mui/material';
-import logo from "../logo512.png"
+import stanleySVG from "../stanleyCup.svg"
 import { Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-export default function ProductCard({link}) {
+export default function ProductCard({link, productDetails}) {
+  const svgWrapperRef = React.useRef()
+  React.useEffect(()=>{
+    svgWrapperRef.current.innerHTML = productDetails.canvasSVG
+  },[productDetails.canvasSVG])
   const navigate = useNavigate()
   const handleClick = ()=>{
     navigate(link)
@@ -22,16 +26,17 @@ export default function ProductCard({link}) {
         action={<IconButton>
             <FavoriteBorderIcon/>
           </IconButton>}/>
-      <CardMedia
+      {/* <CardMedia
         sx={{width:isSmallScreen?'40vw':'20vw'}}
         component="img"
-        image={logo}
+        src={`data:image/svg+xml;utf8,${productDetails.canvasSVG}`}
         alt="Paella dish"
-      />
+      />  */}
+      <div ref={svgWrapperRef}></div>
       <Stack mx={1} >
-        <Typography variant='p' sx={{fontWeight:700,fontSize:'14px',fontFamily:'Inter'}}>Hoodie</Typography>
-        <Typography variant='p' sx={{fontWeight:300,fontSize:'12px',fontFamily:'Inter'}}>Some random shii</Typography>
-        <Typography variant='p' sx={{color:'#004b24',fontSize:'16px',fontWeight:700,fontFamily:'Inter',}}>KSH 1200</Typography>
+        <Typography variant='p' sx={{fontWeight:700,fontSize:'14px',fontFamily:'Inter'}}>{productDetails.names}</Typography>
+        <Typography variant='p' sx={{fontWeight:300,fontSize:'12px',fontFamily:'Inter'}}>{productDetails.description}</Typography>
+        <Typography variant='p' sx={{color:'#004b24',fontSize:'16px',fontWeight:700,fontFamily:'Inter',}}>KSH {productDetails.price}</Typography>
       </Stack>
     </Card>
   );
