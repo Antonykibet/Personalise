@@ -82,7 +82,7 @@ function ResponsiveAppBar() {
           <Autocomplete
                 id="tags-standard"
                 options={[]}
-                sx={{width:'70%'}}
+                sx={{"& fieldset": { border: 'none' },width:'70%'}}
                 renderInput={params => {
                   return (
                     <TextField

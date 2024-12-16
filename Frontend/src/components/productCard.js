@@ -11,6 +11,9 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 export default function ProductCard({link, productDetails}) {
   const svgWrapperRef = React.useRef()
   React.useEffect(()=>{
+    
+    svgWrapperRef.current.style.height = '100px'
+    svgWrapperRef.current.style.width = '100px'
     svgWrapperRef.current.innerHTML = productDetails.canvasSVG
   },[productDetails.canvasSVG])
   const navigate = useNavigate()
@@ -32,7 +35,7 @@ export default function ProductCard({link, productDetails}) {
         src={`data:image/svg+xml;utf8,${productDetails.canvasSVG}`}
         alt="Paella dish"
       />  */}
-      <div ref={svgWrapperRef}></div>
+      <div style={{width:isSmallScreen?'40vw':'20vw',border:'solid'}} ref={svgWrapperRef}></div>
       <Stack mx={1} >
         <Typography variant='p' sx={{fontWeight:700,fontSize:'14px',fontFamily:'Inter'}}>{productDetails.names}</Typography>
         <Typography variant='p' sx={{fontWeight:300,fontSize:'12px',fontFamily:'Inter'}}>{productDetails.description}</Typography>
