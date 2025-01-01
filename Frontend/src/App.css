@@ -7,7 +7,15 @@
   pointer-events: none;
 }
 
-
+.adminForms{
+  display:'flex';
+  flex-direction: column;
+  width:50dvw;
+  margin:56px;
+  border:solid;
+  border-radius:8px;
+  padding:16px;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -28,12 +36,6 @@
 
 .App-link {
   color: #61dafb;
-}
-.carousel-container{
-  transform: rotate(90deg);
-}
-.CarouselObject{
-  border: solid;
 }
 
 @keyframes App-logo-spin {

@@ -5,9 +5,7 @@ import CategorySelection from "./categorySelection"
 export default function Sections(){
     return (
         <Stack  spacing={4} px={2} my={2}>
-            <TopCategory title = 'Top Category'/>
-            {/* <CategorySelection/>
-            <Category2 title = 'Hoodie'/> */}
+            
         </Stack>
     )
 }

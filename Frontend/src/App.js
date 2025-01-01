@@ -1,5 +1,5 @@
 import './App.css';
-import Landing from './pages/landing';
+import Landing from './pages/LandingPage/landing';
 import ProductPage from './pages/productPage';
 import CategoryPage from './pages/categoryPage';
 import Layout from './components/layout';
@@ -7,14 +7,14 @@ import { Route,Routes,BrowserRouter } from 'react-router-dom';
 import Checkout from './checkout/Checkout';
 import SignIn from './sign-in/SignIn';
 import SignUp from './sign-up/SignUp';
-import AdminPage from './pages/admin';
+import AdminPage from './pages/Admin/admin';
 function App() {
   return (
     <BrowserRouter>
       <Layout>
         <Routes>
           <Route path='/' element={<Landing/>}/>
-          <Route path='testPage/' element={<ProductPage/>}/>
+          <Route path='productPage/:productName' element={<ProductPage/>}/>
           <Route path='category/:category' element={<CategoryPage />}/>
           <Route path='checkout' element={<Checkout />}/>
           <Route path='sign-in' element={<SignIn />} />

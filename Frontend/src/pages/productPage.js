@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box, Button, Stack, Typography, Modal, Backdrop, useMediaQuery} from "@mui/material";
 
-import TopCategory from '../components/topCategory';
+import FeaturedTemplates from './LandingPage/featuredTemplates';
 import Playground from '../Playground/playground';
 
 
@@ -55,7 +55,7 @@ export default function ProductPage(){
                 </Stack>
             </Stack>
             <Typography variant="h5" sx={{fontFamily:'Montserrat',fontWeight:700,color:'rgb(34, 34, 34)'}}>Others also bought</Typography>
-            <TopCategory/>
+            <FeaturedTemplates/>
         </Stack>
             
         </>

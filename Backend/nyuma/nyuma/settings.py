@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'nyuma.wsgi.application'
 DATABASES = {
     'default':
         {'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Antony',
+        'NAME': 'personalise',
         'USER': 'postgres',
-        'PASSWORD': 'Gelandavagen63',
+        'PASSWORD': 'antony',
         'HOST': 'localhost',
         'PORT': '5432',}
     }

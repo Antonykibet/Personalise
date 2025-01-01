@@ -2,6 +2,7 @@ import { useRef,useEffect, useState, } from 'react';
 import { Canvas, Textbox, FabricImage } from 'fabric';
 import { Button, Stack, Typography, IconButton, useMediaQuery, Box } from "@mui/material";
 import stanleyCup from '../stanleyCup-removebg-preview.png'
+import hoodieMock from '../hoodie_mockup.jpeg'
 
 import ViewStreamIcon from '@mui/icons-material/ViewStream';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
@@ -55,7 +56,7 @@ const canvasButtons = [
     },
 ]
 
-export default function Playground({isAdmin, handleFormDataEntry}){
+export default function Playground({isAdmin, handleFormDataEntry,formStateHandler}){
     const isPhone = useMediaQuery('(max-width: 768px)');
     const isTablet = useMediaQuery('(max-width: 820px)');
     const [canvas, setCanvas] = useState('');
@@ -126,8 +127,11 @@ export default function Playground({isAdmin, handleFormDataEntry}){
     const handleAdminDesign = ()=>{
         let canvasJSON = JSON.stringify(canvas)
         let canvasSVG = canvas.toSVG()
-        handleFormDataEntry('canvasJSON',canvasJSON)
-        handleFormDataEntry('canvasSVG',canvasSVG)
+        let canvasPNG = canvas.toDataURL('image/png');
+        console.log(canvasPNG)
+        handleFormDataEntry('canvasJSON',formStateHandler,canvasJSON)
+        handleFormDataEntry('canvasSVG',formStateHandler,canvasSVG)
+        handleFormDataEntry('canvasPNG',formStateHandler,canvasPNG)
     }
     const handleUserDesign = ()=>{
         alert('Sawa chill!!')
@@ -138,7 +142,7 @@ export default function Playground({isAdmin, handleFormDataEntry}){
     useEffect(() => {
         const newCanvas = new Canvas('canvas',{width:canvasWrapper.current.offsetWidth, height: canvasWrapper.current.offsetHeight});
         const img = new Image()
-        img.src = stanleyCup
+        img.src = hoodieMock
         const productImg = new FabricImage(img,{})
         productImg.selectable = false; // make it unselectable
         productImg.evented = false;

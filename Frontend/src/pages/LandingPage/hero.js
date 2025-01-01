@@ -1,5 +1,5 @@
 import { Button, Stack, Typography, Box, TextField } from "@mui/material"
-import logo from "../logo512.png"
+import logo from "../../logo512.png"
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
@@ -72,33 +72,22 @@ export default function Hero(){
     // )
     return(
       <>
-        <Stack p={{md:4,xs:1}} spacing={1} direction='column'>
+        <Stack my={2} p={{md:4,xs:1}} spacing={1} direction='column'>
           <Stack spacing={1} direction={{xs:'column',md:'row'}} >
-            <Stack sx={{justifyContent:'space-between',alignItems:'start',borderRadius:2,width:{md:'65%',xs:'100%'}, height:{md:'65vh',xs:'25vh'},backgroundColor:'#EE7A13'}}>
-              <Stack m={1} spacing={1}>
+            <Stack sx={{py:2,justifyContent:'space-between',alignItems:'center',borderRadius:2,width:{md:'65%',xs:'100%'}, height:{md:'65vh'},backgroundColor:'#EE7A13'}}>
+              <Stack mx={3} spacing={1}>
                 <Typography variant="h4" sx={{fontFamily:'poppins',fontWeight:700,color:'white'}}>Personalise with Ease.</Typography>
                 <Typography variant="p" sx={{fontFamily:'poppins',fontWeight:500,color:'white'}}>Design custom products at your comfort, 
                 no design skills required.</Typography>
               </Stack>
-              <Button disableElevation variant="contained" sx={{m:1,width:'auto',backgroundColor:'#F5F5F5',color:'#E45A00',fontFamily:'sans serif',borderRadius:4}}>Personalise</Button>
-            </Stack>
-            <Stack sx={{borderRadius:2,width:{md:'35%',xs:'100%'} ,height:{md:'65vh',xs:'40vh'},border:'solid'}}></Stack>
-          </Stack>
-          <Stack pb={1} spacing={1} direction={{md:'row',xs:'column'} }  sx={{borderRadius:2,width:'100%',height:{md:'65vh',xs:'auto'},backgroundColor:'#1E3006',alignItems:'center'}}>
-            <Stack direction='row'>
-              <Stack m={1} sx={{borderRadius:2,width:{md:'20%',xs:'40vw'} ,height: {md:'100%',xs:'auto'},backgroundColor:'white'}}></Stack>
-              <Stack sx={{width:'80%',justifyContent:'space-between'}}>
-                <Stack mr={0.5}>
-                  <Typography variant="h4" sx={{fontFamily:'poppins',fontWeight:700,color:'white'}}>Gifts</Typography>
-                  <Typography variant="p" sx={{fontFamily:'poppins',fontWeight:500,color:'white'}}>Curate a custom gift for your loved.</Typography>
-                  <Typography variant="p" sx={{fontFamily:'poppins',fontWeight:500,color:'white'}}>Try our Zawadi AI for gift suggestions.</Typography>
-                  <Button disableElevation variant="contained" sx={{m:1,width:'auto',backgroundColor:'#EE7A13',fontFamily:'sans serif',borderRadius:4}}>Get gift</Button>
-                </Stack>
-                <TextField sx={{"& fieldset": { border: 'none' },display:{xs:'none',md:'flex'}}} fullWidth placeholder='Dont know what to get? Try Zawadi AI'></TextField>
+              <Stack mx={3} my={2} sx={{borderRadius:2,width:{md:'35%',xs:'90%'} ,height:{md:'65vh',xs:'40vh'},border:'solid'}}></Stack>
+              <Stack mx={3}  spacing={2} sx={{width:'90%'}} direction='row'>
+                <Button disableElevation variant="contained" sx={{width:'auto',backgroundColor:'#F5F5F5',color:'#E45A00',fontFamily:'sans serif',borderRadius:4}}>Personalise</Button>
+                <Button disableElevation variant="outlined" sx={{width:'auto',color:'white',borderColor:'white',fontFamily:'sans serif',borderRadius:4}}>Customize Gift</Button>
               </Stack>
             </Stack>
-            <TextField size="small" sx={{"& fieldset": { border: 'none' },display:{xs:'flex',md:'none'},width:'95%',backgroundColor:'white',borderRadius:4,border:'none'}}  placeholder='What xmas gift can i get for the  LOML.'></TextField>
           </Stack>
+          
         </Stack>
       </>
     )

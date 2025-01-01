@@ -1,17 +1,17 @@
 import { Stack, Typography, Box, useMediaQuery, Tab, Tabs, } from "@mui/material"
-import ProductCard from "./productCard"
+import ProductCard from "../../components/productCard"
 import { useEffect, useState } from "react";
 import axios from "axios"
 
-export default function TopCategory(){
+export default function FeaturedTemplates({isGiftSection}){
     const [products, setProducts] = useState([])
     const [availableThemes, setAvailableThemes] = useState([])
     const [selectedTheme, setSelectedTheme] = useState('one');
 
-  const handleThemeChange = (event, newValue) => {
-    setSelectedTheme(newValue);
+  const handleThemeChange = (event,newValue) => {
     (async ()=>{
-        const response = await axios.get(`http://localhost:8000/${newValue}`)
+        const response = await axios.get(`http://localhost:8000/products?themeName=${newValue}`)
+        console.log(response.data)
         setProducts(response.data)
     })()
   };
@@ -21,10 +21,17 @@ export default function TopCategory(){
     
     useEffect(()=>{
         (async ()=>{
-            const response = await axios.get("http://localhost:8000/products")
-            setProducts(response.data)
+            let productTheme= isGiftSection?'GIFT THEME':'RANDOM THEME'
+            let themeType = isGiftSection?'GIFT THEME':'RANDOM THEME'
+            const themes = await axios.get(`http://localhost:8000/theme?themeType=${themeType}`)
+            setAvailableThemes(themes.data)
+            //fetch products of the first theme displayed in the tab.
+            const products = await axios.get(`http://localhost:8000/products?themeName=${themes.data[0].name}`)
+            setProducts(products.data)
+            
         })()
-        setAvailableThemes([{label:'Memes'}, {label:'Movies'}, {label:'Spotify'}, {label:'Quotes'},{label:'Football'}, {label:'F1'}])
+        
+        // setAvailableThemes([{label:'Memes'}, {label:'Movies'}, {label:'Spotify'}, {label:'Quotes'},{label:'Football'}, {label:'F1'}])
     },[])
     return(
         <Stack  spacing={1} alignItems='start'>
@@ -38,9 +45,10 @@ export default function TopCategory(){
                     aria-label="Themes"
                     indicatorColor="transparent"
                     textColor="red"
+                    sx={{ minHeight: "30px", height: "30px" }}
                     >
                         {availableThemes.map((theme)=>{
-                            return <Tab sx={{border:'solid',borderRadius:8,borderWidth:2,mr:1,}} value={theme.label} label={theme.label} />
+                            return <Tab sx={{border:'solid',borderRadius:8,borderWidth:2,mr:1,minHeight: "30px", height: "30px" }} value={theme.name} label={theme.name} />
                         })}
                 </Tabs>
             </Box>
