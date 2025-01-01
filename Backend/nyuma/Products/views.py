@@ -9,6 +9,7 @@ from Products.serializers import ProductSerializer, ThemeSerializer
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
     def get_queryset(self):
         queryset = Product.objects.all()
         theme = self.request.query_params.get('themeName', None) 
@@ -19,9 +20,6 @@ class ProductViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(theme__name = theme)
         return queryset
 
-    
-
-    
 
 class ThemeViewSet(viewsets.ModelViewSet):
     queryset = Theme.objects.all()

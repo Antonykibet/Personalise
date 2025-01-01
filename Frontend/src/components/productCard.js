@@ -42,7 +42,7 @@ export default function ProductCard({link, productDetails}) {
         action={<IconButton>
             <FavoriteBorderIcon/>
           </IconButton>}/>
-      <Link to={`/productPage/${productDetails.name}`}>
+      <Link to={`/productPage/${productDetails.id}`}>
       {/* <div ref={svgWrapperRef}></div> */}
       <img style={{width:'100%',height:'auto'}} src={productDetails.canvasPNG} alt={productDetails.name}/>
       <Stack mx={0.5} >

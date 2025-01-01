@@ -22,7 +22,7 @@ from rest_framework import routers
 from Products import views
 
 router = routers.DefaultRouter()
-router.register(r'products', views.ProductViewSet)
+router.register(r'products', views.ProductViewSet,basename='product')
 router.register(r'theme', views.ThemeViewSet)
 
 # Wire up our API using automatic URL routing.
