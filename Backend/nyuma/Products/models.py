@@ -10,10 +10,17 @@ class Theme(models.Model):
     name = models.CharField(max_length=200,null=True)
     type = models.CharField(choices=theme_types) 
 
-class Product(models.Model):
+class AvailableProducts(models.Model):
+    name = models.CharField(max_length=200,null=True,)
+    thumbnail_image = models.ImageField(upload_to='products/', null=True, blank=True)
+    base_image = models.ImageField(upload_to='products/', null=True, blank=True)
+
+class ThemedProduct(models.Model):
     name = models.CharField(max_length=200,null=True, unique=True)
     theme = models.ForeignKey(Theme,on_delete=models.PROTECT,
         related_name='products',null=True)
+    base_product = models.ForeignKey(AvailableProducts,on_delete=models.PROTECT,
+        related_name='themed_products',null=True)
     price = models.IntegerField(null=True)
     canvasJSON = models.JSONField()
     canvasSVG = models.TextField(null=True)
@@ -24,3 +31,4 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
