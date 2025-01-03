@@ -16,22 +16,25 @@ export default function ProductCreationForm(){
     const [formData,setFormData] = useState({})
     
     const [themes,setthemes] = useState([])
+    const [availableProducts,setAvailableProducts] = useState([])
+    const [selectedAvailableProduct,setSelectedAvailableProduct] = useState([])
     const [selectedTheme,setSelectedTheme] = useState('')
 
     useEffect(()=>{
         async function fetchThemes(){
             const themes = await getShit('theme')
             setthemes(themes)
-            console.log(themes)
             setSelectedTheme(themes[0].name)
+
+            const availableproducts = await getShit('availableItem')
+            setAvailableProducts(availableproducts)
         }
         fetchThemes()
-        
     },[])
     
     
     return (
-        <form className="adminForms" onSubmit={(e)=>handleSubmit(e,'products',formData)}>
+        <form className="adminForms" onSubmit={(e)=>handleSubmit(e,'products',formData,false)}>
             <Typography variant="h4">Product Creation</Typography>
             <TextField fullWidth onChange={(e)=>handleFormDataEntry('name',setFormData,e.target.value)} style={inputStyle}
                 label='Name'
@@ -57,7 +60,24 @@ export default function ProductCreationForm(){
                 }}
             >
                 {themes.map((theme)=>(
-                    <MenuItem value={theme.url} >{theme.name}</MenuItem>
+                    <MenuItem value={theme.id} >{theme.name}</MenuItem>
+                ))}
+            </Select>
+            <InputLabel>Select Item to Customize</InputLabel>
+            <Select
+                sx={{my:1}}
+                fullWidth
+                labelId="demo-simple-select-label"
+                id="theme-select"
+                value={selectedTheme}
+                label='Item select'
+                onChange={(e)=>{
+                    const selectedAvailable = e.target.value
+                    setSelectedAvailableProduct(selectedAvailable)
+                }}
+            >
+                {availableProducts.map((product)=>(
+                    <MenuItem value={product} >{product.name}</MenuItem>
                 ))}
             </Select>
             <Button fullWidth variant = 'outlined' onClick={handleOpen} sx={{borderRadius:4,backgroundColor:'#e45a00',color:'white', width:'30vw',my:1}}  >Design</Button>
@@ -71,7 +91,7 @@ export default function ProductCreationForm(){
                     timeout: 500,
                 },
                 }}>
-                    <Playground isAdmin = {true} formStateHandler={setFormData} handleFormDataEntry={handleFormDataEntry}/>
+                    <Playground isAdmin = {true} productDetail={selectedAvailableProduct} formStateHandler={setFormData} handleFormDataEntry={handleFormDataEntry}/>
             </Modal>
             <Button fullWidth type="submit" variant="contained" color="primary">
               Submit

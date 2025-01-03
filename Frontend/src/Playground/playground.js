@@ -1,8 +1,6 @@
 import { useRef,useEffect, useState, } from 'react';
 import { Canvas, Textbox, FabricImage } from 'fabric';
 import { Button, Stack, Typography, IconButton, useMediaQuery, Box } from "@mui/material";
-import stanleyCup from '../stanleyCup-removebg-preview.png'
-import hoodieMock from '../hoodie_mockup.jpeg'
 
 import ViewStreamIcon from '@mui/icons-material/ViewStream';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
@@ -14,8 +12,6 @@ import TextFieldEditModal from './textFieldModal';
 import TemplateBox from './templateBox';
 import TextConfigBox from './TextConfigBox';
 
-const img = document.createElement('img')
-img.src = stanleyCup
 
 let ModalStyle = {
     position:'absolute',
@@ -56,7 +52,7 @@ const canvasButtons = [
     },
 ]
 
-export default function Playground({isAdmin, handleFormDataEntry,formStateHandler}){
+export default function Playground({isAdmin, handleFormDataEntry,formStateHandler,productDetail}){
     const isPhone = useMediaQuery('(max-width: 768px)');
     const isTablet = useMediaQuery('(max-width: 820px)');
     const [canvas, setCanvas] = useState('');
@@ -140,23 +136,52 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
     
 
     useEffect(() => {
-        const newCanvas = new Canvas('canvas',{width:canvasWrapper.current.offsetWidth, height: canvasWrapper.current.offsetHeight});
-        const img = new Image()
-        img.src = hoodieMock
-        const productImg = new FabricImage(img,{})
-        productImg.selectable = false; // make it unselectable
-        productImg.evented = false;
-        newCanvas.requestRenderAll();
-        newCanvas.add(productImg)
-        newCanvas.centerObject(productImg)
-        setCanvas(newCanvas)
+        const containerWidth = canvasWrapper.current.offsetWidth
+        const containerHeight = canvasWrapper.current.offsetHeight
+        const newCanvas = new Canvas('canvas',{width:containerWidth, height: containerHeight});
 
+        //handle base image, an image that has not been designed before.
+        if (productDetail?.thumbnail_image){
+            const img = new Image()
+            img.src = productDetail.base_image
+            img.crossOrigin = "anonymous";  // This enables CORS
+            const productImg = new FabricImage(img,{})
+            productImg.selectable = false; // make it unselectable
+            productImg.evented = false;
+            const scaleFactor = Math.min(containerWidth / img.width, containerHeight / img.height);
+            productImg.scale(scaleFactor);
+            newCanvas.set('backgroundImage',productImg)
+            newCanvas.requestRenderAll();
+            setCanvas(newCanvas)
+        }else{
+            newCanvas.loadFromJSON(productDetail.canvasJSON)
+            .then( r => {
+                // Get the current canvas dimensions
+                const backimg = r.backgroundImage
+                const canvasWidth = 800
+                const canvasHeight = 800
+                console.log(canvasHeight)
+                console.log(canvasWidth)
+                
+               
+                const scaleRatio = 0.7
+                console.log(scaleRatio)
+                newCanvas.setDimensions({ width: canvasWidth * scaleRatio, height: canvasHeight * scaleRatio });
+                newCanvas.setZoom(scaleRatio)
+
+                
+                newCanvas.renderAll()
+                setCanvas(newCanvas)
+                })
+            
+        }
+        
         // Cleanup function
         return () => {
             newCanvas.dispose();
             };
 
-        },[]);
+        },[productDetail]);
       
       
    
@@ -175,7 +200,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                         borderTopRightRadius:{xs:'8px',md:'0px'},
                         borderTopLeftRadius:{xs:'8px',md:'0px'},
                         }}
-                >
+                    >
                     <Box sx={{height:{xs:'65%', md:'100%'}}}>
                         <Typography m={1} variant='h6' sx={{fontFamily:'Montserrat', color:'rgb(46, 46, 46)', fontWeight:700}}>{selectedButton}</Typography>
                             {
@@ -186,18 +211,18 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                             selectedButton === 'Draw'?<TextConfigBox/>:''
                             }
                         <Stack>
-                        <Button  
-                            sx={{
-                                m:1,
-                                mx:2,
-                                borderRadius:4,
-                                backgroundColor:'#e45a00',
-                                color:'white'}}
-                                variant='solid'
-                                onClick={isAdmin?()=>handleAdminDesign():()=>handleUserDesign()}
-                            >
-                                    {isAdmin?'SUBMIT DESIGN':'PROCEED TO ADD TO CART'}
-                        </Button>
+                            <Button  
+                                sx={{
+                                    m:1,
+                                    mx:2,
+                                    borderRadius:4,
+                                    backgroundColor:'#e45a00',
+                                    color:'white'}}
+                                    variant='solid'
+                                    onClick={isAdmin?()=>handleAdminDesign():()=>handleUserDesign()}
+                                >
+                                        {isAdmin?'SUBMIT DESIGN':'PROCEED TO ADD TO CART'}
+                            </Button>
                         </Stack>
                     </Box>
 
@@ -242,7 +267,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                     </Stack>
                 </Stack>
                 
-                <Stack sx={{position:'relative', width:{md:'60vw',xs:'100%'}, height:'100%'}} ref={canvasWrapper}  id='canvasWrapper'>
+                <Stack sx={{position:'relative', width:{md:'60vw',xs:'100%'}, height:'100%',display:'flex',justifyContent:'center'}} ref={canvasWrapper}  id='canvasWrapper'>
                     <canvas  id="canvas" />
                     <TextFieldEditModal textFields = {textFields}  focusedText = {focusedText} handleTextConfig={handleTextConfig}/>
                 </Stack>

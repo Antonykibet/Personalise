@@ -10,7 +10,7 @@ export default function ThemeCreationForm(){
     },[])
     return (
         <>
-        <form className="adminForms" onSubmit={(e)=>handleSubmit(e,'theme',formData)}>
+        <form className="adminForms" onSubmit={(e)=>handleSubmit(e,'theme',formData,false)}>
             <Typography variant="h4">Theme Creation</Typography>
             <TextField sx={{my:1}} fullWidth onChange={(e)=>handleFormDataEntry('name',setFormData,e.target.value)} label='name'  />
             <Select
