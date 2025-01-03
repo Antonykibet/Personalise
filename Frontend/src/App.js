@@ -4,7 +4,7 @@ import ProductPage from './pages/productPage';
 import CategoryPage from './pages/categoryPage';
 import Layout from './components/layout';
 import { Route,Routes,BrowserRouter } from 'react-router-dom';
-import Checkout from './checkout/Checkout';
+import Checkout from './pages/checkout/Checkout';
 import SignIn from './sign-in/SignIn';
 import SignUp from './sign-up/SignUp';
 import AdminPage from './pages/Admin/admin';

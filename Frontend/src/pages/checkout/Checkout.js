@@ -16,7 +16,7 @@ import Info from './components/Info';
 import InfoMobile from './components/InfoMobile';
 import PaymentForm from './components/PaymentForm';
 import Review from './components/Review';
-import AppTheme from '../shared-theme/AppTheme';
+import AppTheme from '../../shared-theme/AppTheme';
 
 const steps = ['Shipping', 'Review your order', 'Payment details', ];
 function getStepContent(step) {

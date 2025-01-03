@@ -1,4 +1,4 @@
-import { Stack, Typography, Box, useMediaQuery, Tab, Tabs, } from "@mui/material"
+import { Stack, Box, useMediaQuery, Tab, Tabs, } from "@mui/material"
 import ProductCard from "../../components/productCard"
 import { useEffect, useState } from "react";
 import axios from "axios"

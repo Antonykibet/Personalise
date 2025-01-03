@@ -2,7 +2,7 @@ import ProductCreationForm from "./themedProductCreationForm"
 import ThemeCreationForm from "./themeCreationForm";
 import AvailableItemCreation from "./availableItemCreation";
 import axios from "axios";
-import CanvasTest from "../../Playground/test";
+import CanvasTest from "../../components/canvas/test";
 
 export function handleFormDataEntry(formAttribute,stateHandler, data){
     const prop = {
@@ -48,7 +48,6 @@ export const getShit = async (param)=>{
 export default function adminpage(){
     return(
         <>
-            <CanvasTest />
             <AvailableItemCreation/>
             <ThemeCreationForm/>
             <ProductCreationForm/>

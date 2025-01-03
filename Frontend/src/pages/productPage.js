@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Box, Button, Stack, Typography, Modal, Backdrop, useMediaQuery} from "@mui/material";
 import FeaturedTemplates from './LandingPage/featuredTemplates';
-import Playground from '../Playground/playground';
+import Playground from '../components/canvas/playground';
 import { useParams } from 'react-router-dom';
 import { getShit } from './Admin/admin';
 

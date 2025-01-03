@@ -1,7 +1,7 @@
 import axios from "axios";
 import { TextField, Button, Modal, Backdrop, Typography,Select, MenuItem, InputLabel } from "@mui/material";
 import { useEffect, useState } from "react";
-import Playground from "../../Playground/playground";
+import Playground from "../../components/canvas/playground";
 import { handleFormDataEntry,handleSubmit } from "./admin";
 import { getShit } from "./admin";
 
