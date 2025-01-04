@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { handleFormDataEntry, handleSubmit } from "./admin"
+import { handleFormDataEntry,handleFormSubmit } from "../../utils";
 import { Typography, TextField, Button } from "@mui/material"
 import { styled } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -19,7 +19,7 @@ export default function AvailableItemCreation(){
       });
     return (
         <>
-        <form className="adminForms" onSubmit={(e)=>handleSubmit(e,'availableItem',formData,true) } >
+        <form className="adminForms" onSubmit={(e)=>handleFormSubmit(e,'availableItem',formData,true) } >
             <Typography variant="h4">Add a new customizable item</Typography>
             <TextField 
                 sx={{my:1}}

@@ -1,5 +1,5 @@
-import {Box, Stack, Typography} from '@mui/material'
-import giftHeroImage from '../../giftHeroImage.jpg'
+import { Stack, Typography} from '@mui/material'
+import giftHeroImage from '../../images/giftHeroImage.jpg'
 export default function GiftHero(){
     return(
         <>

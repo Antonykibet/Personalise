@@ -1,6 +1,4 @@
-import { Button, Stack, Typography, Box, TextField } from "@mui/material"
-import logo from "../../logo512.png"
-import Carousel from 'react-multi-carousel';
+import { Button, Stack, Typography, } from "@mui/material"
 import 'react-multi-carousel/lib/styles.css';
 
 

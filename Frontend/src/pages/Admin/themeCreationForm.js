@@ -1,5 +1,5 @@
 import { Button, Select, TextField, MenuItem, Typography } from "@mui/material";
-import { handleFormDataEntry,handleSubmit } from "./admin";
+import { handleFormDataEntry,handleFormSubmit } from "../../utils";
 import { useEffect, useState } from "react";
 
 export default function ThemeCreationForm(){
@@ -10,7 +10,7 @@ export default function ThemeCreationForm(){
     },[])
     return (
         <>
-        <form className="adminForms" onSubmit={(e)=>handleSubmit(e,'theme',formData,false)}>
+        <form className="adminForms" onSubmit={(e)=>handleFormSubmit(e,'theme',formData,false)}>
             <Typography variant="h4">Theme Creation</Typography>
             <TextField sx={{my:1}} fullWidth onChange={(e)=>handleFormDataEntry('name',setFormData,e.target.value)} label='name'  />
             <Select

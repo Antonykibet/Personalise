@@ -1,9 +1,7 @@
-import axios from "axios";
 import { TextField, Button, Modal, Backdrop, Typography,Select, MenuItem, InputLabel } from "@mui/material";
 import { useEffect, useState } from "react";
 import Playground from "../../components/canvas/playground";
-import { handleFormDataEntry,handleSubmit } from "./admin";
-import { getShit } from "./admin";
+import { handleFormDataEntry,handleFormSubmit,getShit } from "../../utils";
 
 const inputStyle = {
     marginBottom:'16px'
@@ -34,7 +32,7 @@ export default function ProductCreationForm(){
     
     
     return (
-        <form className="adminForms" onSubmit={(e)=>handleSubmit(e,'products',formData,false)}>
+        <form className="adminForms" onSubmit={(e)=>handleFormSubmit(e,'products',formData,false)}>
             <Typography variant="h4">Product Creation</Typography>
             <TextField fullWidth onChange={(e)=>handleFormDataEntry('name',setFormData,e.target.value)} style={inputStyle}
                 label='Name'

@@ -5,8 +5,8 @@ import CategoryPage from './pages/categoryPage';
 import Layout from './components/layout';
 import { Route,Routes,BrowserRouter } from 'react-router-dom';
 import Checkout from './pages/checkout/Checkout';
-import SignIn from './sign-in/SignIn';
-import SignUp from './sign-up/SignUp';
+import SignIn from './pages/sign-in/SignIn';
+import SignUp from './pages/sign-up/SignUp';
 import AdminPage from './pages/Admin/admin';
 function App() {
   return (

@@ -3,7 +3,7 @@ import { Box, Button, Stack, Typography, Modal, Backdrop, useMediaQuery} from "@
 import FeaturedTemplates from './LandingPage/featuredTemplates';
 import Playground from '../components/canvas/playground';
 import { useParams } from 'react-router-dom';
-import { getShit } from './Admin/admin';
+import { getShit } from '../utils';
 
 
   
