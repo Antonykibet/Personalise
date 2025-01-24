@@ -27,7 +27,13 @@ export default function ImageBox(){
                 Upload Image
             </Button>
             {/*Ive set a padding bottom  to take care of the images being hidden by the canvas btns */}
-            <Box sx={{height:'auto',overflowY:'scroll',display:'flex',justifyContent:'top',paddingBottom:'200px'}}>
+            <Box sx={{height:'auto',width:'100%',overflowY:'scroll',display:'flex',justifyContent:'space-around',paddingBottom:'200px',flexWrap:'wrap'}}>
+                {stockImages.map(img=>{
+                    return <img style={{borderRadius:'8px',height:'20vh',width:'20vh',objectFit:'contain'}} src={img.stock_image} alt={img.name}/>
+                })}
+                {stockImages.map(img=>{
+                    return <img style={{borderRadius:'8px',height:'20vh',width:'20vh',objectFit:'contain'}} src={img.stock_image} alt={img.name}/>
+                })}
                 {stockImages.map(img=>{
                     return <img style={{borderRadius:'8px',height:'20vh',width:'20vh',objectFit:'contain'}} src={img.stock_image} alt={img.name}/>
                 })}

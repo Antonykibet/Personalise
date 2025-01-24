@@ -3,6 +3,7 @@ import { Canvas, Textbox, FabricImage } from 'fabric';
 import { Button, Stack, Typography, useMediaQuery, Box, IconButton } from "@mui/material";
 import ImageBox from './imageBox';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 import TextFieldEditModal from './textFieldModal';
@@ -34,6 +35,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
     const [canvas, setCanvas] = useState('');
     const canvasWrapper = useRef(null)
     const [selectedButton, setSelectedButton] = useState('Template');
+    const [isboxExpanded,setIsboxExpanded] = useState(false)
     const [focusedText, setFocusedText] = useState(
         {
             id:0,
@@ -49,11 +51,6 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
     const [textFields, setTextFields] = useState([])
     
     const otherStateRef = useRef(textFields)
-    
-    useEffect(() => {
-        otherStateRef.current = textFields
-      })
-      
     const addTextField = ()=>{
         let field = {
             id:textFields.length + 1,
@@ -91,6 +88,14 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
         })
     }
     
+    const handleBoxExpand = ()=>{
+        if (!isboxExpanded){
+           setIsboxExpanded(true)
+        }else{
+            setIsboxExpanded(false)
+        }
+    }
+
     const handleButtonClick = (buttonId) => {
         setSelectedButton(buttonId);
     };
@@ -114,6 +119,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
         const containerWidth = canvasWrapper.current.offsetWidth
         const containerHeight = canvasWrapper.current.offsetHeight
         const newCanvas = new Canvas('canvas',{width:containerWidth, height: containerHeight});
+        otherStateRef.current = textFields
 
         //handle base image, an image that has not been designed before.
         if (productDetail?.thumbnail_image){
@@ -163,6 +169,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
         <>
             <Stack  sx={ModalStyle} direction={isPhone||isTablet ? 'column':'row'}   > 
                 <Stack 
+                    onTouchStart={()=>setIsboxExpanded(true)}
                     direction={{md:'row',xs:'column'}}
                     sx={{
                         position:{xs:'fixed',md:'static'},
@@ -170,14 +177,20 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                         zIndex:'1000',
                         justifyContent:'space-between',
                         width:{md:'30%',xs:'100vw'},
-                        height:{xs:'65dvh', md:'100%'},
+                        height:{xs:isboxExpanded?'65dvh':'35dvh', md:'100%'},
                         backgroundColor:'#E9E9E9',
                         borderTopRightRadius:{xs:'8px',md:'0px'},
                         borderTopLeftRadius:{xs:'8px',md:'0px'},
                         }}
                     >
                     <Box sx={{height:{xs:'100%', md:'100%'}}}>
+                        <Stack direction='row' sx={{px:1,justifyContent:'space-between',alignItems:'center'}}>
                             <Typography m={1} variant='h6' sx={{fontFamily:'Montserrat', color:'rgb(46, 46, 46)', fontWeight:700}}>{selectedButton}</Typography>
+                            <IconButton onClick={handleBoxExpand}  aria-label="expand/minimize">
+                                {isboxExpanded?<ExpandMoreIcon fontSize='large'/>:<ExpandLessIcon fontSize='large' />}
+                            </IconButton>
+                        </Stack>
+                        
                             {
                             selectedButton === 'Template'?<TemplateBox/>:
                             selectedButton === 'Text'?<TextConfigBox addTextFunc={addTextField}/>:
@@ -207,7 +220,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                     {isPhone||isTablet ? '':<CanvasEditingBtns/>}
                 </Stack>
                 
-                <Stack sx={{position:'relative', width:{md:'60vw',xs:'100%'}, height:'100%',display:'flex',justifyContent:'center'}} ref={canvasWrapper}  id='canvasWrapper'>
+                <Stack onTouchStart={()=>setIsboxExpanded(false)} sx={{position:'relative', width:{md:'60vw',xs:'100%'}, height:'100%',display:'flex',justifyContent:'center'}} ref={canvasWrapper}  id='canvasWrapper'>
                     <canvas  id="canvas" />
                     <TextFieldEditModal textFields = {textFields}  focusedText = {focusedText} handleTextConfig={handleTextConfig}/>
                 </Stack>
