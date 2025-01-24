@@ -20,7 +20,7 @@ export default function AvailableItemCreation(){
     return (
         <>
         <form className="adminForms" onSubmit={(e)=>handleFormSubmit(e,'availableItem',formData,true) } >
-            <Typography variant="h4">Add a new customizable item</Typography>
+            <Typography variant="h4">Add customizable item</Typography>
             <TextField 
                 sx={{my:1}}
                 fullWidth

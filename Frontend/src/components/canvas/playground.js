@@ -1,7 +1,8 @@
 import { useRef,useEffect, useState, } from 'react';
 import { Canvas, Textbox, FabricImage } from 'fabric';
-import { Button, Stack, Typography, useMediaQuery, Box } from "@mui/material";
+import { Button, Stack, Typography, useMediaQuery, Box, IconButton } from "@mui/material";
 import ImageBox from './imageBox';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 
 import TextFieldEditModal from './textFieldModal';
@@ -169,18 +170,18 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                         zIndex:'1000',
                         justifyContent:'space-between',
                         width:{md:'30%',xs:'100vw'},
-                        height:{xs:'35dvh', md:'100%'},
+                        height:{xs:'65dvh', md:'100%'},
                         backgroundColor:'#E9E9E9',
                         borderTopRightRadius:{xs:'8px',md:'0px'},
                         borderTopLeftRadius:{xs:'8px',md:'0px'},
                         }}
                     >
                     <Box sx={{height:{xs:'100%', md:'100%'}}}>
-                        <Typography m={1} variant='h6' sx={{fontFamily:'Montserrat', color:'rgb(46, 46, 46)', fontWeight:700}}>{selectedButton}</Typography>
+                            <Typography m={1} variant='h6' sx={{fontFamily:'Montserrat', color:'rgb(46, 46, 46)', fontWeight:700}}>{selectedButton}</Typography>
                             {
                             selectedButton === 'Template'?<TemplateBox/>:
                             selectedButton === 'Text'?<TextConfigBox addTextFunc={addTextField}/>:
-                            selectedButton === 'Photo'?<ImageBox/>:
+                            selectedButton === 'Image'?<ImageBox/>:
                             selectedButton === 'Shapes'?<TextConfigBox/>:
                             selectedButton === 'Draw'?<TextConfigBox/>:''
                             }
@@ -188,7 +189,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                             backgroundColor:'white',
                             position:'absolute',
                                     bottom:'0px',}}>
-                            <CanvasEditingBtns handleButtonClick={handleButtonClick}/>
+                            <CanvasEditingBtns handleButtonClick={handleButtonClick} selectedButton={selectedButton}/>
                             <Button  
                                 sx={{
                                     m:1,

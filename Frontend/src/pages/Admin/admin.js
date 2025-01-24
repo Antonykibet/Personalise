@@ -1,6 +1,7 @@
 import ProductCreationForm from "./themedProductCreationForm"
 import ThemeCreationForm from "./themeCreationForm";
 import AvailableItemCreation from "./availableItemCreation";
+import AddStockImageForm from "./stockImage";
 
 
 export default function adminpage(){
@@ -9,6 +10,7 @@ export default function adminpage(){
             <AvailableItemCreation/>
             <ThemeCreationForm/>
             <ProductCreationForm/>
+            <AddStockImageForm/>
         </>
     )
 }

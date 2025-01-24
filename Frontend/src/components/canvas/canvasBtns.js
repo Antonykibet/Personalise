@@ -16,7 +16,7 @@ const canvasButtons = [
         icon:<TextFieldsIcon />
     },
     {
-        type:'Photo',
+        type:'Image',
         icon:<AddPhotoAlternateIcon/>
     },
     {

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export function handleFormDataEntry(formAttribute,stateHandler, data){
+export function handleFormDataEntry(formAttribute,stateHandler, formValue){
     const prop = {
-        [formAttribute]:data
+        [formAttribute]:formValue
     }
     stateHandler((former)=>{
         return {...former,...prop}}
