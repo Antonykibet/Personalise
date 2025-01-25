@@ -10,7 +10,7 @@ import SignUp from './pages/sign-up/SignUp';
 import AdminPage from './pages/Admin/admin';
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter >
       <Layout>
         <Routes>
           <Route path='/' element={<Landing/>}/>
