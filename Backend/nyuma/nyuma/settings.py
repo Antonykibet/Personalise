@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'Orders',
     'Account',
     'canvas',
+    'django_filters',
     'corsheaders'
 ]
 

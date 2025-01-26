@@ -10,7 +10,7 @@ export default function FeaturedTemplates({isGiftSection}){
 
     return(
         <Stack  spacing={1} alignItems='start'>
-            <ThemeSelector setProducts={setProducts} products={products} isGiftSection={isGiftSection} />
+            <ThemeSelector setResults={setProducts} results={products} isGiftSection={isGiftSection} disableSearch={true}/>
             <Box display='flex' paddingBottom={2}  width='100vw' alignItems='center' justifyContent={isSmallScreen || isTablet?'space-evenly':'start'} flexWrap='wrap'>
                 {products.map((product)=><ProductCard productDetails={product} link='/testPage'/>)}
             </Box>

@@ -4,22 +4,22 @@ import SearchIcon from '@mui/icons-material/Search';
 import axios from "axios";
 import { useEffect, useState } from "react"
 
-export default function ThemeSelector({setProducts,products,isGiftSection}){
+export default function ThemeSelector({setResults,results,isGiftSection,disableSearch}){
     const navigate = useNavigate();
     const [availableThemes, setAvailableThemes] = useState([])
     const [selectedTheme, setSelectedTheme] = useState('');
 
   const handleThemeChange = (event,newValue) => {
     (async ()=>{
-        const response = await axios.get(`http://localhost:8000/products?themeName=${newValue}`)
-        setProducts(response.data)
+        const response = await axios.get(`http://localhost:8000/products?theme__name=${newValue}`)
+        setResults(response.data)
     })()
     setSelectedTheme(newValue)
   };
 
   const handleOptionSelect = (event, selectedOption) => {
     // Get the product object based on the selected name
-    const selectedProduct = products.find(product => product.name === selectedOption);
+    const selectedProduct = results.find(product => product.name === selectedOption);
 
     // Redirect to the product page with the product ID
     navigate(`/productPage/${selectedProduct.id}`);
@@ -28,14 +28,14 @@ export default function ThemeSelector({setProducts,products,isGiftSection}){
     useEffect(()=>{
         (async ()=>{
             let themeType = isGiftSection?'GIFT THEME':'RANDOM THEME'
-            const themes = await axios.get(`http://localhost:8000/theme?themeType=${themeType}`)
+            const themes = await axios.get(`http://localhost:8000/theme?type=${themeType}`)
             setAvailableThemes(themes.data)
             
             //fetch products of the first theme displayed in the tab.
-            const products = await axios.get(`http://localhost:8000/products?themeName=${themes.data[0].name}`)
+            const products = await axios.get(`http://localhost:8000/products?theme__name=${themes.data[0].name}`)
             setSelectedTheme(themes.data[0].name)
 
-            setProducts(products.data)
+            setResults(products.data)
             
         })()
         
@@ -43,10 +43,10 @@ export default function ThemeSelector({setProducts,products,isGiftSection}){
     },[])
     return(
         <>
-            <Box sx={{ width: '100%',display:'flex', alignItems:'start', flexDirection:'column' }}>
+            <Box sx={{ width: '100%',display:'flex', alignItems:'center', flexDirection:'column' }}>
                 <Tabs
                     color
-                    value={availableThemes.length > 0 ? availableThemes[0].name : ''}
+                    value={selectedTheme}
                     onChange={handleThemeChange}
                     variant="scrollable"
                     scrollButtons="auto"
@@ -59,32 +59,31 @@ export default function ThemeSelector({setProducts,products,isGiftSection}){
                             return <Tab sx={{border:'solid',borderRadius:8,borderWidth:2,mr:1,minHeight: "30px", height: "30px" }} value={theme.name} label={theme.name} />
                         })}
                 </Tabs>
-                <Autocomplete
-                id="tags-standard"
-                onChange={handleOptionSelect}
-                options={products?products.map(product=>product.name):[]}
-                sx={{"& fieldset": { border: 'none' },width:'50%'}}
-                renderInput={params => {
-                  return (
-                    <TextField
-                      {...params}
-                      placeholder={`Search ${selectedTheme??''}`}
-                      InputProps={{
-                        ...params.InputProps,
-                        sx:{border:{border:'solid',height:'40px',  borderRadius:16, borderWidth:'2px'}},
-                        endAdornment: (
-                          <>
-                            <InputAdornment  position='end'>
-                              <SearchIcon sx={{color:'#e45a00'}} />
-                            </InputAdornment>
-                            {params.InputProps.startAdornment}
-                          </>
-                        )
-                      }}
+                {disableSearch?'':<Autocomplete
+                  id="tags-standard"
+                  onChange={handleOptionSelect}
+                  options={results?results.map(product=>product.name):[]}
+                  sx={{"& fieldset": { border: 'none' },width:'95%'}}
+                  renderInput={params => {
+                    return (
+                      <TextField
+                        {...params}
+                        placeholder={`Search ${selectedTheme??''}`}
+                        InputProps={{
+                          ...params.InputProps,
+                          sx:{border:{border:'solid',height:'40px',  borderRadius:16, borderWidth:'2px'}},
+                          startAdornment: (
+                            <>
+                              <InputAdornment  position='start'>
+                                <SearchIcon sx={{color:'#e45a00'}} />
+                              </InputAdornment>
+                            </>
+                          )
+                        }}
                     />
                   );
                 }}
-              />
+              />}
             </Box>
         </>
     )
