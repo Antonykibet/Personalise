@@ -7,20 +7,20 @@ import ThemeSelector from "../themeSelector";
 
 export default function ImageBox(){
     const [stockImages,setStockImages] = useState([])
-    useEffect(()=>{
-        getShit('stockImage')
+    const handleOptionSelect = (event, selectedOption) => {
+        getShit(`stockImage?search=${selectedOption}`)
         .then(data=>{
             setStockImages(data)
         })
         .catch(err=>{
-            console.log(`Error getting stockImages:${err}`)
+            console.log(`Error on selecting option:${err}`)
         })
-    },[])
+      };
     return(
         <Box  sx={{height:'100%',display:'flex',flexDirection:'column',alignItems:'center',overflow:'auto', backgroundColor:'#F6F5F5'}}>
             <Stack sx={{justifyContent:'center',alignItems:'center',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',width:'100%',mb:2,pb:1}}>
                 <Button
-                    sx={{mb:4,mt:2 }}
+                    sx={{my:4}}
                     component="label"
                     role={undefined}
                     variant="outlined"
@@ -29,7 +29,7 @@ export default function ImageBox(){
                     >
                     Upload Image
                 </Button>
-                <ThemeSelector setResults={setStockImages} results={stockImages} isGiftSection={false}/>
+                <ThemeSelector setResults={setStockImages} results={stockImages} isGiftSection={false} searchURL={'stockImage?'} handleOptionSelect={handleOptionSelect}/>
             </Stack>
             
             {/*Ive set a padding bottom  to take care of the images being hidden by the canvas btns */}
@@ -41,12 +41,6 @@ export default function ImageBox(){
                             <Typography variant="body1" color="initial">{img.name}</Typography>
                         </Stack>
                     ) 
-                })}
-                {stockImages.map(img=>{
-                    return <img style={{borderRadius:'8px',height:'20vh',width:'20vh',objectFit:'contain'}} src={img.stock_image} alt={img.name}/>
-                })}
-                {stockImages.map(img=>{
-                    return <img style={{borderRadius:'8px',height:'20vh',width:'20vh',objectFit:'contain'}} src={img.stock_image} alt={img.name}/>
                 })}
             </Box>
         </Box>

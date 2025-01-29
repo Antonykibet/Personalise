@@ -75,7 +75,7 @@ export default function Hero(){
             <Stack sx={{py:2,justifyContent:'space-between',alignItems:'center',borderRadius:2,width:{md:'65%',xs:'100%'}, height:{md:'65vh'},backgroundColor:'#EE7A13'}}>
               <Stack mx={3} spacing={1}>
                 <Typography variant="h4" sx={{fontFamily:'poppins',fontWeight:700,color:'white'}}>Personalise with Ease.</Typography>
-                <Typography variant="p" sx={{fontFamily:'poppins',fontWeight:500,color:'white'}}>Design custom products at your comfort, 
+                <Typography variant="p" sx={{fontFamily:'poppins',fontWeight:500,color:'white'}}>Design and get customizable products at your comfort, 
                 no design skills required.</Typography>
               </Stack>
               <Stack mx={3} my={2} sx={{borderRadius:2,width:{md:'35%',xs:'90%'} ,height:{md:'65vh',xs:'40vh'},border:'solid'}}></Stack>

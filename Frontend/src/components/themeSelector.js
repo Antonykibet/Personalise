@@ -3,11 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from "axios";
 import { useEffect, useState } from "react"
+import { getShit } from "../utils";
 
-export default function ThemeSelector({setResults,results,isGiftSection,disableSearch}){
+export default function ThemeSelector({setResults,isGiftSection,disableSearch,handleOptionSelect,searchURL}){
     const navigate = useNavigate();
     const [availableThemes, setAvailableThemes] = useState([])
     const [selectedTheme, setSelectedTheme] = useState('');
+    const [searchResult,setSearchResult] = useState([])
+
+    const handleSearchInput = (event)=>{
+      getShit(`${searchURL}search=${event.target.value}`)
+      .then(data=>{
+        setSearchResult(data)
+      })
+      .catch(err=>{
+        console.log(`Error handling search: ${err}`)
+      })
+    }
 
   const handleThemeChange = (event,newValue) => {
     (async ()=>{
@@ -17,13 +29,13 @@ export default function ThemeSelector({setResults,results,isGiftSection,disableS
     setSelectedTheme(newValue)
   };
 
-  const handleOptionSelect = (event, selectedOption) => {
-    // Get the product object based on the selected name
-    const selectedProduct = results.find(product => product.name === selectedOption);
+  // const handleOptionSelect = (event, selectedOption) => {
+  //   // Get the product object based on the selected name
+  //   const selectedProduct = results.find(product => product.name === selectedOption);
 
-    // Redirect to the product page with the product ID
-    navigate(`/productPage/${selectedProduct.id}`);
-  };
+  //   // Redirect to the product page with the product ID
+  //   navigate(`/productPage/${selectedProduct.id}`);
+  // };
     
     useEffect(()=>{
         (async ()=>{
@@ -62,12 +74,13 @@ export default function ThemeSelector({setResults,results,isGiftSection,disableS
                 {disableSearch?'':<Autocomplete
                   id="tags-standard"
                   onChange={handleOptionSelect}
-                  options={results?results.map(product=>product.name):[]}
+                  options={searchResult?searchResult.map(product=>product.name):[]}
                   sx={{"& fieldset": { border: 'none' },width:'95%'}}
                   renderInput={params => {
                     return (
                       <TextField
                         {...params}
+                        onChange={handleSearchInput}
                         placeholder={`Search ${selectedTheme??''}`}
                         InputProps={{
                           ...params.InputProps,

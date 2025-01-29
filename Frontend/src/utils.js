@@ -31,12 +31,12 @@ export const handleFormSubmit = async (e,path,formData,hasFile)=>{
         alert('error while sending this shit')
     }
 }
-export const getShit = async (param)=>{
+export const getShit = async (url)=>{
     try {
-        const resp = await axios.get(`http://127.0.0.1:8000/${param}/`)
+        const resp = await axios.get(`http://127.0.0.1:8000/${url}`)
         return resp.data
     } catch (error) {
-        console.log(`Error while fething ${param}:${error}`)
+        console.log(`Error while fething ${url}:${error}`)
         return [error]
     }
     
