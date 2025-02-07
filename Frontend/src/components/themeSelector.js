@@ -1,15 +1,14 @@
 import { Autocomplete, Box, InputAdornment, Tab, Tabs, TextField } from "@mui/material"
-import { useNavigate } from 'react-router-dom'; 
 import SearchIcon from '@mui/icons-material/Search';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { getShit } from "../utils";
 
-export default function ThemeSelector({setResults,isGiftSection,disableSearch,handleOptionSelect,searchURL}){
-    const navigate = useNavigate();
+export default function ThemeSelector({renderSearchResults,setRenderSearchResults,setSearchResult,searchResult,setResults,isGiftSection,disableSearch,handleOptionSelect,searchURL}){
     const [availableThemes, setAvailableThemes] = useState([])
     const [selectedTheme, setSelectedTheme] = useState('');
-    const [searchResult,setSearchResult] = useState([])
+    
 
     const handleSearchInput = (event)=>{
       getShit(`${searchURL}search=${event.target.value}`)
@@ -21,21 +20,15 @@ export default function ThemeSelector({setResults,isGiftSection,disableSearch,ha
       })
     }
 
-  const handleThemeChange = (event,newValue) => {
-    (async ()=>{
-        const response = await axios.get(`http://localhost:8000/products?theme__name=${newValue}`)
-        setResults(response.data)
-    })()
-    setSelectedTheme(newValue)
-  };
+    const handleThemeChange = (event,newValue) => {
+      (async ()=>{
+          const response = await axios.get(`http://localhost:8000/products?theme__name=${newValue}`)
+          setResults(response.data)
+      })()
+      setSelectedTheme(newValue)
+    };
 
-  // const handleOptionSelect = (event, selectedOption) => {
-  //   // Get the product object based on the selected name
-  //   const selectedProduct = results.find(product => product.name === selectedOption);
-
-  //   // Redirect to the product page with the product ID
-  //   navigate(`/productPage/${selectedProduct.id}`);
-  // };
+  
     
     useEffect(()=>{
         (async ()=>{
@@ -88,7 +81,7 @@ export default function ThemeSelector({setResults,isGiftSection,disableSearch,ha
                           startAdornment: (
                             <>
                               <InputAdornment  position='start'>
-                                <SearchIcon sx={{color:'#e45a00'}} />
+                                {renderSearchResults?<KeyboardBackspaceIcon onClick={()=>{setRenderSearchResults(false)}} sx={{color:'#e45a00'}}/>:<SearchIcon onClick={()=>{setRenderSearchResults(true)}} sx={{color:'#e45a00'}} />} 
                               </InputAdornment>
                             </>
                           )

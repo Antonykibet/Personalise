@@ -14,25 +14,19 @@ const formatIcons = [
     {format:'strikethrough',cssProperty:'linethrough', defaultOption:'false', secondOption:'true',  isSelected:false, icon:<StrikethroughSIcon/>}
 ]
 
-export default function TextFieldEditModal({focusedText ,textFields, handleTextConfig}){
+export default function TextFieldEditModal({focusedText ,canvas}){
     const [color, setColor] = useState('')
 
     useEffect(()=>{
-        textFields.forEach((field)=>{
-            if (field.id === focusedText.id){
-                setColor(field.fill)
-            }
-        })
+        setColor(focusedText.fill)
     },[focusedText])
    
     const handleColorChange = (newValue) => {
-        handleTextConfig(focusedText.id,{fill:newValue})
+        focusedText.set({fill: newValue})
         setColor(newValue)
+        canvas.renderAll()
       }
 
-    const handleFormatChange = (newValue) => {
-        handleTextConfig(focusedText.id,{})
-      }
     return(
         <Stack 
             direction='row'
@@ -57,9 +51,6 @@ export default function TextFieldEditModal({focusedText ,textFields, handleTextC
                 sx={{mb:2,width:'40%',"& .MuiInputBase-input": { fontSize: 15,  padding: 0.2, top:0},}}
                 select
                 defaultValue={''}
-                onChange={(event)=>{
-                    handleTextConfig(focusedText.id,{fontFamily:event.target.value})
-                }}
             >
                 <MenuItem value='Poppins'>Poppins</MenuItem>
                 <MenuItem value='Inter'>Inter</MenuItem>
@@ -85,7 +76,7 @@ export default function TextFieldEditModal({focusedText ,textFields, handleTextC
                             const newFormatIcons = formatIcons.map((formatIcon)=>{
                                 if (formatIcon.format === icon.format){
                                     const cssProperty = icon.cssProperty
-                                    handleTextConfig(focusedText.id,{cssProperty:formatIcon.isSelected === true? formatIcon.secondOption:formatIcon.defaultOption})
+                                    // handleTextConfig(focusedText.id,{cssProperty:formatIcon.isSelected === true? formatIcon.secondOption:formatIcon.defaultOption})
                                     return {...formatIcon,...{isSelected:!formatIcon.isSelected}}
                                     
                                 }

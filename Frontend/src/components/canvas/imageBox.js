@@ -7,10 +7,13 @@ import ThemeSelector from "../themeSelector";
 
 export default function ImageBox(){
     const [stockImages,setStockImages] = useState([])
+    const [searchResult,setSearchResult] = useState([])
+    const [renderSearchResults,setRenderSearchResults] = useState(false)
     const handleOptionSelect = (event, selectedOption) => {
         getShit(`stockImage?search=${selectedOption}`)
         .then(data=>{
-            setStockImages(data)
+            setSearchResult(data)
+            setRenderSearchResults(true)
         })
         .catch(err=>{
             console.log(`Error on selecting option:${err}`)
@@ -26,15 +29,18 @@ export default function ImageBox(){
                     variant="outlined"
                     tabIndex={-1}
                     startIcon={<CloudUploadIcon />}
+                    onClick={()=>{
+                        alert('Wozaa')
+                    }}
                     >
                     Upload Image
                 </Button>
-                <ThemeSelector setResults={setStockImages} results={stockImages} isGiftSection={false} searchURL={'stockImage?'} handleOptionSelect={handleOptionSelect}/>
+                <ThemeSelector setRenderSearchResults={setRenderSearchResults} renderSearchResults={renderSearchResults} searchResult={searchResult} setSearchResult={setSearchResult} setResults={setStockImages} results={stockImages} isGiftSection={false} searchURL={'stockImage?'} handleOptionSelect={handleOptionSelect}/>
             </Stack>
             
             {/*Ive set a padding bottom  to take care of the images being hidden by the canvas btns */}
             <Box sx={{height:'auto',width:'100%',overflowY:'scroll',display:'flex',justifyContent:'space-around',paddingBottom:'200px',flexWrap:'wrap'}}>
-                {stockImages.map(img=>{
+                {(renderSearchResults?searchResult:stockImages).map(img=>{
                     return (
                         <Stack sx={{alignItems:'center'}}>
                             <img style={{backgroundColor:'white',borderRadius:'8px',height:'20vh',width:'20vh',objectFit:'contain'}} src={img.stock_image} alt={img.name}/>

@@ -6,10 +6,11 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
-import TextFieldEditModal from './textFieldModal';
+import TextFieldEditModal from './editModals/textFieldEditModal';
 import TemplateBox from './templateBox';
 import TextConfigBox from './TextConfigBox';
 import CanvasEditingBtns from './canvasBtns';
+import ShapeBox from './shapeBox';
 
 let ModalStyle = {
     position:'absolute',
@@ -36,58 +37,10 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
     const canvasWrapper = useRef(null)
     const [selectedButton, setSelectedButton] = useState('Template');
     const [isboxExpanded,setIsboxExpanded] = useState(false)
-    const [focusedText, setFocusedText] = useState(
-        {
-            id:0,
-            text:'',
-            fontWeight:'',
-            fontStyle:'',
-            fill:'',
-            fontSize:0,
-            fontFamily:'',
-            linethrough: false,
-            underline: false
-        })
+    const [focusedObject, setfocusedObject] = useState({type:'',object:''})
     const [textFields, setTextFields] = useState([])
     
     const otherStateRef = useRef(textFields)
-    const addTextField = ()=>{
-        let field = {
-            id:textFields.length + 1,
-            text:'AddText',
-            fontWeight:'normal',
-            fontStyle:'normal',
-            fill:'red',
-            fontSize:24,
-            fontFamily:'Poppins',
-            linethrough: false,
-            underline: false
-        }
-        const text = new Textbox(field.text,field)
-        text.on('selected',()=>{
-            setFocusedText(field)
-        })
-        canvas.add(text)
-        setTextFields((previous)=>{
-            previous.push(text)
-            return previous
-        })
-    }
-
-    const handleTextConfig = (id,editfield) =>{
-        textFields.forEach((field)=>{
-            if (field.id === id){
-                const key = Object.keys(editfield)[0]
-                field.set(key, editfield[key])
-
-                //Once a fabric js object is selected/is on focus,
-                //changes made to it will not reflect until you deselect it.
-                canvas.discardActiveObject()
-                canvas.renderAll()
-            }
-        })
-    }
-    
     const handleBoxExpand = ()=>{
         if (!isboxExpanded){
            setIsboxExpanded(true)
@@ -193,9 +146,9 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                         
                             {
                             selectedButton === 'Template'?<TemplateBox/>:
-                            selectedButton === 'Text'?<TextConfigBox addTextFunc={addTextField}/>:
+                            selectedButton === 'Text'?<TextConfigBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
                             selectedButton === 'Image'?<ImageBox/>:
-                            selectedButton === 'Shapes'?<TextConfigBox/>:
+                            selectedButton === 'Shapes'?<ShapeBox/>:
                             selectedButton === 'Draw'?<TextConfigBox/>:''
                             }
                         <Stack sx={{width:'100%',
@@ -222,7 +175,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                 
                 <Stack onTouchStart={()=>setIsboxExpanded(false)} sx={{position:'relative', width:{md:'60vw',xs:'100%'}, height:'100%',display:'flex',justifyContent:'center'}} ref={canvasWrapper}  id='canvasWrapper'>
                     <canvas  id="canvas" />
-                    <TextFieldEditModal textFields = {textFields}  focusedText = {focusedText} handleTextConfig={handleTextConfig}/>
+                    {focusedObject.type==='Text'?<TextFieldEditModal focusedText = {focusedObject.object} canvas={canvas}/>:''}
                 </Stack>
 
             </Stack>
