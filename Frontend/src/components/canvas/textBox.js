@@ -8,7 +8,7 @@ export default function TextConfigBox({setfocusedObject,canvas}){
             fontWeight:'normal',
             fontStyle:'normal',
             fill:'red',
-            fontSize:24,
+            fontSize:80,
             fontFamily:'Poppins',
             linethrough: false,
             underline: false
@@ -20,7 +20,6 @@ export default function TextConfigBox({setfocusedObject,canvas}){
                 object:obj.target
             }
             setfocusedObject(selectedObj)
-            console.log(obj)
         })
         text.on('deselected',()=>{
             setfocusedObject({type:null,object:null})

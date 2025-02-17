@@ -4,25 +4,38 @@ import ProductPage from './pages/productPage';
 import CategoryPage from './pages/categoryPage';
 import Layout from './components/layout';
 import { Route,Routes,BrowserRouter } from 'react-router-dom';
+
 import Checkout from './pages/checkout/Checkout';
 import SignIn from './pages/sign-in/SignIn';
 import SignUp from './pages/sign-up/SignUp';
 import AdminPage from './pages/Admin/admin';
+import { createTheme, ThemeProvider,  } from '@mui/material';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#e45a00'
+    }
+  }
+});
+
 function App() {
   return (
-    <BrowserRouter >
-      <Layout>
-        <Routes>
-          <Route path='/' element={<Landing/>}/>
-          <Route path='productPage/:productid' element={<ProductPage/>}/>
-          <Route path='category/:category' element={<CategoryPage />}/>
-          <Route path='checkout' element={<Checkout />}/>
-          <Route path='sign-in' element={<SignIn />} />
-          <Route path='sign-up' element={<SignUp />} />
-          <Route path='admin' element={<AdminPage />} />
-        </Routes>
-      </Layout>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter >
+        <Layout>
+          <Routes>
+            <Route path='/' element={<Landing/>}/>
+            <Route path='productPage/:productid' element={<ProductPage/>}/>
+            <Route path='category/:category' element={<CategoryPage />}/>
+            <Route path='checkout' element={<Checkout />}/>
+            <Route path='sign-in' element={<SignIn />} />
+            <Route path='sign-up' element={<SignUp />} />
+            <Route path='admin' element={<AdminPage />} />
+          </Routes>
+        </Layout>
+      </BrowserRouter>
+      </ThemeProvider>
   );
 }
 

@@ -7,10 +7,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 import TextFieldEditModal from './editModals/textFieldEditModal';
+import ShapeModal from './editModals/shapeModal.js';
+
 import TemplateBox from './templateBox';
-import TextConfigBox from './TextConfigBox';
+import TextConfigBox from './textBox.js';
 import CanvasEditingBtns from './canvasBtns';
-import ShapeBox from './shapeBox';
+import ShapeBox from './shapeBox.js';
 
 let ModalStyle = {
     position:'absolute',
@@ -49,8 +51,8 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
         }
     }
 
-    const handleButtonClick = (buttonId) => {
-        setSelectedButton(buttonId);
+    const handleButtonClick = (buttonType) => {
+        setSelectedButton(buttonType);
     };
     
     //proceed button
@@ -148,7 +150,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                             selectedButton === 'Template'?<TemplateBox/>:
                             selectedButton === 'Text'?<TextConfigBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
                             selectedButton === 'Image'?<ImageBox/>:
-                            selectedButton === 'Shapes'?<ShapeBox/>:
+                            selectedButton === 'Shapes'?<ShapeBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
                             selectedButton === 'Draw'?<TextConfigBox/>:''
                             }
                         <Stack sx={{width:'100%',
@@ -175,7 +177,8 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                 
                 <Stack onTouchStart={()=>setIsboxExpanded(false)} sx={{position:'relative', width:{md:'60vw',xs:'100%'}, height:'100%',display:'flex',justifyContent:'center'}} ref={canvasWrapper}  id='canvasWrapper'>
                     <canvas  id="canvas" />
-                    {focusedObject.type==='Text'?<TextFieldEditModal focusedText = {focusedObject.object} canvas={canvas}/>:''}
+                    {focusedObject.type==='Text'?<TextFieldEditModal focusedText = {focusedObject.object} canvas={canvas}/>:
+                    focusedObject.type==='Shape'?<ShapeModal focusedText = {focusedObject.object} canvas={canvas}/>:''}
                 </Stack>
 
             </Stack>
