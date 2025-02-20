@@ -1,30 +1,39 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Box, Button, Stack, Typography, Modal, Backdrop, useMediaQuery} from "@mui/material";
 import FeaturedTemplates from './LandingPage/featuredTemplates';
 import Playground from '../components/canvas/playground';
 import { useParams } from 'react-router-dom';
 import { getShit } from '../utils';
 
+const formatProductDetail = (productDetail)=>{
+    if (productDetail?.thumbnail_image){
+        productDetail.themed = false
+    }else{
+        productDetail.themed = true
+    }
+    return productDetail
+}
 
   
 
 export default function ProductPage(){
     const [productDetails,setProductDetails] = useState({})
-
+    const location = useLocation()
     const isPhone = useMediaQuery('(max-width: 768px)');
     const isTablet = useMediaQuery('(max-width: 820px)');
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const {productid} = useParams()
-
     useEffect(()=>{
         async function fetchData() {
             try {
-                const url = `products/${productid}`
-                const resp = await getShit(url)
-                setProductDetails(resp)
+                const path = location.pathname
+                let productDetail = await getShit(path)
+                //A way to identify whether the product is a themed product or an 'original/base' product
+                let formatedProductDetail = formatProductDetail(productDetail)
+                setProductDetails(formatedProductDetail)
             } catch (error) {
                 console.log('error while trying to retrieve product.')
             }
@@ -37,7 +46,7 @@ export default function ProductPage(){
         <Stack px={{md:4,xs:2}} my={8} mt={4}>
             <Stack px={{justifyContent:{xs:'center',md:'space-around'}}} direction={isPhone||isTablet ? 'column':'row'} spacing={4} mb={6}  >
                 <Box sx={{width: {md:'65%',xs:'100%'}, height:'70vh', boxShadow:'rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px',borderRadius:'4px'}}  >
-                <img style={{width:'100%',height:'100%'}} src={productDetails.canvasPNG} alt={productDetails.name}/>
+                <img style={{width:'100%',height:'100%'}} src={productDetails.themed === true?productDetails.canvasPNG:productDetails.thumbnail_image} alt={productDetails.name}/>
                 </Box>
                 <Stack spacing={4} sx={{justifyContent:'space-between',width:{md:'35%',xs:'100%'}}}>
                     <Stack >

@@ -14,6 +14,8 @@ class AvailableProducts(models.Model):
     name = models.CharField(max_length=200,null=True,)
     thumbnail_image = models.ImageField(upload_to='products/', null=True, blank=True)
     base_image = models.ImageField(upload_to='products/', null=True, blank=True)
+    price = models.IntegerField(null=True)
+    description = models.TextField(null='')
 
 class ThemedProduct(models.Model):
     name = models.CharField(max_length=200,null=True, unique=True)

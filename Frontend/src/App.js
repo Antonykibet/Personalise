@@ -26,7 +26,8 @@ function App() {
         <Layout>
           <Routes>
             <Route path='/' element={<Landing/>}/>
-            <Route path='productPage/:productid' element={<ProductPage/>}/>
+            <Route path='products/:productid' element={<ProductPage/>}/>
+            <Route path='availableItem/:id' element={<ProductPage/>}/>
             <Route path='category/:category' element={<CategoryPage />}/>
             <Route path='checkout' element={<Checkout />}/>
             <Route path='sign-in' element={<SignIn />} />

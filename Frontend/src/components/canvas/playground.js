@@ -1,5 +1,5 @@
 import { useRef,useEffect, useState, } from 'react';
-import { Canvas, Textbox, FabricImage } from 'fabric';
+import { Canvas, FabricImage } from 'fabric';
 import { Button, Stack, Typography, useMediaQuery, Box, IconButton } from "@mui/material";
 import ImageBox from './imageBox';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
@@ -77,30 +77,30 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
         otherStateRef.current = textFields
 
         //handle base image, an image that has not been designed before.
-        if (productDetail?.thumbnail_image){
+        if (!productDetail.themed){
             const img = new Image()
             img.src = productDetail.base_image
             img.crossOrigin = "anonymous";  // This enables CORS
-            const productImg = new FabricImage(img,{})
-            productImg.selectable = false; // make it unselectable
-            productImg.evented = false;
-            const scaleFactor = Math.min(containerWidth / img.width, containerHeight / img.height);
-            productImg.scale(scaleFactor);
-            newCanvas.set('backgroundImage',productImg)
-            newCanvas.requestRenderAll();
-            setCanvas(newCanvas)
+            img.onload = function () {
+                const productImg = new FabricImage(img,{})
+                productImg.selectable = false; // make it unselectable
+                productImg.evented = false;
+                const scaleFactor = Math.min(containerWidth / img.width, containerHeight / img.height);
+                productImg.scale(scaleFactor);
+                newCanvas.set('backgroundImage',productImg)
+                setCanvas(newCanvas)
+                newCanvas.renderAll()
+              }
+            
+            
         }else{
             newCanvas.loadFromJSON(productDetail.canvasJSON)
             .then( r => {
                 // Get the current canvas dimensions
                 const canvasWidth = 800
                 const canvasHeight = 800
-                console.log(canvasHeight)
-                console.log(canvasWidth)
-                
                
                 const scaleRatio = 0.55
-                console.log(scaleRatio)
                 newCanvas.setDimensions({ width: canvasWidth * scaleRatio, height: canvasHeight * scaleRatio });
                 newCanvas.setZoom(scaleRatio)
 
