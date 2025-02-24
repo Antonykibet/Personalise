@@ -40,7 +40,7 @@ export default function AvailableItemCreation(){
                 <VisuallyHiddenInput
                     type="file"
                     onChange={(e) =>{
-                        handleFormDataEntry('thumbnail_image',setFormData,e.target.files[0])
+                        handleFormDataEntry('thumbnail_image_url',setFormData,e.target.files[0])
                     }} 
                     single
                 />
@@ -57,7 +57,7 @@ export default function AvailableItemCreation(){
                 <VisuallyHiddenInput
                     type="file"
                     onChange={(e) =>{
-                        handleFormDataEntry('base_image',setFormData,e.target.files[0])
+                        handleFormDataEntry('base_image_url',setFormData,e.target.files[0])
                     }} 
                     single
                 />

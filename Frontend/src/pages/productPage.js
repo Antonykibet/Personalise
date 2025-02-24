@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { getShit } from '../utils';
 
 const formatProductDetail = (productDetail)=>{
-    if (productDetail?.thumbnail_image){
+    if (productDetail?.thumbnail_image_url){
         productDetail.themed = false
     }else{
         productDetail.themed = true
@@ -46,7 +46,7 @@ export default function ProductPage(){
         <Stack px={{md:4,xs:2}} my={8} mt={4}>
             <Stack px={{justifyContent:{xs:'center',md:'space-around'}}} direction={isPhone||isTablet ? 'column':'row'} spacing={4} mb={6}  >
                 <Box sx={{width: {md:'65%',xs:'100%'}, height:'70vh', boxShadow:'rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px',borderRadius:'4px'}}  >
-                <img style={{width:'100%',height:'100%'}} src={productDetails.themed === true?productDetails.canvasPNG:productDetails.thumbnail_image} alt={productDetails.name}/>
+                <img style={{width:'100%',height:'100%'}} src={productDetails.themed === true?productDetails.canvasPNG:productDetails.thumbnail_image_url} alt={productDetails.name}/>
                 </Box>
                 <Stack spacing={4} sx={{justifyContent:'space-between',width:{md:'35%',xs:'100%'}}}>
                     <Stack >

@@ -30,7 +30,21 @@ let ModalStyle = {
     overflow:'hidden',
     justifyContent:'space-between',
   };
-
+let initialRenderInfoModal = {
+    position:'absolute',
+    top:'10%',
+    left:'50%',
+    transform: 'translate(-50%,-50%)',
+    border:'1px solid grey',
+    borderSize:1,
+    borderRadius:2,
+    backgroundColor:'white',
+    p:0.5,
+    width:'90%',
+    height:'auto',
+    justifyContent:'center',
+    alignItems:'center'
+    }
 
 export default function Playground({isAdmin, handleFormDataEntry,formStateHandler,productDetail}){
     const isPhone = useMediaQuery('(max-width: 768px)');
@@ -40,15 +54,19 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
     const [selectedButton, setSelectedButton] = useState('Template');
     const [isboxExpanded,setIsboxExpanded] = useState(false)
     const [focusedObject, setfocusedObject] = useState({type:'',object:''})
-    const [textFields, setTextFields] = useState([])
-    
-    const otherStateRef = useRef(textFields)
-    const handleBoxExpand = ()=>{
+    const [initialRenderInfo,setInitialRenderInfo] = useState({productType:''})
+
+    const handleExpandBox = ()=>{
         if (!isboxExpanded){
            setIsboxExpanded(true)
         }else{
             setIsboxExpanded(false)
         }
+    }
+
+    const handleAddImage = ()=>{
+        setSelectedButton('Image')
+        handleExpandBox()
     }
 
     const handleButtonClick = (buttonType) => {
@@ -74,40 +92,37 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
         const containerWidth = canvasWrapper.current.offsetWidth
         const containerHeight = canvasWrapper.current.offsetHeight
         const newCanvas = new Canvas('canvas',{width:containerWidth, height: containerHeight});
-        otherStateRef.current = textFields
 
         //handle base image, an image that has not been designed before.
         if (!productDetail.themed){
             const img = new Image()
-            img.src = productDetail.base_image
+            img.src = productDetail.base_image_url
             img.crossOrigin = "anonymous";  // This enables CORS
-            img.onload = function () {
-                const productImg = new FabricImage(img,{})
+            img.onload = function (){
+                const productImg = new FabricImage(this,{})
                 productImg.selectable = false; // make it unselectable
                 productImg.evented = false;
-                const scaleFactor = Math.min(containerWidth / img.width, containerHeight / img.height);
+                const scaleFactor = Math.min(containerWidth / this.width, containerHeight / this.height);
                 productImg.scale(scaleFactor);
                 newCanvas.set('backgroundImage',productImg)
                 setCanvas(newCanvas)
                 newCanvas.renderAll()
               }
-            
-            
+            setInitialRenderInfo({productType:'originalProduct'})
         }else{
             newCanvas.loadFromJSON(productDetail.canvasJSON)
             .then( r => {
                 // Get the current canvas dimensions
-                const canvasWidth = 800
-                const canvasHeight = 800
+                // const canvasWidth = 800
+                // const canvasHeight = 800
                
-                const scaleRatio = 0.55
-                newCanvas.setDimensions({ width: canvasWidth * scaleRatio, height: canvasHeight * scaleRatio });
-                newCanvas.setZoom(scaleRatio)
-
-                
+                // const scaleRatio = 0.8
+                // newCanvas.setDimensions({ width: canvasWidth * scaleRatio, height: canvasHeight * scaleRatio });
+                // newCanvas.setZoom(scaleRatio)
                 newCanvas.renderAll()
                 setCanvas(newCanvas)
                 })
+                setInitialRenderInfo({productType:'themedProduct'})
             
         }
         
@@ -141,7 +156,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                     <Box sx={{height:{xs:'100%', md:'100%'}}}>
                         <Stack direction='row' sx={{px:1,justifyContent:'space-between',alignItems:'center'}}>
                             <Typography m={1} variant='h6' sx={{fontFamily:'Montserrat', color:'rgb(46, 46, 46)', fontWeight:700}}>{selectedButton}</Typography>
-                            <IconButton onClick={handleBoxExpand}  aria-label="expand/minimize">
+                            <IconButton onClick={handleExpandBox}  aria-label="expand/minimize">
                                 {isboxExpanded?<ExpandMoreIcon fontSize='large'/>:<ExpandLessIcon fontSize='large' />}
                             </IconButton>
                         </Stack>
@@ -149,7 +164,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                             {
                             selectedButton === 'Template'?<TemplateBox/>:
                             selectedButton === 'Text'?<TextConfigBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
-                            selectedButton === 'Image'?<ImageBox/>:
+                            selectedButton === 'Image'?<ImageBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
                             selectedButton === 'Shapes'?<ShapeBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
                             selectedButton === 'Draw'?<TextConfigBox/>:''
                             }
@@ -177,8 +192,14 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                 
                 <Stack onTouchStart={()=>setIsboxExpanded(false)} sx={{position:'relative', width:{md:'60vw',xs:'100%'}, height:'100%',display:'flex',justifyContent:'center'}} ref={canvasWrapper}  id='canvasWrapper'>
                     <canvas  id="canvas" />
-                    {focusedObject.type==='Text'?<TextFieldEditModal focusedText = {focusedObject.object} canvas={canvas}/>:
-                    focusedObject.type==='Shape'?<ShapeModal focusedText = {focusedObject.object} canvas={canvas}/>:''}
+                    {
+                        initialRenderInfo.productType==='originalProduct'?<Button onClick={handleAddImage} sx={initialRenderInfoModal}>Add Image</Button>:
+                        initialRenderInfo.productType==='themedProduct'?<Typography sx={initialRenderInfoModal}>Select image to change</Typography>:''
+                    }
+                    {
+                        focusedObject.type==='Text'?<TextFieldEditModal focusedText = {focusedObject.object} canvas={canvas}/>:
+                        focusedObject.type==='Shape'?<ShapeModal focusedText = {focusedObject.object} canvas={canvas}/>:''
+                    }
                 </Stack>
 
             </Stack>

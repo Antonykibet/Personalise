@@ -7,4 +7,4 @@ class StockImage(models.Model):
     theme = models.ForeignKey(Theme,on_delete=models.PROTECT,
         related_name='stockImages',null=True)
     description = models.TextField(null=True)
-    stock_image = models.ImageField(upload_to='stockImages/', null=True, blank=True)
+    stock_image_url = models.ImageField(upload_to='stockImages/', null=True, blank=True)

@@ -70,7 +70,7 @@ export default function AddStockImageForm(){
                 <VisuallyHiddenInput
                     type="file"
                     onChange={(e) =>{
-                        handleFormDataEntry('stock_image',setFormData,e.target.files[0])
+                        handleFormDataEntry('stock_image_url',setFormData,e.target.files[0])
                     }} 
                     single
                 />

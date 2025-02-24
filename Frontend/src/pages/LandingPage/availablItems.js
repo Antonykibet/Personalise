@@ -19,7 +19,7 @@ export default function AvailableItems(){
                 {availableItems.map((item)=>{
                     return(<Paper sx={itemsStyle}>
                                 <Link to={`/availableItem/${item.id}`} target="_top">
-                                    <img style={itemImageStyle} alt={item.name} src={item.thumbnail_image} />
+                                    <img style={itemImageStyle} alt={item.name} src={item.thumbnail_image_url} />
                                     <Typography variant='h6' sx={{fontSize:'16px',fontWeight:'bold',color:'#383838'}}>{item.name}</Typography>
                                 </Link>
                             </Paper>
