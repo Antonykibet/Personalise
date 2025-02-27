@@ -1,10 +1,9 @@
 import { useRef,useEffect, useState, } from 'react';
-import { Canvas, FabricImage } from 'fabric';
+import { Canvas, FabricImage, FabricObject } from 'fabric';
 import { Button, Stack, Typography, useMediaQuery, Box, IconButton } from "@mui/material";
 import ImageBox from './imageBox';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
 
 import TextFieldEditModal from './editModals/textFieldEditModal';
 import ShapeModal from './editModals/shapeModal.js';
@@ -13,6 +12,8 @@ import TemplateBox from './templateBox';
 import TextConfigBox from './textBox.js';
 import CanvasEditingBtns from './canvasBtns';
 import ShapeBox from './shapeBox.js';
+
+FabricObject.customProperties = ['id'];
 
 let ModalStyle = {
     position:'absolute',
@@ -49,12 +50,18 @@ let initialRenderInfoModal = {
 export default function Playground({isAdmin, handleFormDataEntry,formStateHandler,productDetail}){
     const isPhone = useMediaQuery('(max-width: 768px)');
     const isTablet = useMediaQuery('(max-width: 820px)');
+
     const [canvas, setCanvas] = useState('');
     const canvasWrapper = useRef(null)
-    const [selectedButton, setSelectedButton] = useState('Template');
+
+    const [selectedEditButton, setSelectedEditButton] = useState('Template');
+
     const [isboxExpanded,setIsboxExpanded] = useState(false)
-    const [focusedObject, setfocusedObject] = useState({type:'',object:''})
+    
     const [initialRenderInfo,setInitialRenderInfo] = useState({productType:''})
+
+    const [isImageUpdateMode,setIsImageUpdateMode] = useState(false)
+    const [focusedObject, setfocusedObject] = useState({type:'',object:''})
 
     const handleExpandBox = ()=>{
         if (!isboxExpanded){
@@ -65,17 +72,17 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
     }
 
     const handleAddImage = ()=>{
-        setSelectedButton('Image')
+        setSelectedEditButton('Image')
         handleExpandBox()
     }
 
     const handleButtonClick = (buttonType) => {
-        setSelectedButton(buttonType);
+        setSelectedEditButton(buttonType);
     };
     
     //proceed button
     const handleAdminDesign = ()=>{
-        let canvasJSON = JSON.stringify(canvas)
+        let canvasJSON = JSON.stringify(canvas.toJSON(['id']))
         let canvasSVG = canvas.toSVG()
         let canvasPNG = canvas.toDataURL('image/png');
         handleFormDataEntry('canvasJSON',formStateHandler,canvasJSON)
@@ -113,14 +120,38 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
             newCanvas.loadFromJSON(productDetail.canvasJSON)
             .then( r => {
                 // Get the current canvas dimensions
-                // const canvasWidth = 800
-                // const canvasHeight = 800
+                const canvasWidth = 800
+                const canvasHeight = 800
                
-                // const scaleRatio = 0.8
-                // newCanvas.setDimensions({ width: canvasWidth * scaleRatio, height: canvasHeight * scaleRatio });
-                // newCanvas.setZoom(scaleRatio)
+                const scaleRatio = 0.9
+                newCanvas.setDimensions({ width: canvasWidth * scaleRatio, height: canvasHeight * scaleRatio });
+                newCanvas.setZoom(scaleRatio)
                 newCanvas.renderAll()
                 setCanvas(newCanvas)
+                newCanvas.getObjects().forEach(obj=>{
+                    if(obj.id==='text'){
+                        obj.on('selected',(obj)=>{
+                            const selectedObj={
+                                type:'Text',
+                                object:obj.target
+                            }
+                            setfocusedObject(selectedObj)
+                        })
+                        obj.on('deselected',()=>{
+                            setfocusedObject({type:null,object:null})
+                        })
+                    }
+                    if(obj.id==='img'){
+                        obj.on('selected',(obj)=>{
+                            const selectedObj={
+                                type:'Image',
+                                object:obj.target
+                            }
+                            setfocusedObject(selectedObj)
+                            setIsImageUpdateMode(true)
+                        })
+                    }
+                })
                 })
                 setInitialRenderInfo({productType:'themedProduct'})
             
@@ -155,24 +186,24 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                     >
                     <Box sx={{height:{xs:'100%', md:'100%'}}}>
                         <Stack direction='row' sx={{px:1,justifyContent:'space-between',alignItems:'center'}}>
-                            <Typography m={1} variant='h6' sx={{fontFamily:'Montserrat', color:'rgb(46, 46, 46)', fontWeight:700}}>{selectedButton}</Typography>
+                            <Typography m={1} variant='h6' sx={{fontFamily:'Montserrat', color:'rgb(46, 46, 46)', fontWeight:700}}>{selectedEditButton}</Typography>
                             <IconButton onClick={handleExpandBox}  aria-label="expand/minimize">
                                 {isboxExpanded?<ExpandMoreIcon fontSize='large'/>:<ExpandLessIcon fontSize='large' />}
                             </IconButton>
                         </Stack>
                         
                             {
-                            selectedButton === 'Template'?<TemplateBox/>:
-                            selectedButton === 'Text'?<TextConfigBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
-                            selectedButton === 'Image'?<ImageBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
-                            selectedButton === 'Shapes'?<ShapeBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
-                            selectedButton === 'Draw'?<TextConfigBox/>:''
+                            selectedEditButton === 'Template'?<TemplateBox/>:
+                            selectedEditButton === 'Text'?<TextConfigBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
+                            selectedEditButton === 'Image'?<ImageBox canvas={canvas} setfocusedObject={setfocusedObject} focusedObject={focusedObject} setIsImageUpdateMode={setIsImageUpdateMode} isImageUpdateMode={isImageUpdateMode}/>:
+                            selectedEditButton === 'Shapes'?<ShapeBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
+                            selectedEditButton === 'Draw'?<TextConfigBox/>:''
                             }
                         <Stack sx={{width:'100%',
                             backgroundColor:'white',
                             position:'absolute',
                                     bottom:'0px',}}>
-                            <CanvasEditingBtns handleButtonClick={handleButtonClick} selectedButton={selectedButton}/>
+                            <CanvasEditingBtns handleButtonClick={handleButtonClick} selectedEditButton={selectedEditButton}/>
                             <Button  
                                 sx={{
                                     m:1,

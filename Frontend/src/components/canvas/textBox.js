@@ -11,7 +11,8 @@ export default function TextConfigBox({setfocusedObject,canvas}){
             fontSize:80,
             fontFamily:'Poppins',
             linethrough: false,
-            underline: false
+            underline: false,
+            id:'text'
         }
         const text = new Textbox(field.text,field)
         text.on('selected',(obj)=>{

@@ -1,15 +1,16 @@
 import { Box, Button, Stack, Typography } from "@mui/material"
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FabricImage } from 'fabric';
 import { getShit } from "../../utils";
 import ThemeSelector from "../themeSelector";
 
 
-export default function ImageBox({canvas,setfocusedObject}){
+export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsImageUpdateMode,isImageUpdateMode}){
     const [stockImages,setStockImages] = useState([])
     const [searchResult,setSearchResult] = useState([])
     const [renderSearchResults,setRenderSearchResults] = useState(false)
+
     const handleOptionSelect = (event, selectedOption) => {
         getShit(`stockImage?search=${selectedOption}`)
         .then(data=>{
@@ -28,16 +29,27 @@ export default function ImageBox({canvas,setfocusedObject}){
             const fabricImg = new FabricImage(this,{
                 left: 100,
                 top: 100,
+                id:'img'
                 })
-            fabricImg.on('selected',()=>{
-                console.log(this)
+            fabricImg.on('selected',(obj)=>{
+                const selectedObj={
+                    type:'Image',
+                    object:obj.target
+                }
+                setfocusedObject(selectedObj)
+                setIsImageUpdateMode(true)
             })
             fabricImg.scale(0.1);
             canvas.add(fabricImg)
             canvas.renderAll()
         }
-        
-        
+    }    
+    const handleUpdateImage = (selectedImg)=>{
+        const img = new Image()
+        img.src = selectedImg.stock_image_url
+        img.crossOrigin = "anonymous";
+        console.log(focusedObject.object)
+        focusedObject.object.setSrc(img.src,()=>canvas.renderAll())
     }
     return(
         <Box  sx={{height:'100%',display:'flex',flexDirection:'column',alignItems:'center',overflow:'auto', backgroundColor:'#F6F5F5'}}>
@@ -62,7 +74,7 @@ export default function ImageBox({canvas,setfocusedObject}){
             <Box sx={{height:'auto',width:'100%',overflowY:'scroll',display:'flex',justifyContent:'space-around',paddingBottom:'200px',flexWrap:'wrap'}}>
                 {(renderSearchResults?searchResult:stockImages).map(img=>{
                     return (
-                        <Stack onClick={()=>handleAddImage(img)} sx={{alignItems:'center'}}>
+                        <Stack onClick={isImageUpdateMode?()=>handleUpdateImage(img):()=>handleAddImage(img)} sx={{alignItems:'center'}}>
                             <img style={{backgroundColor:'white',borderRadius:'8px',height:'20vh',width:'20vh',objectFit:'contain'}} src={img.stock_image_url} alt={img.name}/>
                             <Typography variant="body1" color="initial">{img.name}</Typography>
                         </Stack>
