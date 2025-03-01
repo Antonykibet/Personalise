@@ -1,40 +1,12 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { useMediaQuery, CardHeader, IconButton, Button } from '@mui/material';
+import { CardHeader, IconButton, Button } from '@mui/material';
 import { Stack } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { XMLSerializer } from 'xmldom'; 
 import { Link } from 'react-router-dom';
 
-export default function ProductCard({link, productDetails}) {
-  const svgWrapperRef = React.useRef('')
-  React.useEffect(()=>{
-    if (productDetails.canvasSVG) {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(productDetails.canvasSVG, 'image/svg+xml');
-      // Set desired dimensions
-      const desiredWidth = '40vw';
-      const desiredHeight = 200;
-
-      // Set width and height attributes on the <svg> element
-      const svgElement = doc.documentElement;
-
-      svgElement.setAttribute('width', desiredWidth);
-      svgElement.setAttribute('height', desiredHeight);
-      
-      // Serialize the modified document back to an SVG string
-      const serializer = new XMLSerializer();
-      const modifiedSvgString = serializer.serializeToString(doc);
-      
-      //svgWrapperRef.current.innerHTML = ''
-    }
-  },[productDetails.canvasSVG])
-
-
-
+export default function ProductCard({productDetails}) {
   return (
     <Card variant='plain' sx={{position: 'relative',width:{xs:'40vw'},border:'solid', borderColor:'#727272', borderRadius:2,mt:2}}>
       <CardHeader 
@@ -43,7 +15,6 @@ export default function ProductCard({link, productDetails}) {
             <FavoriteBorderIcon/>
           </IconButton>}/>
       <Link to={`/products/${productDetails.id}`} target="_top">
-      {/* <div ref={svgWrapperRef}></div> */}
       <img style={{width:'100%',height:'auto'}} src={productDetails.canvasPNG} alt={productDetails.name}/>
       <Stack mx={0.5} >
         <Typography variant='p' sx={{fontWeight:700,fontSize:'16px',fontFamily:'Inter'}}>{productDetails.name}</Typography>

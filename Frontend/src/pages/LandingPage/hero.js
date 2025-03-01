@@ -1,9 +1,11 @@
 import { Button, Stack, Typography, } from "@mui/material"
 import 'react-multi-carousel/lib/styles.css';
+import { useTheme } from "@emotion/react";
 
 
 
 export default function Hero(){
+  const theme = useTheme()
     // const responsive = {
     //     superLargeDesktop: {
     //       // the naming can be any, depends on you.
@@ -80,8 +82,7 @@ export default function Hero(){
               </Stack>
               <Stack mx={3} my={2} sx={{borderRadius:2,width:{md:'35%',xs:'90%'} ,height:{md:'65vh',xs:'40vh'},border:'solid'}}></Stack>
               <Stack mx={3}  spacing={2} sx={{width:'90%'}} direction='row'>
-                <Button disableElevation variant="contained" sx={{width:'auto',backgroundColor:'#F5F5F5',color:'#E45A00',fontFamily:'sans serif',borderRadius:4}}>Personalise</Button>
-                <Button disableElevation variant="outlined" sx={{width:'auto',color:'white',borderColor:'white',fontFamily:'sans serif',borderRadius:4}}>Customize Gift</Button>
+                <Button disableElevation variant="contained" sx={{width:'auto',color:theme.palette.primary.main,backgroundColor:'white',fontFamily:'poppins',borderRadius:4}}>Customize Gift</Button>
               </Stack>
             </Stack>
           </Stack>
