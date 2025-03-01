@@ -98,8 +98,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
     useEffect(() => {
         const containerWidth = canvasWrapper.current.offsetWidth
         const containerHeight = canvasWrapper.current.offsetHeight
-        const newCanvas = new Canvas('canvas',{width:containerWidth, height: containerHeight});
-
+        const newCanvas = new Canvas('canvas',{width:containerWidth, height: containerHeight,preserveObjectStacking: true});
         //handle base image, an image that has not been designed before.
         if (!productDetail.themed){
             const img = new Image()
@@ -109,23 +108,36 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                 const productImg = new FabricImage(this,{})
                 productImg.selectable = false; // make it unselectable
                 productImg.evented = false;
-                const scaleFactor = Math.min(containerWidth / this.width, containerHeight / this.height);
+                const scaleFactor = Math.min(containerWidth / this.width);
                 productImg.scale(scaleFactor);
+                
                 newCanvas.set('backgroundImage',productImg)
                 setCanvas(newCanvas)
                 newCanvas.renderAll()
+                newCanvas.backgroundImage.translateToCenterPoint()
+
+                // To Do:
+                // https://stackoverflow.com/questions/40508523/fabricjs-setting-background-image-size-and-position
+                // var canvasAspect = canvasWidth / canvasHeight;
+                // var imgAspect = bgImage.width / bgImage.height;
+                // var left, top, scaleFactor;
+
+                // if (canvasAspect >= imgAspect) {
+                //     var scaleFactor = canvasWidth / bgImage.width;
+                //     left = 0;
+                //     top = -((bgImage.height * scaleFactor) - canvasHeight) / 2;
+                // } else {
+                //     var scaleFactor = canvasHeight / bgImage.height;
+                //     top = 0;
+                //     left = -((bgImage.width * scaleFactor) - canvasWidth) / 2;
+
+                // }
               }
             setInitialRenderInfo({productType:'originalProduct'})
         }else{
             newCanvas.loadFromJSON(productDetail.canvasJSON)
             .then( r => {
                 // Get the current canvas dimensions
-                const canvasWidth = 800
-                const canvasHeight = 800
-               
-                const scaleRatio = 0.9
-                newCanvas.setDimensions({ width: canvasWidth * scaleRatio, height: canvasHeight * scaleRatio });
-                newCanvas.setZoom(scaleRatio)
                 newCanvas.renderAll()
                 setCanvas(newCanvas)
                 newCanvas.getObjects().forEach(obj=>{
@@ -221,8 +233,8 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                     {isPhone||isTablet ? '':<CanvasEditingBtns/>}
                 </Stack>
                 
-                <Stack onTouchStart={()=>setIsboxExpanded(false)} sx={{position:'relative', width:{md:'60vw',xs:'100%'}, height:'100%',display:'flex',justifyContent:'center'}} ref={canvasWrapper}  id='canvasWrapper'>
-                    <canvas  id="canvas" />
+                <Stack onTouchStart={()=>setIsboxExpanded(false)} sx={{position:'relative', width:{md:'60vw',xs:'100%'}, height:{md:'40%',xs:'70%'} ,display:'flex',justifyContent:'bottom',alignItems:{xs:'bottom'}}} ref={canvasWrapper}  id='canvasWrapper'>
+                    <canvas style={{position:'fixed'}}  id="canvas" />
                     {
                         initialRenderInfo.productType==='originalProduct'?<Button onClick={handleAddImage} sx={initialRenderInfoModal}>Add Image</Button>:
                         initialRenderInfo.productType==='themedProduct'?<Typography sx={initialRenderInfoModal}>Select image to change</Typography>:''

@@ -16,6 +16,9 @@
   border-radius:8px;
   padding:16px;
 }
+#canvas{
+  margin-top: 70px;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
