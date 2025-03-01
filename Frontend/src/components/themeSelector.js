@@ -11,6 +11,7 @@ export default function ThemeSelector({renderSearchResults,setRenderSearchResult
     
 
     const handleSearchInput = (event)=>{
+      //Search queries all themes
       getShit(`${searchURL}search=${event.target.value}`)
       .then(data=>{
         setSearchResult(data)
@@ -32,15 +33,15 @@ export default function ThemeSelector({renderSearchResults,setRenderSearchResult
     
     useEffect(()=>{
         (async ()=>{
-            let themeType = isGiftSection?'GIFT THEME':'RANDOM THEME'
-            const themes = await axios.get(`http://localhost:8000/theme?type=${themeType}`)
-            setAvailableThemes(themes.data)
-            
+            const themeType = isGiftSection?'GIFT THEME':'RANDOM THEME'
+            const themes = await await getShit(`theme?type=${themeType}`)
+            setAvailableThemes(themes)
+            const url = searchURL?`${searchURL}theme_name=${themes[0].name}`: `products?theme__name=${themes[0].name}`
             //fetch products of the first theme displayed in the tab.
-            const products = await axios.get(`http://localhost:8000/products?theme__name=${themes.data[0].name}`)
-            setSelectedTheme(themes.data[0].name)
+            const products = await getShit(url)
+            setSelectedTheme(themes[0].name)
 
-            setResults(products.data)
+            setResults(products)
             
         })()
         
@@ -77,10 +78,15 @@ export default function ThemeSelector({renderSearchResults,setRenderSearchResult
                         placeholder={`Search ${selectedTheme??''}`}
                         InputProps={{
                           ...params.InputProps,
-                          sx:{border:{border:'solid',height:'40px',  borderRadius:16, borderWidth:'2px'}},
+                          sx:{border:{border:'solid',height:'40px',  borderRadius:16, borderWidth:'2px',width:'100%',pr:'10px'}},
+                          endAdornment: (
+                            <>
+                              
+                            </>
+                          ),
                           startAdornment: (
                             <>
-                              <InputAdornment  position='start'>
+                              <InputAdornment  position='end'>
                                 {renderSearchResults?<KeyboardBackspaceIcon onClick={()=>{setRenderSearchResults(false)}} sx={{color:'#e45a00'}}/>:<SearchIcon onClick={()=>{setRenderSearchResults(true)}} sx={{color:'#e45a00'}} />} 
                               </InputAdornment>
                             </>

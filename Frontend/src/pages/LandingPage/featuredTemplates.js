@@ -11,7 +11,7 @@ export default function FeaturedTemplates({isGiftSection}){
     return(
         <Stack  spacing={1} alignItems='start'>
             <ThemeSelector setResults={setProducts} results={products} isGiftSection={isGiftSection} disableSearch={true}/>
-            <Box display='flex' paddingBottom={2}  width='100vw' alignItems='center' justifyContent={isSmallScreen || isTablet?'space-evenly':'start'} flexWrap='wrap'>
+            <Box display='flex'  width='100%' alignItems='center' justifyContent={{xs:'space-evenly',md:'start'}} flexWrap='wrap'>
                 {products.map((product)=><ProductCard productDetails={product} />)}
             </Box>
         </Stack>

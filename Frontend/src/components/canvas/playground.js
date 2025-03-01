@@ -162,6 +162,10 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                             setfocusedObject(selectedObj)
                             setIsImageUpdateMode(true)
                         })
+                        obj.on('deselected',()=>{
+                            setfocusedObject({type:null,object:null})
+                            setIsImageUpdateMode(false)
+                        })
                     }
                 })
                 })

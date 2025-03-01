@@ -9,4 +9,4 @@ class StockImageViewSet(viewsets.ModelViewSet):
     queryset = StockImage.objects.all()
     serializer_class = StockImageSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name','description']
+    search_fields = ['name','description','theme_name']
