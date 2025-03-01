@@ -8,24 +8,24 @@ import { useTheme } from "@emotion/react";
 
 
 
-export default function ShapeModal({focusedText ,canvas}){
+export default function ShapeModal({focusedObject ,canvas}){
     const theme = useTheme() 
-     const [color, setColor] = useState('')
-     const [shapeColorType, setShapeColorType] = useState('Background color')
-     const [hideShapeColorTypeLabel,setshapeColorTypeLabel] = useState(false)
-     const [hideBorderWidthLabel,setHideTextfieldLabel] = useState(false)
+    const [color, setColor] = useState('')
+    const [shapeColorType, setShapeColorType] = useState('Background color')
+    const [hideShapeColorTypeLabel,setshapeColorTypeLabel] = useState(false)
+    const [hideBorderWidthLabel,setHideTextfieldLabel] = useState(false)
     
         useEffect(()=>{
-            setColor(focusedText.fill)
-        },[focusedText])
+            setColor(focusedObject.fill)
+        },[focusedObject])
        
         const handleBackgroundColorChange = (newValue) => {
-            focusedText.set({fill: newValue})
+            focusedObject.set({fill: newValue})
             setColor(newValue)
             canvas.renderAll()
         }
         const handleBorderColorChange = (newValue) => {
-            focusedText.set({stroke: newValue})
+            focusedObject.set({stroke: newValue})
             setColor(newValue)
             canvas.renderAll()
         }
@@ -33,16 +33,16 @@ export default function ShapeModal({focusedText ,canvas}){
             const shapeColorType = event.target.value
             setShapeColorType(shapeColorType)
             setshapeColorTypeLabel(true)
-            shapeColorType === 'Border color'?setColor(focusedText.stroke):setColor(focusedText.fill)
+            shapeColorType === 'Border color'?setColor(focusedObject.stroke):setColor(focusedObject.fill)
         }
         const handleBorderSizeChange = (event)=>{
             const size = event.target.value
-            focusedText.set({strokeWidth:size})
+            focusedObject.set({strokeWidth:size})
             setHideTextfieldLabel(true)
             canvas.renderAll()
         }
         const handleShapeDelete = ()=>{
-            canvas.remove(focusedText)
+            canvas.remove(focusedObject)
         }
     return (
         <Stack 

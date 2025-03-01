@@ -12,6 +12,7 @@ import TemplateBox from './templateBox';
 import TextConfigBox from './textBox.js';
 import CanvasEditingBtns from './canvasBtns';
 import ShapeBox from './shapeBox.js';
+import ImageModal from './editModals/imageModal.js';
 
 FabricObject.customProperties = ['id'];
 
@@ -244,8 +245,9 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                         initialRenderInfo.productType==='themedProduct'?<Typography sx={initialRenderInfoModal}>Select image to change</Typography>:''
                     }
                     {
-                        focusedObject.type==='Text'?<TextFieldEditModal focusedText = {focusedObject.object} canvas={canvas}/>:
-                        focusedObject.type==='Shape'?<ShapeModal focusedText = {focusedObject.object} canvas={canvas}/>:''
+                        focusedObject.type === 'Text'?<TextFieldEditModal focusedObject = {focusedObject.object} canvas={canvas}/>:
+                        focusedObject.type === 'Shape'?<ShapeModal focusedObject = {focusedObject.object} canvas={canvas}/>:
+                        focusedObject.type === 'Image'?<ImageModal focusedObject = {focusedObject.object} canvas={canvas} handleAddImage={handleAddImage}/>:''
                     }
                 </Stack>
 

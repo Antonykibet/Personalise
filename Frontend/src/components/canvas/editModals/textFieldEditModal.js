@@ -1,4 +1,4 @@
-import { IconButton, MenuItem, Stack, TextField } from "@mui/material";
+import { IconButton, MenuItem, Stack, TextField, useTheme } from "@mui/material";
 import { MuiColorInput } from 'mui-color-input'
 import { useEffect, useRef, useState } from "react";
 
@@ -6,6 +6,7 @@ import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
 import StrikethroughSIcon from '@mui/icons-material/StrikethroughS';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const formatIcons = [
     {format:'bold', cssProperty:'fontWeight',defaultOption:'normal', secondOption:'bold', isSelected:false, icon:<FormatBoldIcon/>},
@@ -14,15 +15,20 @@ const formatIcons = [
     {format:'strikethrough',cssProperty:'linethrough', defaultOption:'false', secondOption:'true',  isSelected:false, icon:<StrikethroughSIcon/>}
 ]
 
-export default function TextFieldEditModal({focusedText ,canvas}){
+export default function TextFieldEditModal({focusedObject ,canvas}){
+    const theme = useTheme()
     const [color, setColor] = useState('')
 
+    const handleDelete = ()=>{
+        canvas.remove(focusedObject)
+    }
+
     useEffect(()=>{
-        setColor(focusedText.fill)
-    },[focusedText])
+        setColor(focusedObject.fill)
+    },[focusedObject])
    
     const handleColorChange = (newValue) => {
-        focusedText.set({fill: newValue})
+        focusedObject.set({fill: newValue})
         setColor(newValue)
         canvas.renderAll()
       }
@@ -76,7 +82,7 @@ export default function TextFieldEditModal({focusedText ,canvas}){
                             const newFormatIcons = formatIcons.map((formatIcon)=>{
                                 if (formatIcon.format === icon.format){
                                     const cssProperty = icon.cssProperty
-                                    // handleTextConfig(focusedText.id,{cssProperty:formatIcon.isSelected === true? formatIcon.secondOption:formatIcon.defaultOption})
+                                    // handleTextConfig(focusedObject.id,{cssProperty:formatIcon.isSelected === true? formatIcon.secondOption:formatIcon.defaultOption})
                                     return {...formatIcon,...{isSelected:!formatIcon.isSelected}}
                                     
                                 }
@@ -94,6 +100,9 @@ export default function TextFieldEditModal({focusedText ,canvas}){
                 )
                 
             })}
+            <IconButton onClick={handleDelete}>
+                <DeleteOutlineIcon size='large' sx={{color:theme.palette.primary.main}}/>
+            </IconButton>
             
         </Stack>
     )
