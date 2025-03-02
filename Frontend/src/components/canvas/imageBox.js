@@ -11,16 +11,6 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
     const [searchResult,setSearchResult] = useState([])
     const [renderSearchResults,setRenderSearchResults] = useState(false)
 
-    const handleOptionSelect = (event, selectedOption) => {
-        getShit(`stockImage?search=${selectedOption}`)
-        .then(data=>{
-            setSearchResult(data)
-            setRenderSearchResults(true)
-        })
-        .catch(err=>{
-            console.log(`Error on selecting option:${err}`)
-        })
-      };
     const handleAddImage = (selectedImg)=>{
         const img = new Image()
         img.src = selectedImg.stock_image_url
@@ -70,7 +60,7 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
                     >
                     Upload Image
                 </Button>
-                <ThemeSelector setRenderSearchResults={setRenderSearchResults} renderSearchResults={renderSearchResults} searchResult={searchResult} setSearchResult={setSearchResult} setResults={setStockImages} results={stockImages} isGiftSection={false} searchURL={'stockImage?'} handleOptionSelect={handleOptionSelect}/>
+                <ThemeSelector setRenderSearchResults={setRenderSearchResults} renderSearchResults={renderSearchResults} searchResult={searchResult} setSearchResult={setSearchResult} setResults={setStockImages} results={stockImages} isGiftSection={false} searchURL={'stockImage?'} />
             </Stack>
             
             {/*Ive set a padding bottom  to take care of the images being hidden by the canvas btns */}

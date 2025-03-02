@@ -1,16 +1,33 @@
-import { Box, CardMedia } from "@mui/material";
+import { Box, CardMedia, Stack } from "@mui/material";
+import ThemeSelector from "../themeSelector";
+import { useState } from "react";
 
 
+export default function TemplateBox({canvas}){
+    const [searchResult,setSearchResult] = useState([])
+    const [renderSearchResults,setRenderSearchResults] = useState(false)
+    const [templates,setTemplates] = useState([])
 
-export default function TemplateBox(){
-    return (
-        <Box  sx={{height:'100%',display:'flex',justifyContent:'space-around',flexWrap:'wrap',overflow:'auto', backgroundColor:'#F6F5F5'}}>
-        {
-            [...Array(10)].map(()=>(
-                <CardMedia sx={{width:{xs:'40%',md:'11vw'},pt:2 }} component="img" alt="Stanley cup."  />
-                
-            ))
+    const handleTemplateSelect = (canvasJSON)=>{
+        canvas.loadFromJSON(canvasJSON)
+        .then( r => {
+            // Get the current canvas dimensions
+            canvas.renderAll()
         }
-        </Box>
+        )
+    }
+    return (
+        <>
+            <Stack sx={{justifyContent:'center',alignItems:'center',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',width:'100%',mb:2,pb:1}}>
+                <ThemeSelector setRenderSearchResults={setRenderSearchResults} renderSearchResults={renderSearchResults} searchResult={searchResult} setSearchResult={setSearchResult} setResults={setTemplates} results={templates} isGiftSection={false} searchURL={'products?'}/>
+            </Stack>
+            <Box sx={{height:'auto',width:'100%',overflowY:'scroll',display:'flex',justifyContent:'space-around',paddingBottom:'200px',flexWrap:'wrap'}}>
+                {(renderSearchResults?searchResult:templates).map(template=>{
+                    return (
+                        <CardMedia onClick={()=>handleTemplateSelect(template.canvasJSON)} sx={{width:{xs:'40%',md:'11vw'},pt:2,objectFit:'contain' }} component="img" alt={template.name} src={template.canvasPNG} />
+                    )
+                })}
+            </Box>
+        </>
     )
 }

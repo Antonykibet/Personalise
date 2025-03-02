@@ -5,10 +5,20 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { getShit } from "../utils";
 
-export default function ThemeSelector({renderSearchResults,setRenderSearchResults,setSearchResult,searchResult,setResults,isGiftSection,disableSearch,handleOptionSelect,searchURL}){
+export default function ThemeSelector({renderSearchResults,setRenderSearchResults,setSearchResult,searchResult,setResults,isGiftSection,disableSearch,searchURL}){
     const [availableThemes, setAvailableThemes] = useState([])
     const [selectedTheme, setSelectedTheme] = useState('');
     
+    const handleOptionSelect = (event, selectedOption) => {
+            getShit(`stockImage?search=${selectedOption}`)
+            .then(data=>{
+                setSearchResult(data)
+                setRenderSearchResults(true)
+            })
+            .catch(err=>{
+                console.log(`Error on selecting option:${err}`)
+            })
+          };
 
     const handleSearchInput = (event)=>{
       //Search queries all themes
@@ -25,7 +35,6 @@ export default function ThemeSelector({renderSearchResults,setRenderSearchResult
       (async ()=>{
         const url = searchURL?`${searchURL}theme__name=${newValue}`: `products?theme__name=${newValue}`
         const response = await getShit(url)
-        console.log(response)
         setResults(response)
       })()
       setSelectedTheme(newValue)
