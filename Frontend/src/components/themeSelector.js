@@ -23,8 +23,10 @@ export default function ThemeSelector({renderSearchResults,setRenderSearchResult
 
     const handleThemeChange = (event,newValue) => {
       (async ()=>{
-          const response = await axios.get(`http://localhost:8000/products?theme__name=${newValue}`)
-          setResults(response.data)
+        const url = searchURL?`${searchURL}theme__name=${newValue}`: `products?theme__name=${newValue}`
+        const response = await getShit(url)
+        console.log(response)
+        setResults(response)
       })()
       setSelectedTheme(newValue)
     };
@@ -36,7 +38,7 @@ export default function ThemeSelector({renderSearchResults,setRenderSearchResult
             const themeType = isGiftSection?'GIFT THEME':'RANDOM THEME'
             const themes = await await getShit(`theme?type=${themeType}`)
             setAvailableThemes(themes)
-            const url = searchURL?`${searchURL}theme_name=${themes[0].name}`: `products?theme__name=${themes[0].name}`
+            const url = searchURL?`${searchURL}theme__name=${themes[0].name}`: `products?theme__name=${themes[0].name}`
             //fetch products of the first theme displayed in the tab.
             const products = await getShit(url)
             setSelectedTheme(themes[0].name)

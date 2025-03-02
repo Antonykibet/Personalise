@@ -8,5 +8,6 @@ from canvas.serializers import StockImageSerializer
 class StockImageViewSet(viewsets.ModelViewSet):
     queryset = StockImage.objects.all()
     serializer_class = StockImageSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['name','description','theme_name']
+    filter_backends = [filters.SearchFilter,DjangoFilterBackend]
+    search_fields = ['name','description']
+    filterset_fields = ['theme__type', 'theme__name']
