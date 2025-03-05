@@ -37,7 +37,7 @@ export const getShit = async (url)=>{
         return resp.data
     } catch (error) {
         console.log(`Error while fething ${url}:${error}`)
-        return [error]
+        return []
     }
     
 }

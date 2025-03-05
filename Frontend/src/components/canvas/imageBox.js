@@ -29,7 +29,12 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
                 setfocusedObject(selectedObj)
                 setIsImageUpdateMode(true)
             })
-            fabricImg.scale(0.1);
+            if (this.height<1000){
+                fabricImg.scale(0.4);
+            }else{
+                fabricImg.scale(0.1);
+            }
+                
             canvas.add(fabricImg)
             canvas.renderAll()
         }

@@ -9,32 +9,87 @@ export default function ThemeSelector({renderSearchResults,setRenderSearchResult
     const [availableThemes, setAvailableThemes] = useState([])
     const [selectedTheme, setSelectedTheme] = useState('');
     
-    const handleOptionSelect = (event, selectedOption) => {
-            getShit(`stockImage?search=${selectedOption}`)
-            .then(data=>{
-                setSearchResult(data)
-                setRenderSearchResults(true)
-            })
-            .catch(err=>{
-                console.log(`Error on selecting option:${err}`)
-            })
-          };
-
-    const handleSearchInput = (event)=>{
+    const handleOptionSelect =  async(event, selectedOption) => {
+      const uri = getSearchURI(selectedOption)
+      const resp = await querySearchAPI(uri)
+      setSearchResult(resp)
+      setRenderSearchResults(true)
+    };
+    const getResponseFromDB = async(paramValue)=>{
+      const uri = searchURL?`${searchURL}theme__name=${paramValue}`: `products?theme__name=${paramValue}`
+      const response = await getShit(uri)
+      return response
+    }
+    const generateSpotifyAccessToken = async()=>{
+      const body = {
+        grant_type:'client_credentials',
+        client_id:'9b09ba47fc574109a39cc383016cf576',
+        client_secret:'46926e5baa784eb59806d2c2cd7af5fa'
+      }
+      const headers = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+      try {
+        const resp = await axios.post('https://accounts.spotify.com/api/token',body,headers)
+        return resp.data.access_token
+      } catch (error) {
+        console.log(`Error getting spotify access token:${error}`)
+      }
+      
+    }
+    const formatSpotifySearchResponse = (resp)=>{
+      const formatedItems = []
+      const items=resp.albums.items
+      items.forEach((item)=>{
+        formatedItems.push({
+          name:item.name,
+          stock_image_url:item.images[0].url
+        })
+      })
+      return formatedItems
+    }
+    const querySpotifySearchAPI = async(uri)=>{
+      try {
+        const accessToken=await generateSpotifyAccessToken()
+        const headers = {
+          headers: {
+            'Authorization':'Bearer '+ accessToken
+          }
+        }
+        const resp = await axios.get(uri,headers)
+        const formatedResults = formatSpotifySearchResponse(resp.data)
+        return formatedResults
+      } catch (error) {
+        console.log(`Error querying spotify search${error}`)
+        return []
+      }
+    }
+    const getSearchURI = (searchInput)=>{
+      if (selectedTheme === 'Spotify'){
+        return `https://api.spotify.com/v1/search?q=${searchInput}&type=album`
+      }
+      return `${searchURL}search=${searchInput}`
+    }
+    const querySearchAPI = async(uri)=>{
+      if(selectedTheme==='Spotify'){
+        return await querySpotifySearchAPI(uri)
+      }
+      return await getShit(uri)
+    }
+    const handleSearchInput = async(event)=>{
       //Search queries all themes
-      getShit(`${searchURL}search=${event.target.value}`)
-      .then(data=>{
-        setSearchResult(data)
-      })
-      .catch(err=>{
-        console.log(`Error handling search: ${err}`)
-      })
+      const searchInput = event.target.value
+      const uri = getSearchURI(searchInput)
+      const resp = await querySearchAPI(uri)
+      setSearchResult(resp)
+      setRenderSearchResults(true)
     }
 
     const handleThemeChange = (event,newValue) => {
       (async ()=>{
-        const url = searchURL?`${searchURL}theme__name=${newValue}`: `products?theme__name=${newValue}`
-        const response = await getShit(url)
+        const response = await getResponseFromDB(newValue)
         setResults(response)
       })()
       setSelectedTheme(newValue)
