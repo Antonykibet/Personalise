@@ -5,17 +5,17 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { getShit } from "../utils";
 
-export default function ThemeSelector({renderSearchResults,setRenderSearchResults,setSearchResult,searchResult,setResults,isGiftSection,disableSearch,searchURL}){
+export default function ThemeSelector({renderSearchResults,setRenderSearchResults,setSearchResult,searchResult,setResults,isGiftSection,disableSearch,searchURI}){
     const [availableThemes, setAvailableThemes] = useState([])
     const [selectedTheme, setSelectedTheme] = useState('');
-    
+    const isTemplateEditBox = searchURI==='products?'?true:false
     const handleOptionSelect =  async(event, selectedOption) => {
-      const resp = await queryAPI(selectedOption)
+      const resp = isTemplateEditBox?await queryTemplate(selectedOption): await queryImageAPI(selectedOption)
       setSearchResult(resp)
       setRenderSearchResults(true)
     };
     const getResponseFromDB = async(paramValue)=>{
-      const uri = searchURL?`${searchURL}theme__name=${paramValue}`: `products?theme__name=${paramValue}`
+      const uri = searchURI?`${searchURI}theme__name=${paramValue}`: `products?theme__name=${paramValue}`
       const response = await getShit(uri)
       return response
     }
@@ -95,7 +95,7 @@ export default function ThemeSelector({renderSearchResults,setRenderSearchResult
         return []
       }
     }
-    const queryAPI = async(searchInput)=>{
+    const queryImageAPI = async(searchInput)=>{
       let uri
       if(selectedTheme==='Spotify'){
         uri = `https://api.spotify.com/v1/search?q=${searchInput}&type=album`
@@ -105,13 +105,22 @@ export default function ThemeSelector({renderSearchResults,setRenderSearchResult
         uri= `https://api.themoviedb.org/3/search/movie?query=${searchInput}`
         return await queryMovieAPI(uri)
       }
-      uri=`${searchURL}search=${searchInput}`
+      uri=`${searchURI}search=${searchInput}`
       return await getShit(uri)
     }
+    const queryTemplate = async(input)=>{
+      try {
+        const uri=`${searchURI}search=${input}`
+        const resp = await getShit(uri)
+        return resp
+      } catch (error) {
+        console.log(`Error querying for templates: ${error}`)
+        return []
+      }
+    }
     const handleSearchInput = async(event)=>{
-      //Search queries all themes
       const searchInput = event.target.value
-      const resp = await queryAPI(searchInput)
+      const resp = isTemplateEditBox? await queryTemplate(searchInput): await queryImageAPI(searchInput)
       setSearchResult(resp)
       setRenderSearchResults(true)
     }
@@ -129,9 +138,9 @@ export default function ThemeSelector({renderSearchResults,setRenderSearchResult
     useEffect(()=>{
         (async ()=>{
             const themeType = isGiftSection?'GIFT THEME':'RANDOM THEME'
-            const themes = await await getShit(`theme?type=${themeType}`)
+            const themes = await getShit(`theme?type=${themeType}`)
             setAvailableThemes(themes)
-            const url = searchURL?`${searchURL}theme__name=${themes[0].name}`: `products?theme__name=${themes[0].name}`
+            const url = searchURI?`${searchURI}theme__name=${themes[0].name}`: `products?theme__name=${themes[0].name}`
             //fetch products of the first theme displayed in the tab.
             const products = await getShit(url)
             setSelectedTheme(themes[0].name)
