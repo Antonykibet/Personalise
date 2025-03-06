@@ -55,7 +55,8 @@ export default function ThemeSelector({productDetail,renderSearchResults,setRend
       items.forEach((item)=>{
         formatedItems.push(
           {
-            name:item.title,
+            //The Tv show payload is a lil bit different from the films, it doesnt have the title attribute.
+            name:selectedTheme==='Film'?item.title:item.name,
             stock_image_url:`https://image.tmdb.org/t/p/w500${item.poster_path}`
           }
         )
@@ -87,7 +88,6 @@ export default function ThemeSelector({productDetail,renderSearchResults,setRend
           }
         }
         const resp = await axios.get(uri,headers)
-        console.log(resp.data)
         const formatedResults = formatMovieSearchResponse(resp.data)
         return formatedResults
       } catch (error) {
@@ -103,6 +103,10 @@ export default function ThemeSelector({productDetail,renderSearchResults,setRend
       }
       if(selectedTheme==='Film'){
         uri= `https://api.themoviedb.org/3/search/movie?query=${searchInput}`
+        return await queryMovieAPI(uri)
+      }
+      if(selectedTheme==='TV Show'){
+        uri= `https://api.themoviedb.org/3/search/tv?query=${searchInput}`
         return await queryMovieAPI(uri)
       }
       uri=`${searchURI}search=${searchInput}&theme__name=${selectedTheme}`
@@ -127,6 +131,7 @@ export default function ThemeSelector({productDetail,renderSearchResults,setRend
     }
 
     const handleThemeChange = (event,newValue) => {
+      console.log(newValue);
       (async ()=>{
         const response = await getResponseFromDB(newValue)
         setResults(response)
@@ -160,10 +165,10 @@ export default function ThemeSelector({productDetail,renderSearchResults,setRend
                     value={selectedTheme}
                     onChange={handleThemeChange}
                     variant="scrollable"
-                    scrollButtons="auto"
+                    scrollButtons={false}
                     aria-label="Themes"
                     indicatorColor="transparent"
-                    sx={{ minHeight: "30px", height: "30px", mb:1 }}
+                    sx={{ minHeight: "30px", height: "30px",width:'95%', mb:1,}}
                     >
                         {availableThemes.map((theme)=>{
                             return <Tab sx={{border:'solid',borderRadius:8,borderWidth:2,mr:1,minHeight: "30px", height: "30px" }} value={theme.name} label={theme.name} />
