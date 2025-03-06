@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { getShit } from "../utils";
 
-export default function ThemeSelector({renderSearchResults,setRenderSearchResults,setSearchResult,searchResult,setResults,isGiftSection,disableSearch,searchURI}){
+export default function ThemeSelector({productDetail,renderSearchResults,setRenderSearchResults,setSearchResult,searchResult,setResults,isGiftSection,disableSearch,searchURI}){
     const [availableThemes, setAvailableThemes] = useState([])
     const [selectedTheme, setSelectedTheme] = useState('');
     const isTemplateEditBox = searchURI==='products?'?true:false
@@ -105,12 +105,13 @@ export default function ThemeSelector({renderSearchResults,setRenderSearchResult
         uri= `https://api.themoviedb.org/3/search/movie?query=${searchInput}`
         return await queryMovieAPI(uri)
       }
-      uri=`${searchURI}search=${searchInput}`
+      uri=`${searchURI}search=${searchInput}&theme__name=${selectedTheme}`
       return await getShit(uri)
     }
     const queryTemplate = async(input)=>{
       try {
-        const uri=`${searchURI}search=${input}`
+        console.log(productDetail);
+        const uri=`${searchURI}search=${input}&theme__name=${selectedTheme}&base_product__name=${productDetail.base_product.name}`
         const resp = await getShit(uri)
         return resp
       } catch (error) {

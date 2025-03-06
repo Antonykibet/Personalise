@@ -11,7 +11,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = ThemedProduct.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['theme__type', 'theme__name']
+    filterset_fields = ['theme__type', 'theme__name','base_product__name']
 
 
 class ThemeViewSet(viewsets.ModelViewSet):

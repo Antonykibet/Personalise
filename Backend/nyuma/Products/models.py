@@ -21,7 +21,7 @@ class ThemedProduct(models.Model):
     name = models.CharField(max_length=200,null=True, unique=True)
     theme = models.ForeignKey(Theme,on_delete=models.PROTECT,
         related_name='products',null=True)
-    base_product_url = models.ForeignKey(AvailableProducts,on_delete=models.PROTECT,
+    base_product = models.ForeignKey(AvailableProducts,on_delete=models.PROTECT,
         related_name='themed_products',null=True)
     price = models.IntegerField(null=True)
     canvasJSON = models.JSONField()
