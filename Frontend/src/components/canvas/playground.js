@@ -42,10 +42,9 @@ let initialRenderInfoModal = {
     borderRadius:2,
     backgroundColor:'white',
     p:0.5,
-    width:'90%',
+    width:'auto',
     height:'auto',
-    justifyContent:'center',
-    alignItems:'center'
+    textAlign:'center'
     }
 
 export default function Playground({isAdmin, handleFormDataEntry,formStateHandler,productDetail}){
@@ -77,7 +76,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
         handleExpandBox()
     }
 
-    const handleButtonClick = (buttonType) => {
+    const handleEditButtonClick = (buttonType) => {
         setSelectedEditButton(buttonType);
     };
     
@@ -220,7 +219,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                             backgroundColor:'white',
                             position:'absolute',
                                     bottom:'0px',}}>
-                            <CanvasEditingBtns handleButtonClick={handleButtonClick} selectedEditButton={selectedEditButton}/>
+                            <CanvasEditingBtns handleButtonClick={handleEditButtonClick} selectedEditButton={selectedEditButton}/>
                             <Button  
                                 sx={{
                                     m:1,
@@ -241,14 +240,13 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                 <Stack onTouchStart={()=>setIsboxExpanded(false)} sx={{position:'relative', width:{md:'60vw',xs:'100%'}, height:{md:'40%',xs:'70%'} ,display:'flex',justifyContent:'bottom',alignItems:{xs:'bottom'}}} ref={canvasWrapper}  id='canvasWrapper'>
                     <canvas style={{position:'fixed'}}  id="canvas" />
                     {
-                        initialRenderInfo.productType==='originalProduct'?<Button onClick={handleAddImage} sx={initialRenderInfoModal}>Add Image</Button>:
-                        initialRenderInfo.productType==='themedProduct'?<Typography sx={initialRenderInfoModal}>Select image to change</Typography>:''
-                    }
-                    {
+                        initialRenderInfo.productType==='originalProduct'&&!isImageUpdateMode?<Button onClick={handleAddImage} sx={initialRenderInfoModal}>Add Image</Button>:
+                        initialRenderInfo.productType==='themedProduct'&&!isImageUpdateMode?<Typography sx={initialRenderInfoModal}>Select an image to change</Typography>:
                         focusedObject.type === 'Text'?<TextFieldEditModal focusedObject = {focusedObject.object} canvas={canvas}/>:
                         focusedObject.type === 'Shape'?<ShapeModal focusedObject = {focusedObject.object} canvas={canvas}/>:
                         focusedObject.type === 'Image'?<ImageModal focusedObject = {focusedObject.object} canvas={canvas} handleAddImage={handleAddImage}/>:''
                     }
+                    
                 </Stack>
 
             </Stack>
