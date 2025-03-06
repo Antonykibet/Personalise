@@ -1,12 +1,34 @@
 import { Button, IconButton, Stack } from "@mui/material"
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import LockIcon from '@mui/icons-material/Lock';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { useTheme } from "@emotion/react";
+import { useState } from "react";
 
 export default function ImageModal({canvas,focusedObject,handleAddImage}){
     const theme = useTheme() 
+    const [isLocked,setIsLocked] = useState(false)
     const handleDelete = ()=>{
         canvas.remove(focusedObject)
     }
+    const lockState = {
+        lockMovementX: isLocked,
+        lockMovementY:isLocked,
+        lockRotation:isLocked,
+        lockScalingX:isLocked,
+        lockScalingY:isLocked
+    }
+    const handleImageLock = ()=>{
+        setIsLocked(false)
+        focusedObject.set(lockState)
+        canvas.renderAll()
+    }
+    const handleImageUnlock = ()=>{
+        setIsLocked(true)
+        focusedObject.set(lockState)
+        canvas.renderAll()
+    }
+    
     return (
         <Stack 
             direction='row'
@@ -27,10 +49,14 @@ export default function ImageModal({canvas,focusedObject,handleAddImage}){
                     alignItems:'center'
                 }}>
             <Button onClick={handleAddImage} disableElevation variant='outlined' sx={{fontFamily:'poppins'}}>change</Button>
+            <IconButton >
+                {isLocked?<LockIcon onClick={handleImageLock} size='large' sx={{color:theme.palette.primary.main}}/>:<LockOpenIcon onClick={handleImageUnlock} size='large'/>}
+            </IconButton>
 
             <IconButton onClick={handleDelete}>
                 <DeleteOutlineIcon size='large' sx={{color:theme.palette.primary.main}}/>
             </IconButton>
+            
         </Stack>
     )
 }
