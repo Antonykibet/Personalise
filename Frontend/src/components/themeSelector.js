@@ -163,7 +163,6 @@ export default function ThemeSelector({productDetail,renderSearchResults,setRend
                     scrollButtons="auto"
                     aria-label="Themes"
                     indicatorColor="transparent"
-                    textColor="red"
                     sx={{ minHeight: "30px", height: "30px", mb:1 }}
                     >
                         {availableThemes.map((theme)=>{
