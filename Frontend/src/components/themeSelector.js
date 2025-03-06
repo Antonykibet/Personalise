@@ -10,8 +10,7 @@ export default function ThemeSelector({renderSearchResults,setRenderSearchResult
     const [selectedTheme, setSelectedTheme] = useState('');
     
     const handleOptionSelect =  async(event, selectedOption) => {
-      const uri = getSearchURI(selectedOption)
-      const resp = await querySearchAPI(uri)
+      const resp = await queryAPI(selectedOption)
       setSearchResult(resp)
       setRenderSearchResults(true)
     };
@@ -23,8 +22,8 @@ export default function ThemeSelector({renderSearchResults,setRenderSearchResult
     const generateSpotifyAccessToken = async()=>{
       const body = {
         grant_type:'client_credentials',
-        client_id:'9b09ba47fc574109a39cc383016cf576',
-        client_secret:'46926e5baa784eb59806d2c2cd7af5fa'
+        client_id:process.env.REACT_APP_CLIENT_ID,
+        client_secret:process.env.REACT_APP_CLIENT_SECRET,
       }
       const headers = {
         headers: {
@@ -50,7 +49,20 @@ export default function ThemeSelector({renderSearchResults,setRenderSearchResult
       })
       return formatedItems
     }
-    const querySpotifySearchAPI = async(uri)=>{
+    const formatMovieSearchResponse = (resp)=>{
+      const formatedItems = []
+      const items=resp.results
+      items.forEach((item)=>{
+        formatedItems.push(
+          {
+            name:item.title,
+            stock_image_url:`https://image.tmdb.org/t/p/w500${item.poster_path}`
+          }
+        )
+      })
+      return formatedItems
+    }
+    const querySpotifyAPI = async(uri)=>{
       try {
         const accessToken=await generateSpotifyAccessToken()
         const headers = {
@@ -62,27 +74,44 @@ export default function ThemeSelector({renderSearchResults,setRenderSearchResult
         const formatedResults = formatSpotifySearchResponse(resp.data)
         return formatedResults
       } catch (error) {
-        console.log(`Error querying spotify search${error}`)
+        console.log(`Error querying spotify: ${error}`)
         return []
       }
     }
-    const getSearchURI = (searchInput)=>{
-      if (selectedTheme === 'Spotify'){
-        return `https://api.spotify.com/v1/search?q=${searchInput}&type=album`
+    const queryMovieAPI = async(uri)=>{
+      try {
+        const accessToken=process.env.REACT_APP_MOVIE_ACCESS_TOKEN
+        const headers = {
+          headers: {
+            'Authorization':'Bearer '+ accessToken
+          }
+        }
+        const resp = await axios.get(uri,headers)
+        console.log(resp.data)
+        const formatedResults = formatMovieSearchResponse(resp.data)
+        return formatedResults
+      } catch (error) {
+        console.log(`Error querying movie: ${error}`)
+        return []
       }
-      return `${searchURL}search=${searchInput}`
     }
-    const querySearchAPI = async(uri)=>{
+    const queryAPI = async(searchInput)=>{
+      let uri
       if(selectedTheme==='Spotify'){
-        return await querySpotifySearchAPI(uri)
+        uri = `https://api.spotify.com/v1/search?q=${searchInput}&type=album`
+        return await querySpotifyAPI(uri)
       }
+      if(selectedTheme==='Film'){
+        uri= `https://api.themoviedb.org/3/search/movie?query=${searchInput}`
+        return await queryMovieAPI(uri)
+      }
+      uri=`${searchURL}search=${searchInput}`
       return await getShit(uri)
     }
     const handleSearchInput = async(event)=>{
       //Search queries all themes
       const searchInput = event.target.value
-      const uri = getSearchURI(searchInput)
-      const resp = await querySearchAPI(uri)
+      const resp = await queryAPI(searchInput)
       setSearchResult(resp)
       setRenderSearchResults(true)
     }
