@@ -186,7 +186,10 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
         <>
             <Stack  sx={ModalStyle} direction={isPhone||isTablet ? 'column':'row'}   > 
                 <Stack 
-                    onTouchStart={()=>setIsboxExpanded(true)}
+                    //use onClick instead of onTouchStart becoz of the 
+                    //double clicking and unexpected behaviuors
+                    //that so uninted image selection in the Image & Template box. 
+                    onClick={()=>setIsboxExpanded(true)}
                     direction={{md:'row',xs:'column'}}
                     sx={{
                         position:{xs:'fixed',md:'static'},
@@ -241,7 +244,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                     <canvas style={{position:'fixed'}}  id="canvas" />
                     {
                         initialRenderInfo.productType==='originalProduct'&&!isImageUpdateMode?<Button onClick={handleAddImage} sx={initialRenderInfoModal}>Add Image</Button>:
-                        initialRenderInfo.productType==='themedProduct'&&!isImageUpdateMode?<Typography sx={initialRenderInfoModal}>Select an image to change</Typography>:
+                        initialRenderInfo.productType==='themedProduct'&&!isImageUpdateMode?<Typography sx={initialRenderInfoModal}>Select image to change</Typography>:
                         focusedObject.type === 'Text'?<TextFieldEditModal focusedObject = {focusedObject.object} canvas={canvas}/>:
                         focusedObject.type === 'Shape'?<ShapeModal focusedObject = {focusedObject.object} canvas={canvas}/>:
                         focusedObject.type === 'Image'?<ImageModal focusedObject = {focusedObject.object} canvas={canvas} handleAddImage={handleAddImage}/>:''

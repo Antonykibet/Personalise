@@ -131,7 +131,6 @@ export default function ThemeSelector({productDetail,renderSearchResults,setRend
     }
 
     const handleThemeChange = (event,newValue) => {
-      console.log(newValue);
       (async ()=>{
         const response = await getResponseFromDB(newValue)
         setResults(response)
