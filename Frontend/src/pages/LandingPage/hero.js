@@ -1,4 +1,4 @@
-import { Button, Stack, Typography, } from "@mui/material"
+import { Box, Button, Stack, Typography, } from "@mui/material"
 import 'react-multi-carousel/lib/styles.css';
 import { useTheme } from "@emotion/react";
 
@@ -6,88 +6,26 @@ import { useTheme } from "@emotion/react";
 
 export default function Hero(){
   const theme = useTheme()
-    // const responsive = {
-    //     superLargeDesktop: {
-    //       // the naming can be any, depends on you.
-    //       breakpoint: { max: 4000, min: 3000 },
-    //       items: 5
-    //     },
-    //     desktop: {
-    //       breakpoint: { max: 3000, min: 1024 },
-    //       items: 3
-    //     },
-    //     tablet: {
-    //       breakpoint: { max: 1024, min: 464 },
-    //       items: 4
-    //     },
-    //     mobile: {
-    //       breakpoint: { max: 464, min: 0 },
-    //       items: 3
-    //     }
-    //   };
-    // return (
-    //     <div>
-    //         <Stack direction={{xs:'column',md:'row',lg:'row',xl:'row'}}  px={4} py={4} mx={4} my={4} sx={{height:{xs:'auto',md:'70vh', } ,backgroundColor:'#e45a00',borderRadius:'12px'}}>
-    //             <Stack width={{xs:'100%',md:'50%',lg:'50%',xl:'50%' }} spacing={1} alignItems='flex-start' justifyContent='center'>
-    //                 <Typography  component='h1' color="#ffffff" fontWeight='700' variant="h3">
-    //                     Personalize  Everything.
-    //                 </Typography>
-    //                 <Typography component='p' color="#ffffff"  variant="p">
-    //                   Some bullshit text some bullshit text some bullshit text some bullshit text some bullshit text.
-    //                 </Typography>
-    //                 <Button width='200px' sx={{backgroundColor:'white',color:'#e45a00', fontWeight:'700',borderRadius:4,display:{xs:'none',md:'block',lg:'block',xl:'block' }}} variant="solid"  >Shop Now</Button>
-    //             </Stack>
-    //             <Stack width = {{xs:'100%',md:'50%',lg:'50%',xl:'50%' }} my={{xs:2}}  justifyContent='space-around'>
-    //               <Carousel arrows={false} customTransition='transform 1000ms linear' infinite={true} autoPlay={true} autoPlaySpeed={2000} responsive={responsive}>
-    //                 <img width='100px' height='100px' src={logo} alt=""/>
-    //                 <img width='100px' src={logo} alt=""/>
-    //                 <img width='100px' src={logo} alt=""/>
-    //                 <img width='100px' src={logo} alt=""/>
-    //                 <img width='100px' src={logo} alt=""/>
-    //                 <img width='100px' src={logo} alt=""/>
-    //               </Carousel>
-    //               <Carousel arrows={false} customTransition='transform 1000ms linear' infinite={true} autoPlay={true} autoPlaySpeed={2000} responsive={responsive}>
-    //                 <img width='100px' height='100px' src={logo} alt=""/>
-    //                 <img width='100px' src={logo} alt=""/>
-    //                 <img width='100px' src={logo} alt=""/>
-    //                 <img width='100px' src={logo} alt=""/>
-    //                 <img width='100px' src={logo} alt=""/>
-    //                 <img width='100px' src={logo} alt=""/>
-    //               </Carousel>
-    //               <Carousel arrows={false} customTransition='transform 1000ms linear' infinite={true} autoPlay={true} autoPlaySpeed={2000} responsive={responsive}>
-    //                 <img width='100px' height='100px' src={logo} alt=""/>
-    //                 <img width='100px' src={logo} alt=""/>
-    //                 <img width='100px' src={logo} alt=""/>
-    //                 <img width='100px' src={logo} alt=""/>
-    //                 <img width='100px' src={logo} alt=""/>
-    //                 <img width='100px' src={logo} alt=""/>
-    //               </Carousel>
-    //             </Stack>
-    //             <Box>
-    //               <Button width='200px' sx={{backgroundColor:'white',color:'#e45a00', fontWeight:'700',borderRadius:4,display:{md:'none',lg:'none',xl:'none'}}} variant="solid"  >Shop Now</Button>
-    //             </Box>
-    //         </Stack>
-            
-    //     </div>
-    // )
     return(
       <>
-        <Stack my={2} p={{md:4,xs:1}} spacing={1} direction='column'>
-          <Stack spacing={1} direction={{xs:'column',md:'row'}} >
-            <Stack sx={{py:2,justifyContent:'space-between',alignItems:'center',borderRadius:2,width:{md:'65%',xs:'100%'}, height:{md:'65vh'},backgroundColor:'#EE7A13'}}>
-              <Stack mx={3} spacing={1}>
-                <Typography variant="h4" sx={{fontFamily:'poppins',fontWeight:700,color:'white'}}>Personalise with Ease.</Typography>
+        <Stack sx={{width:'100%',height:'80vh',alignItems:'center'}}>
+          <Stack direction={{xs:'column',md:'row',xl:'row'}} sx={{my:2,py:2,px:2,justifyContent:'space-around',alignItems:'center',borderRadius:2,width:{xs:'95%',md:'90%',lg:'90%',xl:'90%'},height:'100%',backgroundColor:'#EE7A13'}}>
+            
+            <Stack sx={{alignItems:'start',justifyContent:{md:'space-around'},height:{md:'90%'},width:{md:'45%'}}} mx={3} spacing={1}>
+              <Box>
+                <Typography variant="h2" sx={{fontFamily:'poppins',fontWeight:700,color:'white',fontSize:{md:'80px'}}}>Personalise with Ease.</Typography>
                 <Typography variant="p" sx={{fontFamily:'poppins',fontWeight:500,color:'white'}}>Design and get customizable products at your comfort, 
-                no design skills required.</Typography>
-              </Stack>
-              <Stack mx={3} my={2} sx={{borderRadius:2,width:{md:'35%',xs:'90%'} ,height:{md:'65vh',xs:'40vh'},border:'solid'}}></Stack>
-              <Stack mx={3}  spacing={2} sx={{width:'90%'}} direction='row'>
-                <Button disableElevation variant="contained" sx={{width:'auto',color:theme.palette.primary.main,backgroundColor:'white',fontFamily:'poppins',borderRadius:4}}>Customize Gift</Button>
-              </Stack>
+                  no design skills required.</Typography>
+              </Box>
+              <Button disableElevation variant="contained" sx={{display:{xs:'none',md:'block',xl:'block'},width:'auto',color:theme.palette.primary.main,backgroundColor:'white',fontFamily:'poppins',borderRadius:4}}>Customize Gift</Button>
+            </Stack>
+
+            <Stack mx={3} my={2} sx={{borderRadius:2,width:{md:'40%',xs:'90%'} ,height:{md:'65vh',xs:'40vh'},border:'solid'}}></Stack>
+            <Stack mx={3}  spacing={2} sx={{width:'90%',display:{md:'none',xl:'none'}}} direction='row'>
+              <Button disableElevation variant="contained" sx={{width:'auto',color:theme.palette.primary.main,backgroundColor:'white',fontFamily:'poppins',borderRadius:4}}>Customize Gift</Button>
             </Stack>
           </Stack>
-          
-        </Stack>
+        </Stack>      
       </>
     )
 }

@@ -30,7 +30,7 @@ function ResponsiveAppBar() {
     <>
       <AppBar sx={{backgroundColor:'#ffffff',justifyContent:'space-between'} } position="static">
         
-          <Toolbar disableGutters sx={{display:'flex',justifyContent:'space-between',px:{md:5,lg:5,xl:5,xs:1}}}>
+          <Toolbar disableGutters sx={{display:'flex',justifyContent:'space-between',px:{md:10,lg:10,xl:10,xs:1}}}>
             <Stack direction="row" alignItems='center'>
               <AutoFixHighIcon sx={{ color:'#e45a00', }} />
               <Typography
