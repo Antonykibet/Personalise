@@ -23,24 +23,24 @@ function ResponsiveAppBar() {
   return (
     <>
       <AppBar sx={{backgroundColor:'#ffffff',justifyContent:'space-between'} } position="static">
-        <Container maxWidth="xl" >
-          <Toolbar disableGutters sx={{display:'flex',justifyContent:'space-between'}}>
+        
+          <Toolbar disableGutters sx={{display:'flex',justifyContent:'space-between',px:{md:5,lg:5,xl:5,xs:1}}}>
             <Stack direction="row" alignItems='center'>
-            <AutoFixHighIcon sx={{ color:'#e45a00', }} />
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                  display: 'flex',
-                  fontFamily: 'Poppins',
-                  fontWeight: 700,
-                  textDecoration:'none',
-                  color: '#e45a00',
-                }}
-              >
-                Personalyze
+              <AutoFixHighIcon sx={{ color:'#e45a00', }} />
+              <Typography
+                variant="h6"
+                noWrap
+                component="a"
+                href="/"
+                sx={{
+                    display: 'flex',
+                    fontFamily: 'Poppins',
+                    fontWeight: 700,
+                    textDecoration:'none',
+                    color: '#e45a00',
+                  }}
+                >
+                  Personalyze
               </Typography>
             </Stack>
             
@@ -74,7 +74,7 @@ function ResponsiveAppBar() {
               <Link href='/sign-in'><AccountCircleSharpIcon sx={{color: '#000000',fontSize:'26px'}}/></Link>
             </Stack>
           </Toolbar>
-        </Container>
+
         <Stack direction='row' sx={{display:{md:'none',lg:'none',xl:'none'},paddingBottom:1, px:1, alignItems:'center', justifyContent:'space-between'}}>
           <IconButton onClick={toggleMenu}>
             <MenuIcon sx={{color: '#000000',fontSize:'26px'}}/>
