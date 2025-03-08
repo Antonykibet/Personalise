@@ -14,6 +14,7 @@ import CanvasEditingBtns from './canvasBtns';
 import ShapeBox from './shapeBox.js';
 import ImageModal from './editModals/imageModal.js';
 
+//usiguze hii tafadhali!!
 FabricObject.customProperties = ['id'];
 
 let ModalStyle = {

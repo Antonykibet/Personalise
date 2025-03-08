@@ -1,8 +1,6 @@
-import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
 import Button from '@mui/material/Button';
@@ -10,16 +8,24 @@ import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import { InputAdornment, Stack, Link, Autocomplete,TextField,IconButton, useMediaQuery} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
-
-const pages = ['Products', 'Pricing', 'Blog','Products', 'Pricing', 'Blog','Products', 'Pricing', 'Blog','Pricing', 'Blog','Products', 'Pricing', 'Blog'];
+import { useEffect, useState } from 'react';
+import { getShit } from "../utils";
 
 function ResponsiveAppBar() {
-  const [menuOpen, setmenuOpen] = React.useState(false)
+  const [menuOpen, setmenuOpen] = useState(false)
+  const [availableItems,setAvailableItems] = useState([])
   let menuDisplay = menuOpen === true ? 'flex' : 'none'
   const isPhone = useMediaQuery('(max-width: 768px)');
   const isTablet = useMediaQuery('(max-width: 820px)');
 
   const toggleMenu = ()=> setmenuOpen(!menuOpen)
+
+  useEffect(()=>{
+    getShit('availableItem')
+            .then(data=>setAvailableItems(data))
+            .catch(err=>console.log(err))
+  },[])
+
   return (
     <>
       <AppBar sx={{backgroundColor:'#ffffff',justifyContent:'space-between'} } position="static">
@@ -106,16 +112,16 @@ function ResponsiveAppBar() {
               />
         </Stack>
         <Stack 
-          sx={{backgroundColor:'rgb(245, 246, 250)',display:{xs:menuDisplay,md:'flex',lg:'flex',xl:'flex'}}} 
+          sx={{backgroundColor:'rgb(245, 246, 250)',display:{xs:menuDisplay,md:'flex',lg:'flex',xl:'flex',overflowX:'auto'}}} 
           direction={isPhone||isTablet ? 'column':'row'}  
           justifyContent={'center'} >
-            {pages.map((page) => (
+            {availableItems.map((item) => (
                     <Button 
-                        href={`/category/${page}`}
-                        key={page}
-                        sx={{ my: 0, color: '#000000', display: 'block', fontFamily:'poppins' }}
+                        href={`/category/${item.name}`}
+                        key={item.name}
+                        sx={{ my: 0, color: '#000000', display: 'block', fontFamily:'poppins',mx:0.5}}
                     >
-                      {page}
+                      {item.name}
                     </Button>
             ))}
         </Stack>

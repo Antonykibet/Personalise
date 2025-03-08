@@ -2,7 +2,6 @@ import { Box, Button, Stack, Typography } from "@mui/material"
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useState } from "react";
 import { FabricImage } from 'fabric';
-import { getShit } from "../../utils";
 import ThemeSelector from "../themeSelector";
 
 
