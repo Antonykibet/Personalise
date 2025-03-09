@@ -8,13 +8,13 @@ import { Link } from 'react-router-dom';
 
 export default function ProductCard({productDetails}) {
   return (
-    <Card variant='plain' sx={{position: 'relative',width:{xs:'40vw'},border:'solid', borderColor:'#727272', borderRadius:2}}>
+    <Card variant='plain' sx={{position: 'relative',width:{xs:'40vw',md:'13vw'},mr:2,mb:1,border:'solid', borderColor:'#727272', borderRadius:2,flexShrink: 0}}>
       <CardHeader 
         sx={{position: 'absolute', top: 0,right:0}}
         action={<IconButton>
             <FavoriteBorderIcon/>
           </IconButton>}/>
-      <Link to={`/products/${productDetails.id}`} target="_top">
+      <Link style={{color:'inherit',textDecoration:'none'}} to={`/products/${productDetails.id}`} target="_top">
         <img style={{width:'100%',height:'auto'}} src={productDetails.canvasPNG} alt={productDetails.name}/>
         <Stack m={0.5} >
           <Typography variant='p' sx={{fontWeight:700,fontSize:'16px',fontFamily:'Inter'}}>{productDetails.name}</Typography>

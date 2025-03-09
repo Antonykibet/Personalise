@@ -167,7 +167,7 @@ export default function ThemeSelector({productDetail,renderSearchResults,setRend
                     scrollButtons={false}
                     aria-label="Themes"
                     indicatorColor="transparent"
-                    sx={{ minHeight: "30px", height: "30px",width:'95%', mb:1,}}
+                    sx={{ minHeight: "30px", height: "30px",width:'100%', mb:1,}}
                     >
                         {availableThemes.map((theme)=>{
                             return <Tab sx={{border:'solid',borderRadius:8,borderWidth:2,mr:1,minHeight: "30px", height: "30px" }} value={theme.name} label={theme.name} />
