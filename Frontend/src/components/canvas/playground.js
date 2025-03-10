@@ -252,7 +252,10 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                 <Stack onTouchStart={()=>setIsboxExpanded(false)} sx={{position:'relative', width:{md:'60vw',xs:'100%'}, height:{md:'40%',xs:'70%'} ,display:'flex',justifyContent:'bottom',alignItems:{xs:'bottom'}}} ref={canvasWrapper}  id='canvasWrapper'>
                     <canvas style={{position:'fixed'}}  id="canvas" />
                     {
-                        
+                        initialRenderInfo.productType==='originalProduct'&&!isImageUpdateMode?<Button onClick={handleAddImage} sx={initialRenderInfoModal}>Add Image</Button>:
+                        initialRenderInfo.productType==='themedProduct'&&!isImageUpdateMode?<Typography sx={initialRenderInfoModal}>Select item to change</Typography>:''
+                    }
+                    {
                         focusedObject.type === 'Text'?<TextFieldEditModal focusedObject = {focusedObject.object} canvas={canvas}/>:
                         focusedObject.type === 'Shape'?<ShapeModal focusedObject = {focusedObject.object} canvas={canvas}/>:
                         focusedObject.type === 'Image'?<ImageModal focusedObject = {focusedObject.object} canvas={canvas} handleAddImage={handleAddImage}/>:''
