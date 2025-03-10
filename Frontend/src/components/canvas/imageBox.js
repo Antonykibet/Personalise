@@ -48,10 +48,9 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
         img.src = selectedImg.stock_image_url
         img.crossOrigin = "anonymous";
         img.onload = ()=>{
-            focusedObject.object.setSrc(img.src)
-            canvas.renderAll()
-        }
-        
+            focusedObject.object.setSrc(img.src,()=>canvas.renderAll())
+        }   
+        setTimeout(()=>canvas.renderAll(),500)
     }
     return(
         <Box  sx={{height:'100%',display:'flex',flexDirection:'column',alignItems:'center',overflow:'auto', backgroundColor:'#F6F5F5'}}>
