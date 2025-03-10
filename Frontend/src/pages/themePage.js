@@ -17,10 +17,10 @@ export default function TemplatePage(){
     },[])
     return (
         <Stack m={3}>
-                <Typography variant="h4" sx={{fontFamily:'Montserrat',fontWeight:700,color:'rgb(34, 34, 34)'}}>{theme}</Typography> 
-                <Box sx={{display:'flex',justifyContent:'space-around',flexWrap:'wrap',mt:2}}>
-                    {templates.map((template)=><ProductCard productDetails={template}/>)}
-                </Box>
+            <Typography variant="h4" sx={{fontFamily:'Montserrat',fontWeight:700,color:'rgb(34, 34, 34)'}}>{theme}</Typography> 
+            <Box sx={{display:'flex',justifyContent:'space-around',flexWrap:'wrap',mt:2}}>
+                {templates.map((template)=><ProductCard productDetails={template}/>)}
+            </Box>
         </Stack>
     )
 }

@@ -66,11 +66,12 @@ export default function ProductCreationForm(){
                 sx={{my:1}}
                 fullWidth
                 labelId="demo-simple-select-label"
-                id="theme-select"
-                value={selectedTheme}
+                id="availableItem-select"
+                value={selectedAvailableProduct}
                 label='Item select'
                 onChange={(e)=>{
                     const selectedAvailable = e.target.value
+                    handleFormDataEntry('base_product',setFormData,selectedAvailable.id)
                     setSelectedAvailableProduct(selectedAvailable)
                 }}
             >

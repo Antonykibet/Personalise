@@ -1,7 +1,6 @@
 import './App.css';
 import Landing from './pages/LandingPage/landing';
 import ProductPage from './pages/productPage';
-import CategoryPage from './pages/categoryPage';
 import Layout from './components/layout';
 import { Route,Routes,BrowserRouter } from 'react-router-dom';
 
@@ -11,6 +10,7 @@ import SignUp from './pages/sign-up/SignUp';
 import AdminPage from './pages/Admin/admin';
 import { createTheme, ThemeProvider,  } from '@mui/material';
 import TemplatePage from './pages/themePage';
+import AvailableItemsPage from './pages/availableItemsPage';
 
 const theme = createTheme({
   palette: {
@@ -29,7 +29,7 @@ function App() {
             <Route path='/' element={<Landing/>}/>
             <Route path='products/:productid' element={<ProductPage/>}/>
             <Route path='availableItem/:id' element={<ProductPage/>}/>
-            <Route path='category/:category' element={<CategoryPage />}/>
+            <Route path='availableItems/:item' element={<AvailableItemsPage />}/>
             <Route path='template/:theme' element={<TemplatePage />}/>
             <Route path='checkout' element={<Checkout />}/>
             <Route path='sign-in' element={<SignIn />} />

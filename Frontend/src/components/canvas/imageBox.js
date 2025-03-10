@@ -65,7 +65,7 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
                     >
                     Upload Image
                 </Button>
-                <ThemeSelector selectedTheme={selectedTheme} setSelectedTheme={selectedTheme} setRenderSearchResults={setRenderSearchResults} renderSearchResults={renderSearchResults} searchResult={searchResult} setSearchResult={setSearchResult} setResults={setStockImages} results={stockImages} isGiftSection={false} searchURI={'stockImage?'} />
+                <ThemeSelector selectedTheme={selectedTheme} setSelectedTheme={setSelectedTheme} setRenderSearchResults={setRenderSearchResults} renderSearchResults={renderSearchResults} searchResult={searchResult} setSearchResult={setSearchResult} setResults={setStockImages} results={stockImages} isGiftSection={false} searchURI={'stockImage?'} />
             </Stack>
             
             {/*Ive set a padding bottom  to take care of the images being hidden by the canvas btns */}

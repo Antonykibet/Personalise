@@ -22,8 +22,8 @@ function ResponsiveAppBar() {
 
   useEffect(()=>{
     getShit('availableItem')
-            .then(data=>setAvailableItems(data))
-            .catch(err=>console.log(err))
+      .then(data=>setAvailableItems(data))
+      .catch(err=>console.log(err))
   },[])
 
   return (
@@ -117,7 +117,7 @@ function ResponsiveAppBar() {
           justifyContent={'center'} >
             {availableItems.map((item) => (
                     <Button 
-                        href={`/category/${item.name}`}
+                        href={`/availableItems/${item.name}`}
                         key={item.name}
                         sx={{ my: 0, color: '#000000', display: 'block', fontFamily:'poppins',mx:0.5}}
                     >
