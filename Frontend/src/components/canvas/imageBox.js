@@ -29,6 +29,10 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
                 setfocusedObject(selectedObj)
                 setIsImageUpdateMode(true)
             })
+            fabricImg.on('deselected',()=>{
+                setfocusedObject({type:null,object:null})
+                setIsImageUpdateMode(false)
+            })
             if (this.height<1000){
                 fabricImg.scale(0.4);
             }else{

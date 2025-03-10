@@ -258,7 +258,7 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                     {
                         focusedObject.type === 'Text'?<TextFieldEditModal focusedObject = {focusedObject.object} canvas={canvas}/>:
                         focusedObject.type === 'Shape'?<ShapeModal focusedObject = {focusedObject.object} canvas={canvas}/>:
-                        focusedObject.type === 'Image'?<ImageModal focusedObject = {focusedObject.object} canvas={canvas} handleAddImage={handleAddImage}/>:''
+                        focusedObject.type === 'Image'?<ImageModal setfocusedObject={setfocusedObject} focusedObject = {focusedObject.object} canvas={canvas} handleAddImage={handleAddImage}/>:''
                     }
                     
                 </Stack>
