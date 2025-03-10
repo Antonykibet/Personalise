@@ -155,6 +155,14 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                         })
                     }
                     if(obj.id==='img'){
+                        const lockMovement = {
+                            lockMovementX: true,
+                            lockMovementY: true,
+                            lockRotation: true,
+                            lockScalingX: true,
+                            lockScalingY: true,
+                        }
+                        obj.set(lockMovement)
                         obj.on('selected',(obj)=>{
                             const selectedObj={
                                 type:'Image',
