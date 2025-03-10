@@ -7,26 +7,27 @@ import { useState } from "react";
 
 export default function ImageModal({canvas,focusedObject,handleAddImage}){
     const theme = useTheme() 
-    const [isLocked,setIsLocked] = useState(false)
+    const [isLocked,setIsLocked] = useState(focusedObject.lockMovementX)
+
     const handleDelete = ()=>{
         canvas.remove(focusedObject)
     }
-    const lockState = {
-        lockMovementX: isLocked,
-        lockMovementY:isLocked,
-        lockRotation:isLocked,
-        lockScalingX:isLocked,
-        lockScalingY:isLocked
-    }
+    
+
     const handleImageLock = ()=>{
-        setIsLocked(false)
-        focusedObject.set(lockState)
-        canvas.renderAll()
-    }
-    const handleImageUnlock = ()=>{
-        setIsLocked(true)
-        focusedObject.set(lockState)
-        canvas.renderAll()
+        setIsLocked((prevIsLocked) => {
+            const newIsLocked = !prevIsLocked;
+            const lockState = {
+                lockMovementX: newIsLocked,
+                lockMovementY: newIsLocked,
+                lockRotation: newIsLocked,
+                lockScalingX: newIsLocked,
+                lockScalingY: newIsLocked,
+            };
+            focusedObject.set(lockState);
+            canvas.renderAll();
+            return newIsLocked;
+        });
     }
     
     return (
@@ -50,7 +51,7 @@ export default function ImageModal({canvas,focusedObject,handleAddImage}){
                 }}>
             <Button onClick={handleAddImage} disableElevation variant='outlined' sx={{fontFamily:'poppins'}}>change</Button>
             <IconButton >
-                {isLocked?<LockIcon onClick={handleImageLock} size='large' sx={{color:theme.palette.primary.main}}/>:<LockOpenIcon onClick={handleImageUnlock} size='large'/>}
+                {isLocked?<LockIcon onClick={()=>handleImageLock()} size='large' sx={{color:theme.palette.primary.main}}/>:<LockOpenIcon onClick={()=>handleImageLock()} size='large'/>}
             </IconButton>
 
             <IconButton onClick={handleDelete}>
