@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { Box, Button, Stack, Typography, Modal, Backdrop, useMediaQuery} from "@mui/material";
 import FeaturedTemplates from './LandingPage/featuredTemplates';
 import Playground from '../components/canvas/playground';
-import { useParams } from 'react-router-dom';
 import { getShit } from '../utils';
 
 const formatProductDetail = (productDetail)=>{

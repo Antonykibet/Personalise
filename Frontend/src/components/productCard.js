@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 export default function ProductCard({productDetails}) {
   return (
-    <Card variant='plain' sx={{position: 'relative',width:{xs:'40vw',md:'13vw'},mr:2,mb:1,border:'solid', borderColor:'#727272', borderRadius:2,flexShrink: 0}}>
+    <Card variant='plain' sx={{position: 'relative',width:{xs:'39vw',md:'13vw'},mx:1,mb:1,border:'solid', borderColor:'#727272', borderRadius:2,flexShrink: 0}}>
       <CardHeader 
         sx={{position: 'absolute', top: 0,right:0}}
         action={<IconButton>

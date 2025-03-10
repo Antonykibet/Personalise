@@ -10,6 +10,7 @@ import SignIn from './pages/sign-in/SignIn';
 import SignUp from './pages/sign-up/SignUp';
 import AdminPage from './pages/Admin/admin';
 import { createTheme, ThemeProvider,  } from '@mui/material';
+import TemplatePage from './pages/themePage';
 
 const theme = createTheme({
   palette: {
@@ -29,6 +30,7 @@ function App() {
             <Route path='products/:productid' element={<ProductPage/>}/>
             <Route path='availableItem/:id' element={<ProductPage/>}/>
             <Route path='category/:category' element={<CategoryPage />}/>
+            <Route path='template/:theme' element={<TemplatePage />}/>
             <Route path='checkout' element={<Checkout />}/>
             <Route path='sign-in' element={<SignIn />} />
             <Route path='sign-up' element={<SignUp />} />

@@ -9,6 +9,7 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
     const [stockImages,setStockImages] = useState([])
     const [searchResult,setSearchResult] = useState([])
     const [renderSearchResults,setRenderSearchResults] = useState(false)
+    const [selectedTheme,setSelectedTheme] = useState('')
 
     const handleAddImage = (selectedImg)=>{
         const img = new Image()
@@ -64,7 +65,7 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
                     >
                     Upload Image
                 </Button>
-                <ThemeSelector setRenderSearchResults={setRenderSearchResults} renderSearchResults={renderSearchResults} searchResult={searchResult} setSearchResult={setSearchResult} setResults={setStockImages} results={stockImages} isGiftSection={false} searchURI={'stockImage?'} />
+                <ThemeSelector selectedTheme={selectedTheme} setSelectedTheme={selectedTheme} setRenderSearchResults={setRenderSearchResults} renderSearchResults={renderSearchResults} searchResult={searchResult} setSearchResult={setSearchResult} setResults={setStockImages} results={stockImages} isGiftSection={false} searchURI={'stockImage?'} />
             </Stack>
             
             {/*Ive set a padding bottom  to take care of the images being hidden by the canvas btns */}

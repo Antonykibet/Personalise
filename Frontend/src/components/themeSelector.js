@@ -5,9 +5,8 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { getShit } from "../utils";
 
-export default function ThemeSelector({productDetail,renderSearchResults,setRenderSearchResults,setSearchResult,searchResult,setResults,isGiftSection,disableSearch,searchURI}){
+export default function ThemeSelector({productDetail,selectedTheme,setSelectedTheme,renderSearchResults,setRenderSearchResults,setSearchResult,searchResult,setResults,isGiftSection,disableSearch,searchURI}){
     const [availableThemes, setAvailableThemes] = useState([])
-    const [selectedTheme, setSelectedTheme] = useState('');
     const isTemplateEditBox = searchURI==='products?'?true:false
     const handleOptionSelect =  async(event, selectedOption) => {
       const resp = isTemplateEditBox?await queryTemplate(selectedOption): await queryImageAPI(selectedOption)
