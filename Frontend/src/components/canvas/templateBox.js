@@ -3,7 +3,7 @@ import ThemeSelector from "../themeSelector";
 import { useState } from "react";
 
 
-export default function TemplateBox({canvas, productDetail}){
+export default function TemplateBox({canvas, setfocusedObject,setIsImageUpdateMode,productDetail}){
     const [searchResult,setSearchResult] = useState([])
     const [renderSearchResults,setRenderSearchResults] = useState(false)
     const [templates,setTemplates] = useState([])
@@ -14,6 +14,42 @@ export default function TemplateBox({canvas, productDetail}){
         .then( r => {
             // Get the current canvas dimensions
             canvas.renderAll()
+            canvas.getObjects().forEach(obj=>{
+                if(obj.id==='text'){
+                    obj.on('selected',(obj)=>{
+                        const selectedObj={
+                            type:'Text',
+                            object:obj.target
+                        }
+                        setfocusedObject(selectedObj)
+                    })
+                    obj.on('deselected',()=>{
+                        setfocusedObject({type:null,object:null})
+                    })
+                }
+                if(obj.id==='img'){
+                    const lockMovement = {
+                        lockMovementX: true,
+                        lockMovementY: true,
+                        lockRotation: true,
+                        lockScalingX: true,
+                        lockScalingY: true,
+                    }
+                    obj.set(lockMovement)
+                    obj.on('selected',(obj)=>{
+                        const selectedObj={
+                            type:'Image',
+                            object:obj.target
+                        }
+                        setfocusedObject(selectedObj)
+                        setIsImageUpdateMode(true)
+                    })
+                    obj.on('deselected',()=>{
+                        setfocusedObject({type:null,object:null})
+                        setIsImageUpdateMode(false)
+                    })
+                }
+            })
         }
         )
     }
