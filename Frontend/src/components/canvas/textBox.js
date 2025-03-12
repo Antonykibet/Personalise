@@ -8,7 +8,7 @@ export default function TextConfigBox({setfocusedObject,canvas}){
             fontWeight:'normal',
             fontStyle:'normal',
             fill:'red',
-            fontSize:80,
+            fontSize:70,
             fontFamily:'Poppins',
             linethrough: false,
             underline: false,
