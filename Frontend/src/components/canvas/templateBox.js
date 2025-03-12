@@ -18,8 +18,8 @@ export default function TemplateBox({canvas, productDetail}){
         )
     }
     return (
-        <>
-            <Stack sx={{justifyContent:'center',alignItems:'center',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',width:'100%',mb:2,pb:1}}>
+        <Box  sx={{height:'100%',display:'flex',flexDirection:'column',alignItems:'center',overflow:'auto', backgroundColor:'#F6F5F5'}}>
+            <Stack sx={{justifyContent:'center',alignItems:'center',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',width:'100%',my:2,pl:2,pb:1}}>
                 <ThemeSelector disableSearch={true} selectedTheme={selectedTheme} setSelectedTheme={setSelectedTheme} productDetail={productDetail} setRenderSearchResults={setRenderSearchResults} renderSearchResults={renderSearchResults} searchResult={searchResult} setSearchResult={setSearchResult} setResults={setTemplates} results={templates} isGiftSection={false} searchURI={'products?'}/>
             </Stack>
             <Box sx={{height:'auto',width:'100%',overflowY:'scroll',display:'flex',justifyContent:'space-around',paddingBottom:'200px',flexWrap:'wrap'}}>
@@ -29,6 +29,6 @@ export default function TemplateBox({canvas, productDetail}){
                     )
                 })}
             </Box>
-        </>
+        </Box>
     )
 }
