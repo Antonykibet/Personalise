@@ -221,11 +221,11 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                         </Stack>
                         
                             {
-                            selectedEditButton === 'Template'?<TemplateBox setfocusedObject={setfocusedObject} setIsImageUpdateMode={setIsImageUpdateMode} productDetail={productDetail} canvas={canvas}/>:
-                            selectedEditButton === 'Text'?<TextConfigBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
-                            selectedEditButton === 'Image'?<ImageBox canvas={canvas} setfocusedObject={setfocusedObject} focusedObject={focusedObject} setIsImageUpdateMode={setIsImageUpdateMode} isImageUpdateMode={isImageUpdateMode}/>:
-                            selectedEditButton === 'Shapes'?<ShapeBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
-                            selectedEditButton === 'Draw'?<TextConfigBox/>:''
+                                selectedEditButton === 'Template'?<TemplateBox setfocusedObject={setfocusedObject} setIsImageUpdateMode={setIsImageUpdateMode} productDetail={productDetail} canvas={canvas}/>:
+                                selectedEditButton === 'Text'?<TextConfigBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
+                                selectedEditButton === 'Image'?<ImageBox canvas={canvas} setfocusedObject={setfocusedObject} focusedObject={focusedObject} productDetail={productDetail} setIsImageUpdateMode={setIsImageUpdateMode} isImageUpdateMode={isImageUpdateMode}/>:
+                                selectedEditButton === 'Shapes'?<ShapeBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
+                                selectedEditButton === 'Draw'?<TextConfigBox/>:''
                             }
                         <Stack sx={{width:'100%',
                             backgroundColor:'white',

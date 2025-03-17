@@ -137,23 +137,57 @@ export default function ThemeSelector({productDetail,selectedTheme,setSelectedTh
       setSelectedTheme(newValue)
     };
 
+    const renderTabs = async()=>{
+      const themeType = isGiftSection?'GIFT THEME':'RANDOM THEME'
+      const themes = await getShit(`theme?type=${themeType}`)
+      setAvailableThemes(themes)
+      return themes
+    }
+
+    const renderDefaulProducts = async()=>{
+      try {
+        const availableThemes = await renderTabs()
+        const url = `products?theme__name=${availableThemes[0].name}`
+        const products = await getShit(url)
+        setSelectedTheme(availableThemes[0].name)
+        setResults(products)
+      } catch (error) {
+        console.log(`Error rendering startup products: ${error}`)
+      }
+    }
+    const renderDefaultTemplates = async()=>{
+      try {
+        await renderTabs()
+        const theme = productDetail.theme.name
+        const base_product = productDetail.base_product.name
+        const url = searchURI?`${searchURI}theme__name=${theme}&base_product__name=${base_product}`: `products?theme__name=${availableThemes[0].name}`
+        const templates = await getShit(url)
+        setSelectedTheme(theme)
+        setResults(templates)
+      } catch (error) {
+        setResults([])
+        console.log(`Error rendering default templates: ${error}`)
+      }
+    }
+    const renderDefaultStockImages = async()=>{
+      try {
+        await renderTabs()
+        const theme = productDetail.theme.name
+        const url = `${searchURI}theme__name=${theme}`
+        const images = await getShit(url)
+        setSelectedTheme(theme)
+        setResults(images)
+      } catch (error) {
+        setResults([])
+        console.log(`Error rendering default images: ${error}`)
+      }
+    }
   
     
     useEffect(()=>{
         (async ()=>{
-            const themeType = isGiftSection?'GIFT THEME':'RANDOM THEME'
-            const themes = await getShit(`theme?type=${themeType}`)
-            setAvailableThemes(themes)
-            const url = searchURI?`${searchURI}theme__name=${themes[0].name}`: `products?theme__name=${themes[0].name}`
-            //fetch products of the first theme displayed in the tab.
-            const products = await getShit(url)
-            setSelectedTheme(themes[0].name)
-
-            setResults(products)
-            
+          searchURI==='products?'?await renderDefaultTemplates():searchURI==='stockImage?'? await renderDefaultStockImages():await renderDefaulProducts()
         })()
-        
-        // setAvailableThemes([{label:'Memes'}, {label:'Movies'}, {label:'Spotify'}, {label:'Quotes'},{label:'Football'}, {label:'F1'}])
     },[])
     return(
         <>

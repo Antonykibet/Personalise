@@ -5,7 +5,7 @@ import { FabricImage } from 'fabric';
 import ThemeSelector from "../themeSelector";
 
 
-export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsImageUpdateMode,isImageUpdateMode}){
+export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsImageUpdateMode,isImageUpdateMode,productDetail}){
     const [stockImages,setStockImages] = useState([])
     const [searchResult,setSearchResult] = useState([])
     const [renderSearchResults,setRenderSearchResults] = useState(false)
@@ -20,7 +20,7 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
                 left: 100,
                 top: 100,
                 id:'img'
-                })
+                })  
             fabricImg.on('selected',(obj)=>{
                 const selectedObj={
                     type:'Image',
@@ -47,9 +47,15 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
         const img = new Image()
         img.src = selectedImg.stock_image_url
         img.crossOrigin = "anonymous";
-        img.onload = ()=>{
-            focusedObject.object.setSrc(img.src,()=>canvas.renderAll())
-        }   
+        const scale = focusedObject.object.getObjectScaling()
+        img.onload = (t)=>{
+            focusedObject.object.setSrc(img.src,()=>{
+                canvas.renderAll()})
+           
+            //console.log(parseInt(t.target.width) / scale.scaleX,parseInt(t.target.height) / scale.scaleY)
+            focusedObject.object.set('width',t.target.width / scale.x)
+            focusedObject.object.set('height',t.target.height / scale.y)
+        }
         setTimeout(()=>canvas.renderAll(),500)
     }
     return(
@@ -68,7 +74,7 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
                     >
                     Upload Image
                 </Button>
-                <ThemeSelector selectedTheme={selectedTheme} setSelectedTheme={setSelectedTheme} setRenderSearchResults={setRenderSearchResults} renderSearchResults={renderSearchResults} searchResult={searchResult} setSearchResult={setSearchResult} setResults={setStockImages} results={stockImages} isGiftSection={false} searchURI={'stockImage?'} />
+                <ThemeSelector selectedTheme={selectedTheme} productDetail={productDetail} setSelectedTheme={setSelectedTheme} setRenderSearchResults={setRenderSearchResults} renderSearchResults={renderSearchResults} searchResult={searchResult} setSearchResult={setSearchResult} setResults={setStockImages} results={stockImages} isGiftSection={false} searchURI={'stockImage?'} />
             </Stack>
             
             {/*Ive set a padding bottom  to take care of the images being hidden by the canvas btns */}
