@@ -159,8 +159,6 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                             lockMovementX: true,
                             lockMovementY: true,
                             lockRotation: true,
-                            lockScalingX: true,
-                            lockScalingY: true,
                         }
                         obj.set(lockMovement)
                         obj.on('selected',(obj)=>{
