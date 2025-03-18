@@ -47,14 +47,11 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
         const img = new Image()
         img.src = selectedImg.stock_image_url
         img.crossOrigin = "anonymous";
-        const scale = focusedObject.object.getObjectScaling()
         img.onload = (t)=>{
             focusedObject.object.setSrc(img.src,()=>{
                 canvas.renderAll()})
            
             //console.log(parseInt(t.target.width) / scale.scaleX,parseInt(t.target.height) / scale.scaleY)
-            focusedObject.object.set('width',t.target.width / scale.x)
-            focusedObject.object.set('height',t.target.height / scale.y)
         }
         setTimeout(()=>canvas.renderAll(),500)
     }
