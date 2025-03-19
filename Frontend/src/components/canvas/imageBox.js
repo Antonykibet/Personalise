@@ -1,8 +1,12 @@
-import { Box, Button, Stack, Typography } from "@mui/material"
+import { Box, Button, IconButton, Paper, Popper, Stack, Typography } from "@mui/material"
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { useState } from "react";
+import { useState, } from "react";
 import { FabricImage } from 'fabric';
 import ThemeSelector from "../themeSelector";
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { useTheme } from "@emotion/react";
+
 
 
 export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsImageUpdateMode,isImageUpdateMode,productDetail}){
@@ -10,6 +14,17 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
     const [searchResult,setSearchResult] = useState([])
     const [renderSearchResults,setRenderSearchResults] = useState(false)
     const [selectedTheme,setSelectedTheme] = useState('')
+    const [open, setOpen] = useState(false);
+    const theme = useTheme()
+    const primaryColor = theme.palette.primary.main
+
+    const popperStyle = {
+        position: 'fixed',
+        top: '10px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 1300,
+      };
 
     const handleAddImage = (selectedImg)=>{
         const img = new Image()
@@ -50,10 +65,10 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
         img.onload = (t)=>{
             focusedObject.object.setSrc(img.src,()=>{
                 canvas.renderAll()})
-           
-            //console.log(parseInt(t.target.width) / scale.scaleX,parseInt(t.target.height) / scale.scaleY)
         }
         setTimeout(()=>canvas.renderAll(),500)
+        setOpen(true)
+        setTimeout(()=>{setOpen(false)},10000)
     }
     return(
         <Box  sx={{height:'100%',display:'flex',flexDirection:'column',alignItems:'center',overflow:'auto', backgroundColor:'#F6F5F5'}}>
@@ -85,6 +100,36 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
                     ) 
                 })}
             </Box>
+            <Popper
+                open={open}
+                placement="top-start"
+                style={popperStyle}
+                sx={{width:{xs:'90%',md:'auto'}}}
+                modifiers={[
+                    {
+                    name: 'preventOverflow',
+                    options: {
+                        padding: 5,
+                    },
+                    },
+                ]}
+            >
+                <Paper elevation={3} sx={{ p: 2,display:"flex",justifyContent:'center'}}>
+                <Typography
+                     sx={{
+                        display: 'inline-flex', // Use inline-flex for better alignment
+                        alignItems: 'center',
+                        fontSize: '16px',
+                      }}
+                    variant="body2"
+                >
+                    Drag and scale image to fit. Unlock
+                    to move around.
+                </Typography>
+                <LockOpenIcon sx={{ color: primaryColor,}} />
+                    <IconButton onClick={()=>setOpen(false)}><CancelIcon/></IconButton>
+                </Paper>
+            </Popper>
         </Box>
     )
 }
