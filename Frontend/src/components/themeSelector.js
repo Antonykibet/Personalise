@@ -8,6 +8,7 @@ import { getShit } from "../utils";
 export default function ThemeSelector({productDetail,selectedTheme,setSelectedTheme,renderSearchResults,setRenderSearchResults,setSearchResult,searchResult,setResults,isGiftSection,disableSearch,searchURI}){
     const [availableThemes, setAvailableThemes] = useState([])
     const isTemplateEditBox = searchURI==='products?'?true:false
+
     const handleOptionSelect =  async(event, selectedOption) => {
       const resp = isTemplateEditBox?await queryTemplate(selectedOption): await queryImageAPI(selectedOption)
       setSearchResult(resp)
@@ -130,7 +131,10 @@ export default function ThemeSelector({productDetail,selectedTheme,setSelectedTh
     }
 
     const handleThemeChange = (event,newValue) => {
+      
       (async ()=>{
+        setRenderSearchResults(false)
+        setSearchResult([])
         const response = await getResponseFromDB(newValue)
         setResults(response)
       })()
