@@ -28,7 +28,6 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
     
     const renderPopper = ()=>{
         setOpen(true)
-        setTimeout(()=>{setOpen(false)},6000)
     }
 
     const handleAddImage = (selectedImg)=>{
@@ -100,7 +99,7 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
                     return (
                         <Stack onClick={isImageUpdateMode?()=>handleUpdateImage(img):()=>handleAddImage(img)} sx={{alignItems:'center'}}>
                             <img style={{backgroundColor:'white',borderRadius:'8px',height:'20vh',width:'20vh',objectFit:'contain'}} src={img.stock_image_url} alt={img.name}/>
-                            <Typography variant="body1" color="initial">{img.name}</Typography>
+                            <Typography variant="body1" color="initial">{img.name.slice(0, 10) + "..."}</Typography>
                         </Stack>
                     ) 
                 })}
@@ -119,19 +118,17 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
                     },
                 ]}
             >
-                <Paper elevation={3} sx={{ p: 2,display:"flex",justifyContent:'center'}}>
-                <Typography
-                     sx={{
-                        display: 'inline-flex', // Use inline-flex for better alignment
-                        alignItems: 'center',
-                        fontSize: '16px',
-                      }}
-                    variant="body2"
-                >
-                    Drag and scale image to fit. Unlock
-                    to move around.
-                </Typography>
-                <LockOpenIcon sx={{ color: primaryColor,}} />
+                <Paper elevation={3} sx={{ px: 2,display:"flex",justifyContent:'center'}}>
+                    <Typography
+                        sx={{
+                            display: 'inline-flex', // Use inline-flex for better alignment
+                            alignItems: 'center',
+                            fontSize: '16px',
+                        }}
+                    >
+                        Drag and scale image to fit. Unlock to move around.
+                    </Typography>
+                    <LockOpenIcon sx={{ color: primaryColor}}/>
                     <IconButton onClick={()=>setOpen(false)}><CancelIcon/></IconButton>
                 </Paper>
             </Popper>

@@ -1,9 +1,12 @@
 import { useRef,useEffect, useState, } from 'react';
 import { Canvas, FabricImage, FabricObject } from 'fabric';
 import { Button, Stack, Typography, useMediaQuery, Box, IconButton } from "@mui/material";
+import { useTheme } from "@emotion/react";
+
 import ImageBox from './imageBox';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 import TextFieldEditModal from './editModals/textFieldEditModal';
 import ShapeModal from './editModals/shapeModal.js';
@@ -48,7 +51,7 @@ let initialRenderInfoModal = {
     textAlign:'center'
     }
 
-export default function Playground({isAdmin, handleFormDataEntry,formStateHandler,productDetail}){
+export default function Playground({isAdmin, handleFormDataEntry,formStateHandler,productDetail,handleClose}){
     const isPhone = useMediaQuery('(max-width: 768px)');
     const isTablet = useMediaQuery('(max-width: 820px)');
 
@@ -63,6 +66,8 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
 
     const [isImageUpdateMode,setIsImageUpdateMode] = useState(false)
     const [focusedObject, setfocusedObject] = useState({type:'',object:''})
+    const theme = useTheme()
+    const primaryColor = theme.palette.primary.main
 
     const handleExpandBox = ()=>{
         if (!isboxExpanded){
@@ -191,15 +196,13 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
    
     return(
         <>
-            <Stack  sx={ModalStyle} direction={isPhone||isTablet ? 'column':'row'}   > 
-                <Stack 
-                    //use onClick instead of onTouchStart becoz of the 
-                    //double clicking and unexpected behaviuors
-                    //that so uninted image selection in the Image & Template box. 
+            <Stack  sx={ModalStyle} direction={isPhone||isTablet ? 'column':'row'}>
+
+                <Stack  
                     onClick={()=>setIsboxExpanded(true)}
                     direction={{md:'row',xs:'column'}}
                     sx={{
-                        position:{xs:'fixed',md:'static'},
+                        position:{xs:'fixed',md:'relative'},
                         bottom:'0',
                         zIndex:'1000',
                         justifyContent:'space-between',
@@ -213,9 +216,9 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                     <Box sx={{height:{xs:'100%', md:'100%'}}}>
                         <Stack direction='row' sx={{px:1,justifyContent:'space-between',alignItems:'center'}}>
                             <Typography m={1} variant='h6' sx={{fontFamily:'Montserrat', color:'rgb(46, 46, 46)', fontWeight:700}}>{selectedEditButton}</Typography>
-                            <IconButton onClick={handleExpandBox}  aria-label="expand/minimize">
+                            {isPhone||isTablet ?<IconButton onClick={handleExpandBox}  aria-label="expand/minimize">
                                 {isboxExpanded?<ExpandMoreIcon fontSize='large'/>:<ExpandLessIcon fontSize='large' />}
-                            </IconButton>
+                            </IconButton>:''}
                         </Stack>
                         
                             {
@@ -225,11 +228,16 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                                 selectedEditButton === 'Shapes'?<ShapeBox canvas={canvas} setfocusedObject={setfocusedObject}/>:
                                 selectedEditButton === 'Draw'?<TextConfigBox/>:''
                             }
-                        <Stack sx={{width:'100%',
-                            backgroundColor:'white',
-                            position:'absolute',
-                                    bottom:'0px',}}>
-                            <CanvasEditingBtns handleButtonClick={handleEditButtonClick} selectedEditButton={selectedEditButton}/>
+                        {/*For mobile only*/}
+                        <Stack sx={{
+                                width:'100%',
+                                backgroundColor:'white',
+                                position:'absolute',
+                                bottom:'0px',
+                                display:{md:'none'}
+                            }}
+                            >
+                                <CanvasEditingBtns handleButtonClick={handleEditButtonClick} selectedEditButton={selectedEditButton} />
                             <Button  
                                 sx={{
                                     m:1,
@@ -243,11 +251,30 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                                         {isAdmin?'SUBMIT DESIGN':'PROCEED TO ADD TO CART'}
                             </Button>
                         </Stack>
+
+                        <Button  
+                                sx={{
+                                    m:1,
+                                    mx:2,
+                                    borderRadius:2,
+                                    backgroundColor:'#e45a00',
+                                    color:'white',
+                                    position:'fixed',
+                                    bottom: '10px',
+                                    left: '50%',
+                                    transform: 'translateX(-50%)',
+                                    zIndex: 1300,
+                                }}
+                                    variant='solid'
+                                    onClick={isAdmin?()=>handleAdminDesign():()=>handleUserDesign()}
+                                >
+                                        {isAdmin?'SUBMIT DESIGN':'PROCEED TO ADD TO CART'}
+                            </Button>
                     </Box>
-                    {isPhone||isTablet ? '':<CanvasEditingBtns/>}
+                    {isPhone||isTablet ? '':<CanvasEditingBtns handleButtonClick={handleEditButtonClick} selectedEditButton={selectedEditButton} />}
                 </Stack>
                 
-                <Stack onTouchStart={()=>setIsboxExpanded(false)} sx={{position:'relative', width:{md:'60vw',xs:'100%'}, height:{md:'40%',xs:'70%'} ,display:'flex',justifyContent:'bottom',alignItems:{xs:'bottom'}}} ref={canvasWrapper}  id='canvasWrapper'>
+                <Stack onTouchStart={()=>setIsboxExpanded(false)} sx={{position:'relative', width:{md:'60vw',xs:'100%'}, height:{md:'100%',xs:'70%'} ,display:'flex',justifyContent:{xs:'bottom',md:'center'},alignItems:{xs:'bottom',md:'center'}}} ref={canvasWrapper}  id='canvasWrapper'>
                     <canvas style={{position:'fixed'}}  id="canvas" />
                     {
                         initialRenderInfo.productType==='originalProduct'&&!isImageUpdateMode?<Button onClick={handleAddImage} sx={initialRenderInfoModal}>Add Image</Button>:
@@ -258,7 +285,9 @@ export default function Playground({isAdmin, handleFormDataEntry,formStateHandle
                         focusedObject.type === 'Shape'?<ShapeModal focusedObject = {focusedObject.object} canvas={canvas}/>:
                         focusedObject.type === 'Image'?<ImageModal setfocusedObject={setfocusedObject} focusedObject = {focusedObject.object} canvas={canvas} handleAddImage={handleAddImage}/>:''
                     }
-                    
+                    <IconButton sx={{position:'absolute', top:'10px', right:'10px',color:primaryColor}} onClick={()=>handleClose()}>
+                        <CancelIcon/>
+                    </IconButton>
                 </Stack>
 
             </Stack>

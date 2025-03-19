@@ -1,4 +1,4 @@
-import { Autocomplete, Box, InputAdornment, Tab, Tabs, TextField } from "@mui/material"
+import { Autocomplete, Box, InputAdornment, Stack, Tab, Tabs, TextField } from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import axios from "axios";
@@ -196,20 +196,22 @@ export default function ThemeSelector({productDetail,selectedTheme,setSelectedTh
     return(
         <>
             <Box sx={{ width: '100%',display:'flex', alignItems:'center', flexDirection:'column' }}>
+            <div style={{ display: 'grid', width: '100%', overflow: 'hidden' }}> 
                 <Tabs
                     color
                     value={selectedTheme}
                     onChange={handleThemeChange}
                     variant="scrollable"
-                    scrollButtons={false}
+                    scrollButtons
                     aria-label="Themes"
                     indicatorColor="transparent"
-                    sx={{ minHeight: "30px", height: "30px",width:'100%', mb:1,}}
+                    sx={{ minHeight: "30px", height: "30px",width: '100%', mb:1}}
                     >
-                        {availableThemes.map((theme)=>{
-                            return <Tab sx={{border:'solid',borderRadius:8,borderWidth:2,mr:1,minHeight: "30px", height: "30px" }} value={theme.name} label={theme.name} />
+                      {availableThemes.map((theme)=>{
+                              return <Tab sx={{border:'solid',borderRadius:8,borderWidth:2,mr:1,minHeight: "30px", height: "30px" }} value={theme.name} label={theme.name} />
                         })}
                 </Tabs>
+              </div>
                 {disableSearch?'':<Autocomplete
                   id="tags-standard"
                   onChange={handleOptionSelect}

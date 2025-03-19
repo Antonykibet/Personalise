@@ -70,7 +70,7 @@ export default function ProductPage(){
                             timeout: 500,
                         },
                         }}>
-                            <Playground productDetail={productDetails} />
+                            <Playground productDetail={productDetails} handleClose={handleClose} />
                     </Modal>
 
                 </Stack>
