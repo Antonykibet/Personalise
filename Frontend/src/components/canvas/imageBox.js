@@ -25,6 +25,11 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
         transform: 'translateX(-50%)',
         zIndex: 1300,
       };
+    
+    const renderPopper = ()=>{
+        setOpen(true)
+        setTimeout(()=>{setOpen(false)},6000)
+    }
 
     const handleAddImage = (selectedImg)=>{
         const img = new Image()
@@ -56,6 +61,7 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
                 
             canvas.add(fabricImg)
             canvas.renderAll()
+            renderPopper()
         }
     }    
     const handleUpdateImage = (selectedImg)=>{
@@ -67,8 +73,7 @@ export default function ImageBox({canvas,setfocusedObject,focusedObject,setIsIma
                 canvas.renderAll()})
         }
         setTimeout(()=>canvas.renderAll(),500)
-        setOpen(true)
-        setTimeout(()=>{setOpen(false)},10000)
+        renderPopper()
     }
     return(
         <Box  sx={{height:'100%',display:'flex',flexDirection:'column',alignItems:'center',overflow:'auto', backgroundColor:'#F6F5F5'}}>

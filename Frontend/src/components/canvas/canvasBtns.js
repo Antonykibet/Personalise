@@ -28,7 +28,7 @@ const canvasButtons = [
         icon:<ModeIcon/>
     },
 ]
-export default function CanvasEditingBtns({handleButtonClick,selectedButton}){
+export default function CanvasEditingBtns({handleButtonClick,selectedEditButton}){
     return(
         <>
             <Stack sx={{pl:{xs:0,md:2},backgroundColor:'white',justifyContent:'center'}} >
@@ -45,7 +45,7 @@ export default function CanvasEditingBtns({handleButtonClick,selectedButton}){
                         return (
                             <Stack
                                 sx={{
-                                    color: selectedButton === button.type ? '#e45a00' : 'rgba(0, 0, 0, 0.54)',
+                                    color: selectedEditButton === button.type ? '#e45a00' : 'rgba(0, 0, 0, 0.54)',
                                     justifyContent:'center',
                                     alignItems:'center'
                                 }}
@@ -54,7 +54,7 @@ export default function CanvasEditingBtns({handleButtonClick,selectedButton}){
                             >
                                 <IconButton
                                     sx={{
-                                        color: selectedButton === button.type ? '#e45a00' : 'rgba(0, 0, 0, 0.54)',
+                                        color: selectedEditButton === button.type ? '#e45a00' : 'rgba(0, 0, 0, 0.54)',
                                     }}
                                     disableFocusRipple
                                     disableRipple
