@@ -19,8 +19,6 @@ const formatProductDetail = (productDetail)=>{
 export default function ProductPage(){
     const [productDetails,setProductDetails] = useState({})
     const location = useLocation()
-    const isPhone = useMediaQuery('(max-width: 768px)');
-    const isTablet = useMediaQuery('(max-width: 820px)');
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -42,12 +40,12 @@ export default function ProductPage(){
     },[])
     return (
         <>
-        <Stack px={{md:4,xs:2}} my={8} mt={4}>
-            <Stack px={{justifyContent:{xs:'center',md:'space-around'}}} direction={isPhone||isTablet ? 'column':'row'} spacing={4} mb={6}  >
+        <Stack px={{md:10,xs:2}} my={8} mt={4}>
+            <Stack  sx={{justifyContent:{xs:'center',md:'space-between'}}} direction={{md:'row',xs:'column'}} spacing={4} mb={6}  >
                 <Box sx={{width: {md:'55%',xs:'100%'}, height:{md:'60vh',xs:'50vh'}, boxShadow:'rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px',borderRadius:'4px'}}  >
-                <img style={{width:'100%',height:'100%',objectFit:'contain'}} src={productDetails.themed === true?productDetails.canvasPNG:productDetails.thumbnail_image_url} alt={productDetails.name}/>
+                    <img style={{width:'100%',height:'100%',objectFit:'contain'}} src={productDetails.themed === true?productDetails.canvasPNG:productDetails.thumbnail_image_url} alt={productDetails.name}/>
                 </Box>
-                <Stack spacing={4} sx={{justifyContent:'space-between',width:{md:'35%',xs:'100%'}}}>
+                <Stack spacing={4} sx={{justifyContent:'space-between',width:{md:'45%',xs:'100%'}}}>
                     <Stack >
                         <Typography variant="h4" sx={{fontFamily:'Montserrat',fontWeight:700,color:'rgb(34, 34, 34)'}}>{productDetails.name}</Typography>
                         <Typography variant="h5" sx={{fontFamily:'Montserrat',fontWeight:700,color:'rgb(34, 34, 34)'}}>{`${productDetails.price}/=`}</Typography>   
