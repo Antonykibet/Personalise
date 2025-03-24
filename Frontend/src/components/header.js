@@ -62,7 +62,7 @@ function ResponsiveAppBar() {
                       placeholder="What are you looking for?"
                       InputProps={{
                         ...params.InputProps,
-                        sx:{border:{border:'solid',height:'40px', width:'30vw', borderRadius:'8px', borderWidth:'2px'}},
+                        sx:{border:{border:'solid',height:'40px', width:'30vw', borderRadius:'8px', borderWidth:'2px',"& fieldset": { border: 'none' },}},
                         endAdornment: (
                           <>
                             <InputAdornment  position='end'>
@@ -93,7 +93,7 @@ function ResponsiveAppBar() {
                   return (
                     <TextField
                       {...params}
-                      placeholder="Favorites"
+                      placeholder="What are you looking for?"
                       InputProps={{
                         ...params.InputProps,
                         sx:{border:{border:'solid',height:'40px',  borderRadius:16, borderWidth:'2px'}},
