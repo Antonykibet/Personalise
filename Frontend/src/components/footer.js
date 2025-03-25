@@ -8,7 +8,17 @@ import { Link } from "react-router-dom";
 export default function Footer(){
     return(
         <Stack color='white' direction='column' component='footer' >
-            <Stack sx={{backgroundColor:'#3c67d8',py:2,justifyContent:'space-between',alignItems:'center',px:{md:10,xs:5}}} direction='row' >
+            <Stack 
+                sx={{
+                    mt:4,
+                    backgroundColor:'#3c67d8',
+                    py:2,
+                    justifyContent:'space-between',
+                    alignItems:'center',
+                    px:{md:10,xs:5}
+                }}
+                direction='row'
+            >
                 <Stack sx={{alignItems:'center'}} direction="row">
                     <AutoFixHighIcon />
                     <Typography

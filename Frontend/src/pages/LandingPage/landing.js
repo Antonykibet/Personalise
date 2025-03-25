@@ -1,7 +1,7 @@
 import Hero from './hero';
 import FeaturedTemplates from './featuredTemplates';
 import AvailableItems from './availablItems';
-import GiftHero from './giftHero';
+import SecondHero from './secondHero';
 import { Box, Typography } from '@mui/material';
 export default function Landing(){
     return(
@@ -10,10 +10,10 @@ export default function Landing(){
             <Box sx={{width:{md:'90%',xs:'95%'}}} >
                 <Typography variant="h5" sx={{fontFamily:'poppins',fontWeight:600,color:'#242424'}}>Featured Templates</Typography>
             </Box>
-            <FeaturedTemplates isGiftSection={false} />
-            <AvailableItems/>
-            <GiftHero/>
             <FeaturedTemplates isGiftSection={true}/>
+            <AvailableItems/>
+            <SecondHero />
+            <FeaturedTemplates isGiftSection={false} />
         </div>
     )
 }
