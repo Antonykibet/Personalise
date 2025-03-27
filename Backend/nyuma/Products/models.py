@@ -8,14 +8,14 @@ class Theme(models.Model):
         'GIFT THEME':'Gift theme',
     }
     name = models.CharField(max_length=200,null=True)
-    type = models.CharField(choices=theme_types) 
+    type = models.CharField(choices=theme_types,max_length=200,) 
 
 class AvailableProducts(models.Model):
     name = models.CharField(max_length=200,null=True,)
     thumbnail_image_url = models.ImageField(upload_to='products/', null=True, blank=True)
     base_image_url = models.ImageField(upload_to='products/', null=True, blank=True)
     price = models.IntegerField(null=True)
-    description = models.TextField(null='')
+    description = models.TextField(null='',blank=True)
 
 class ThemedProduct(models.Model):
     name = models.CharField(max_length=200,null=True, unique=True)

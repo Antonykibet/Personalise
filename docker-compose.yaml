@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: antony
+      POSTGRES_DB: personalise
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5433:5432" # only for local dev. remove for production
+  app:
+    build: . # your application dockerfile location.
+    ports:
+      - "8000:8000"
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://postgres:antony@db:5432/personalise
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

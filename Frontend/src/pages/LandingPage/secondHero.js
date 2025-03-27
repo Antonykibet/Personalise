@@ -13,7 +13,7 @@ export default function SecondHero(){
 
     const heros = [
         { title: 'Gifts for Movie Buffs.', img: moviesHero, description: 'Personalize movie posters and themed gifts to celebrate their favorite films.'},
-        { title: 'Music Lover Gifts.', img: spotifyHero, description: 'Design a gift that sings their tune. Custom playlists, album art prints, and more for the music lover in your life.' },
+        { title: 'Gift a music lover.', img: spotifyHero, description: 'Design a gift that sings their tune. Custom playlists, album art prints, and more for the music lover in your life.' },
         { title: 'Fuel Their F1 Passion.', img: f1Hero, description: 'Create personalized track maps and driver-themed art for racing fans.'},
         { title: 'For the Football Fanatic.', img: footballHero, description: 'Design team memorabilia and match-day keepsakes for passionate fans.'},
         { title: 'Personalized Prestige for Car Connoisseurs.', img: carsHero, description: 'Craft custom car art and accessories for the ultimate auto enthusiast.' },
