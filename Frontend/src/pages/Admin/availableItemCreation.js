@@ -28,6 +28,20 @@ export default function AvailableItemCreation(){
                     handleFormDataEntry('name',setFormData,e.target.value)}
                 }
                 label='name'  />
+            <TextField 
+                sx={{my:1}}
+                fullWidth
+                onChange={(e)=>{
+                    handleFormDataEntry('description',setFormData,e.target.value)}
+                }
+                label='description'  />
+            <TextField 
+                sx={{my:1}}
+                fullWidth
+                onChange={(e)=>{
+                    handleFormDataEntry('price',setFormData,e.target.value)}
+                }
+                label='price'/>
             <Button
                 sx={{my:1, width:'90%'}}
                 component="label"
