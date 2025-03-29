@@ -24,9 +24,8 @@ COPY . .
 
 
 # Build the React app
-RUN cd Frontend && npm run build
+RUN cd /app/Frontend && npm run build
 
-ENV DATABASE_URL=postgres://postgres:temporary_password@db:5432/temporary_db
 # Django migrations and static files
 # RUN python Backend/nyuma/manage.py migrate
 # RUN python Backend/nyuma/manage.py collectstatic --no-input

@@ -98,10 +98,12 @@ WSGI_APPLICATION = 'nyuma.wsgi.application'
 #     }
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+    'default': dj_database_url.config(default='postgresql://antony:SW5doqLree0eGQQKOLtlbiz2GUc86mnD@dpg-cvk2r6h5pdvs73a1m050-a.oregon-postgres.render.com/thoughtfull')
 }
-
-# Password validation
+# DATABASES = {
+#      'default': 'postgresql://antony:SW5doqLree0eGQQKOLtlbiz2GUc86mnD@dpg-cvk2r6h5pdvs73a1m050-a.oregon-postgres.render.com/thoughtfull'
+# }
+# # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
