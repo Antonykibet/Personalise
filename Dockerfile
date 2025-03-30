@@ -22,17 +22,16 @@ RUN cd react-app && npm install
 # Copy the rest of the application code
 COPY . .
 
-
 # Build the React app
-RUN cd /app/Frontend && npm run build
+#RUN cd Frontend && npx run build
 
 # Django migrations and static files
 # RUN python Backend/nyuma/manage.py migrate
 # RUN python Backend/nyuma/manage.py collectstatic --no-input
 
 # Expose ports
-EXPOSE 8000
-EXPOSE 3000
+# EXPOSE 8000
+# EXPOSE 3000
 
 RUN chmod +x ./start.sh
 # Start Django and React (using a shell script or a process manager like supervisor)
